@@ -1,0 +1,9 @@
+#ifndef COMMONH
+#define COMMONH
+
+#include <vector>
+#include "Util.h"
+
+using namespace std;
+
+#endif

@@ -1,0 +1,38 @@
+#ifndef UTILH
+#define UTILH
+
+#define noone -4
+
+#include "Objects.h"
+#include <vector>
+#include "Image.h"
+#include "ObjectType.h"
+#include "Room.h"
+
+using namespace std;
+
+struct references {
+        vector<ObjectType *> objectref;
+        vector<Image *> imageref;
+        vector<Object *> instanceref;
+        vector<Room *> roomref;
+};
+
+typedef struct references references;
+
+class Util {
+public:
+        static void init();
+        static void fillObjects();
+        static void fillImages();
+        static void fillRooms();
+        static references *refs;
+        static int instanceid;
+        static ObjectType *getObject(unsigned int id);
+        static Object *getInstance(unsigned int id);
+        static Image *getSprite(unsigned int id);
+        static Room *getRoom(unsigned int id);
+        static Room *currentRoom;
+};
+
+#endif
