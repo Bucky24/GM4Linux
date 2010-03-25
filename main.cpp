@@ -7,13 +7,12 @@
 #else
 #include <GL/glut.h>
 #endif
-
 #include "Image.h"
 #include "ObjectType.h"
 #include "Objects.h"
 #include "Room.h"
 #include <cstdio>
-#include "Util.h"
+#include "Engine.h"
 #include "Rooms.h"
 
 using namespace std;
@@ -33,9 +32,37 @@ void handleKeypress(unsigned char key, int x, int y) {
 	}
 }
 
+
+void handleMouse(int button, int state, int x, int y) {
+        vector<Object *> instances = Engine::currentRoom->getInstances();
+        unsigned int i;
+        for (i=0;i<instances.size();i++) {
+                Object *inst = instances[i];
+		if (button == GLUT_LEFT_BUTTON) {
+			if (state == GLUT_DOWN) {
+				
+			} else if (state == GLUT_UP) {
+				
+			}
+		} else if (button == GLUT_RIGHT_BUTTON) {
+			if (state == GLUT_DOWN) {
+				
+			} else if (state == GLUT_UP) {
+				
+			}
+		} else if (button == GLUT_MIDDLE_BUTTON) {
+			if (state == GLUT_DOWN) {
+				
+			} else if (state == GLUT_UP) {
+				
+			}
+		}
+	}
+}
+
 void handleSpecialKeypress(int key, int x, int y) {
         printf("key: %d\n",key);
-        vector<Object *> instances = Util::currentRoom->getInstances();
+        vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
         for (i=0;i<instances.size();i++) {
                 Object *inst = instances[i];
@@ -133,7 +160,7 @@ void initRendering() {
 	//inst = new testobject(instanceid,obj,20,10);
 	//instanceid ++;
 
-        Util::init();
+        Engine::init();
 }
 
 void handleResize(int w, int h) {
@@ -150,7 +177,7 @@ void drawScene() {
 	glLoadIdentity();
 
 	//inst->draw();
-        Util::currentRoom->draw();
+        Engine::currentRoom->draw();
 	
 	glutSwapBuffers();
 }
@@ -163,7 +190,7 @@ void update(int value) {
         // end step
         // draw
 	glutPostRedisplay();
-	glutTimerFunc(1000/Util::currentRoom->getSpeed(), update, 0);
+	glutTimerFunc(1000/Engine::currentRoom->getSpeed(), update, 0);
 }
 
 int main(int argc, char** argv) {
@@ -177,6 +204,7 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(handleKeypress);
 	glutSpecialFunc(handleSpecialKeypress);
+	glutMouseFunc(handleMouse);
 	glutReshapeFunc(handleResize);
 	glutTimerFunc(25, update, 0);
 	

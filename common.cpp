@@ -3,17 +3,17 @@
 int instance_create(unsigned int id, int x, int y) {
         int ret = noone;
         if (id == 0) {
-        	testobject *inst = new testobject(Util::instanceid,Util::objectref[id],x,y);
-                Util::instanceref.push_back(inst);
-                ret = Util::instanceid;
-                Util::instanceid++;
+        	testobject *inst = new testobject(Engine::instanceid,Engine::objectref[id],x,y);
+                Engine::instanceref.push_back(inst);
+                ret = Engine::instanceid;
+                Engine::instanceid++;
         }
         return ret;
 }
 
 void draw_sprite(unsigned int sprite, int offset, float x, float y) {
-        if (sprite >= Util::imageref.size()) {
+        if (sprite >= Engine::imageref.size()) {
                 return;
         }
-        Util::imageref[sprite]->draw(x,y);
+        Engine::imageref[sprite]->draw(x,y);
 }

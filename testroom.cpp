@@ -1,7 +1,9 @@
 #include "testroom.h"
 #include "Objects.h"
-#include "Util.h"
 #include "common.h"
+
+// all object cpp files must include Engine
+#include "Engine.h"
 
 testroom::testroom(int i, string t, int w, int h, int sp) : Room(i,t,w,h,sp) {
         initInstances();
@@ -9,7 +11,7 @@ testroom::testroom(int i, string t, int w, int h, int sp) : Room(i,t,w,h,sp) {
 }
 
 void testroom::initInstances() {
-        instances.push_back(Util::getInstance(instance_create(0,30,30)));
+        instances.push_back(Engine::getInstance(instance_create(0,30,30)));
 }
 
 void testroom::create() {

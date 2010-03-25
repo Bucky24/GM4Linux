@@ -32,17 +32,15 @@
 #include <GL/glut.h>
 #endif
 
-typedef enum {
-	IMAGE_FILE,
-	IMAGE_DATA
-} imagetype;
+#define IMAGE_FILE 1
+#define IMAGE_DATA 2
 
 //Represents an image
 class Image {
 	public:
 		void loadBMP(char* filename);
 		Image(char* ps);
-		Image(char* ps, float,float,imagetype);
+		Image(char* ps, float,float,int);
 		~Image();
 		
 		/* An array of the form (R1, G1, B1, R2, G2, B2, ...) indicating the

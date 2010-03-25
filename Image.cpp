@@ -57,7 +57,7 @@ Image::Image(char* filename) {
 	_textureId = loadTexture(pixels);
 }
 
-Image::Image(char* filename, float w, float h, imagetype type) {
+Image::Image(char* filename, float w, float h, int type) {
 	if (type == IMAGE_FILE) {
 		loadBMP(filename);
 		//width = w;
