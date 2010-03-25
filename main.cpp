@@ -27,7 +27,8 @@ const float WINDOW_HEIGHT = 600;
 
 void handleKeypress(unsigned char key, int x, int y) {
         printf("key: %d\n",key);
-        Engine::keys[key] = true;
+        (*Engine::keys->find(key)).second = true;
+        //Engine::keys[key] = true;
 	switch (key) {
 		case 27: //Escape key
 			exit(0);
@@ -36,7 +37,7 @@ void handleKeypress(unsigned char key, int x, int y) {
 
 
 void handleMouse(int button, int state, int x, int y) {
-        vector<Object *> instances = Engine::currentRoom->getInstances();
+        /*vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
         printf("%d %d\n",button,state);
         for (i=0;i<instances.size();i++) {
@@ -60,12 +61,13 @@ void handleMouse(int button, int state, int x, int y) {
 				
 			}
 		}
-	}
+	}*/
 }
 
 void handleSpecialKeypress(int key, int x, int y) {
         printf("key: %d\n",key);
-        Engine::keys[key+200] = true;
+        (*Engine::keys->find(key+200)).second = true;
+        //Engine::keys[key+200] = true;
 }
 
 void initRendering() {

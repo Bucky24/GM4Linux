@@ -8,8 +8,8 @@ vector<Object *> Engine::instanceref;
 vector<Room *> Engine::roomref;
 int Engine::instanceid = 0;
 Room *Engine::currentRoom;
-bool Engine::keys[500];
-bool Engine::keyslaststep[500];
+keyhitmap *Engine::keys;
+keyhitmap *Engine::keyslaststep;
 bool Engine::mouse_left_flagged;
 bool Engine::mouse_left_flagged_laststep;
 bool Engine::mouse_right_flagged;
@@ -28,34 +28,17 @@ void Engine::init() {
         fillImages();
         fillRooms();
 
-        int i;
+        /*int i;
         for (i=0;i<500;i++) {
                 keys[i] = false;
                 keyslaststep[i] = false;
-        }
+        }*/
 
+        keys = new keyhitmap();
+        keyslaststep = new keyhitmap();
         keymaps = new keymap();
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F1));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F2));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F3));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F4));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F5));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F6));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F7));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F8));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F9));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F10));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F11));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F12));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_UP,&Object::key_up));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_DOWN,&Object::key_down));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_LEFT,&Object::key_left));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_RIGHT,&Object::key_right));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_PAGE_UP,&Object::key_page_up));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_PAGE_DOWN,&Object::key_page_down));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_HOME,&Object::key_home));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_END,&Object::key_end));
-        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_INSERT,&Object::key_insert));
+
+        generateKeyMaps();
 }
 
 void Engine::fillObjects() {
@@ -77,17 +60,21 @@ void Engine::fillRooms() {
 void Engine::handleEvents() {
         vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
-        int j;
+        //int j;
         //printf("%d %d\n",button,state);
         for (i=0;i<instances.size();i++) {
                 Object *inst = instances[i];
-                for (i=0;i<500;j++) {
-                        if (keys[j] == true) {
-                                keyfunc function = (*(keymaps->find(j))).second;
+                keyhitmap::iterator itor = keys->begin();
+                while (itor != keys->end()) {
+                        bool val = (*itor).second;
+                        int id = (*itor).first;
+                        if (val == true) {
+                                keyfunc function = (*(keymaps->find(id))).second;
                                 if (function != NULL) {
                                         (inst->*function)();
                                 }
                         }
+                        itor ++;
                 }
                 /*if (keys[GLUT_KEY_F1+200] == true) {
                         inst->key_F1();
@@ -153,8 +140,13 @@ void Engine::handleEvents() {
                         inst->key_insert();
                 }*/
 	}
-        for (i=0;i<500;i++) {
-                keyslaststep[i] = keys[i];
+        keyhitmap::iterator itor = keys->begin();
+        keyhitmap::iterator itor2 = keyslaststep->begin();
+        while (itor != keys->end()) {
+                (*itor2).second = (*itor).second;
+                (*itor).second = false;
+                itor ++;
+                itor2 ++;
         }
 }
 
@@ -184,4 +176,83 @@ Room *Engine::getRoom(unsigned int id) {
                 return NULL;
         }
         return roomref[id];
+}
+
+
+
+
+
+
+
+
+
+
+
+void Engine::generateKeyMaps() {
+        //keys = new keyhitmap();
+        //keyslaststep = new keyhitmap();
+        //keymaps = new keymap();
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1+200,&Object::key_F1));
+        keys->insert(pair<int,bool>(GLUT_KEY_F1+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F1+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F2+200,&Object::key_F2));
+        keys->insert(pair<int,bool>(GLUT_KEY_F2+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F2+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F3+200,&Object::key_F3));
+        keys->insert(pair<int,bool>(GLUT_KEY_F3+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F3+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F4+200,&Object::key_F4));
+        keys->insert(pair<int,bool>(GLUT_KEY_F4+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F4+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F5+200,&Object::key_F5));
+        keys->insert(pair<int,bool>(GLUT_KEY_F5+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F5+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F6+200,&Object::key_F6));
+        keys->insert(pair<int,bool>(GLUT_KEY_F6+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F6+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F7+200,&Object::key_F7));
+        keys->insert(pair<int,bool>(GLUT_KEY_F7+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F7+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F8+200,&Object::key_F8));
+        keys->insert(pair<int,bool>(GLUT_KEY_F8+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F8+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F9+200,&Object::key_F9));
+        keys->insert(pair<int,bool>(GLUT_KEY_F9+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F9+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F10+200,&Object::key_F10));
+        keys->insert(pair<int,bool>(GLUT_KEY_F10+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F10+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F11+200,&Object::key_F11));
+        keys->insert(pair<int,bool>(GLUT_KEY_F11+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F11+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F12+200,&Object::key_F12));
+        keys->insert(pair<int,bool>(GLUT_KEY_F12+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_F12+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_UP+200,&Object::key_up));
+        keys->insert(pair<int,bool>(GLUT_KEY_UP+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_UP+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_DOWN+200,&Object::key_down));
+        keys->insert(pair<int,bool>(GLUT_KEY_DOWN+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_DOWN+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_LEFT+200,&Object::key_left));
+        keys->insert(pair<int,bool>(GLUT_KEY_LEFT+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_LEFT+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_RIGHT+200,&Object::key_right));
+        keys->insert(pair<int,bool>(GLUT_KEY_RIGHT+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_RIGHT+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_PAGE_UP+200,&Object::key_page_up));
+        keys->insert(pair<int,bool>(GLUT_KEY_PAGE_UP+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_PAGE_UP+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_PAGE_DOWN+200,&Object::key_page_down));
+        keys->insert(pair<int,bool>(GLUT_KEY_PAGE_DOWN+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_PAGE_DOWN+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_HOME+200,&Object::key_home));
+        keys->insert(pair<int,bool>(GLUT_KEY_HOME+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_HOME+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_END+200,&Object::key_end));
+        keys->insert(pair<int,bool>(GLUT_KEY_END+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_END+200,false));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_INSERT+200,&Object::key_insert));
+        keys->insert(pair<int,bool>(GLUT_KEY_INSERT+200,false));
+        keyslaststep->insert(pair<int,bool>(GLUT_KEY_INSERT+200,false));
 }

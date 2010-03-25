@@ -23,7 +23,7 @@ typedef void (Object::*keyfunc)();
 
 typedef map<int,keyfunc> keymap;
 
-//typedef map<int,bool> keyhitmap;
+typedef map<int,bool> keyhitmap;
 
 class Engine {
 public:
@@ -32,6 +32,8 @@ public:
         static void fillImages();
         static void fillRooms();
 
+        static void generateKeyMaps();
+
         static void handleEvents();
 
         static vector<ObjectType *> objectref;
@@ -39,10 +41,10 @@ public:
         static vector<Object *> instanceref;
         static vector<Room *> roomref;
 
-        static bool keys[500];
-        //static keyhitmap *keys;
-        static bool keyslaststep[500];
-        //static keyhitmap *keyslaststep;
+        //static bool keys[500];
+        static keyhitmap *keys;
+        //static bool keyslaststep[500];
+        static keyhitmap *keyslaststep;
 
         static int instanceid;
         static ObjectType *getObject(unsigned int id);
