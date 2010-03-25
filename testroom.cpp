@@ -3,7 +3,7 @@
 #include "Util.h"
 #include "common.h"
 
-testroom::testroom(int i, string t, int w, int h) : Room(i,t,w,h) {
+testroom::testroom(int i, string t, int w, int h, int sp) : Room(i,t,w,h,sp) {
         initInstances();
         create();
 }

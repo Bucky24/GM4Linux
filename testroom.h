@@ -5,7 +5,7 @@
 
 class testroom : public Room {
 public:
-        testroom(int i, string t, int w, int h);
+        testroom(int i, string t, int w, int h, int sp=30);
         void initInstances();
 	void create();
 };

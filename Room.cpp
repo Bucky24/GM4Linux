@@ -1,6 +1,6 @@
 #include "Room.h"
 
-Room::Room(int i, string t, int w, int h, int s = 30) {
+Room::Room(int i, string t, int w, int h, int sp) {
         id = i;
         title = t;
         width = w;

@@ -15,3 +15,4 @@ all:
 
 clean:
 	rm -f $(PROG)
+	rm -f *~
