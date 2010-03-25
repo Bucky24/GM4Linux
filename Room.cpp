@@ -1,10 +1,11 @@
 #include "Room.h"
 
-Room::Room(int i, string t, int w, int h) {
+Room::Room(int i, string t, int w, int h, int s = 30) {
         id = i;
         title = t;
         width = w;
         height = h;
+        speed = sp;
         instances = *(new vector<Object *>());
 }
 

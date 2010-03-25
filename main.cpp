@@ -137,8 +137,13 @@ void drawScene() {
 
 //Called every 25 milliseconds
 void update(int value) {
+        // begin step
+        // collision
+        // step
+        // end step
+        // draw
 	glutPostRedisplay();
-	glutTimerFunc(25, update, 0);
+	glutTimerFunc(1000/Util::currentRoom->getSpeed(), update, 0);
 }
 
 int main(int argc, char** argv) {

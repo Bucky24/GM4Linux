@@ -5,6 +5,7 @@ Room::Room(int i, string t, int w, int h) {
         title = t;
         width = w;
         height = h;
+        speed = 30;
         instances = *(new vector<Object *>());
 }
 
