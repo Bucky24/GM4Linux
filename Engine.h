@@ -8,6 +8,7 @@
 #include "Image.h"
 #include "ObjectType.h"
 #include "Room.h"
+#include <map>
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
@@ -17,6 +18,10 @@
 #endif
 
 using namespace std;
+
+typedef void (Object::*keyfunc)();
+
+typedef map<int,keyfunc> keymap;
 
 class Engine {
 public:
@@ -49,6 +54,7 @@ public:
         static bool mouse_center_flagged;
         static bool mouse_center_flagged_laststep;
         
+        static keymap *keymaps;
 };
 
 #endif

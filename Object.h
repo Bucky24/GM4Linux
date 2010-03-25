@@ -9,12 +9,6 @@ using namespace std;
 #include "Image.h"
 #include "ObjectType.h"
 
-class Object;
-
-typedef void (Object::*keyfunc)();
-
-typedef map<int,keyfunc> keymap;
-
 class Object {
 public:
 	Object(int i, ObjectType *obj, float x, float y);
@@ -49,7 +43,6 @@ public:
 	int getSprite() {return sprite;}
         int getType();
 
-        keymap *keymaps;
 protected:
 	int id;
 	int sprite;

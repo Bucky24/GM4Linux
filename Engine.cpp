@@ -16,6 +16,7 @@ bool Engine::mouse_right_flagged;
 bool Engine::mouse_right_flagged_laststep;
 bool Engine::mouse_center_flagged;
 bool Engine::mouse_center_flagged_laststep;
+keymap *Engine::keymaps;
 
 void Engine::init() {
         //refs = (references *)malloc(sizeof(struct references));
@@ -32,6 +33,29 @@ void Engine::init() {
                 keys[i] = false;
                 keyslaststep[i] = false;
         }
+
+        keymaps = new keymap();
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F1));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F2));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F3));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F4));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F5));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F6));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F7));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F8));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F9));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F10));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F11));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F12));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_UP,&Object::key_up));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_DOWN,&Object::key_down));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_LEFT,&Object::key_left));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_RIGHT,&Object::key_right));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_PAGE_UP,&Object::key_page_up));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_PAGE_DOWN,&Object::key_page_down));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_HOME,&Object::key_home));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_END,&Object::key_end));
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_INSERT,&Object::key_insert));
 }
 
 void Engine::fillObjects() {
