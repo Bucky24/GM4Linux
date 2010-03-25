@@ -2,11 +2,18 @@
 #define OBJECTH
 
 #include <string>
+#include <map>
 
 using namespace std;
 
 #include "Image.h"
 #include "ObjectType.h"
+
+class Object;
+
+typedef void (Object::*keyfunc)();
+
+typedef map<int,keyfunc> keymap;
 
 class Object {
 public:
@@ -41,6 +48,8 @@ public:
 	int getId() {return id;}
 	int getSprite() {return sprite;}
         int getType();
+
+        keymap *keymaps;
 protected:
 	int id;
 	int sprite;

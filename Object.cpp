@@ -3,6 +3,13 @@
 #include <string>
 #include "common.h"
 
+#ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 using namespace std;
 
 Object::Object(int i, ObjectType *obj, float xx, float yy) {
@@ -11,6 +18,8 @@ Object::Object(int i, ObjectType *obj, float xx, float yy) {
         type = obj;
         x = xx;
         y = yy;
+        keymaps = new keymap();
+        keymaps->insert(pair<int,keyfunc>(GLUT_KEY_F1,&Object::key_F1));
 }
 
 void Object::create() {
