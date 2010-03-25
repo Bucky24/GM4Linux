@@ -77,11 +77,19 @@ void Engine::fillRooms() {
 void Engine::handleEvents() {
         vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
-        //int j;
+        int j;
         //printf("%d %d\n",button,state);
         for (i=0;i<instances.size();i++) {
                 Object *inst = instances[i];
-                if (keys[GLUT_KEY_F1+200] == true) {
+                for (i=0;i<500;j++) {
+                        if (keys[j] == true) {
+                                keyfunc function = (*(keymaps->find(j))).second;
+                                if (function != NULL) {
+                                        (inst->*function)();
+                                }
+                        }
+                }
+                /*if (keys[GLUT_KEY_F1+200] == true) {
                         inst->key_F1();
                 }
                 if (keys[GLUT_KEY_F2+200]) {
@@ -143,7 +151,7 @@ void Engine::handleEvents() {
                 }
                 if (keys[GLUT_KEY_INSERT+200]) {
                         inst->key_insert();
-                }
+                }*/
 	}
         for (i=0;i<500;i++) {
                 keyslaststep[i] = keys[i];
