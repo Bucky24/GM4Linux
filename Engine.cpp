@@ -69,20 +69,21 @@ void Engine::handleEvents() {
         unsigned int i;
         //int j;
         //printf("%d %d\n",button,state);
-        for (i=0;i<instances.size();i++) {
-                Object *inst = instances[i];
-                keyhitmap::iterator itor = keys->begin();
-                while (itor != keys->end()) {
-                        bool val = (*itor).second;
-                        int id = (*itor).first;
-                        if (val == true) {
-                                keyfunc function = (*(keymaps->find(id))).second;
-                                if (function != NULL) {
+        keyhitmap::iterator itor = keys->begin();
+        while (itor != keys->end()) {
+                bool val = (*itor).second;
+                int id = (*itor).first;
+                if (val == true) {
+                        keyfunc function = (*(keymaps->find(id))).second;
+                        if (function != NULL) {
+                                for (i=0;i<instances.size();i++) {
+                                        Object *inst = instances[i];
                                         (inst->*function)();
                                 }
                         }
-                        itor ++;
                 }
+                itor ++;
+        }
                 /*if (keys[GLUT_KEY_F1+200] == true) {
                         inst->key_F1();
                 }
@@ -146,8 +147,7 @@ void Engine::handleEvents() {
                 if (keys[GLUT_KEY_INSERT+200]) {
                         inst->key_insert();
                 }*/
-	}
-        keyhitmap::iterator itor = keys->begin();
+        itor = keys->begin();
         keyhitmap::iterator itor2 = keyslaststep->begin();
         while (itor != keys->end()) {
                 (*itor2).second = (*itor).second;
