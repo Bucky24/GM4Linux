@@ -41,47 +41,67 @@ void handleSpecialKeypress(int key, int x, int y) {
                 Object *inst = instances[i];
 	        switch (key) {
 	                case GLUT_KEY_F1:
+                                inst->key_F1();
                                 break;
                         case GLUT_KEY_F2:
+                                inst->key_F2();
                                 break;
                         case GLUT_KEY_F3:
+                                inst->key_F3();
                                 break;
                         case GLUT_KEY_F4:
+                                inst->key_F4();
                                 break;
                         case GLUT_KEY_F5:
+                                inst->key_F5();
                                 break;
                         case GLUT_KEY_F6:
+                                inst->key_F6();
                                 break;
                         case GLUT_KEY_F7:
+                                inst->key_F7();
                                 break;
                         case GLUT_KEY_F8:
+                                inst->key_F8();
                                 break;
                         case GLUT_KEY_F9:
+                                inst->key_F9();
                                 break;
                         case GLUT_KEY_F10:
+                                inst->key_F10();
                                 break;
                         case GLUT_KEY_F11:
+                                inst->key_F11();
                                 break;
                         case GLUT_KEY_F12:
+                                inst->key_F12();
                                 break;
                         case GLUT_KEY_LEFT:
+                                inst->key_left();
                                 break;
                         case GLUT_KEY_UP:
                                 inst->key_up();
                                 break;
                         case GLUT_KEY_RIGHT:
+                                inst->key_right();
                                 break;
                         case GLUT_KEY_DOWN:
+                                inst->key_down();
                                 break;
                         case GLUT_KEY_PAGE_UP:
+                                inst->key_page_up();
                                 break;
                         case GLUT_KEY_PAGE_DOWN:
+                                inst->key_page_down();
                                 break;
                         case GLUT_KEY_HOME:
+                                inst->key_home();
                                 break;
                         case GLUT_KEY_END:
+                                inst->key_end();
                                 break;
                         case GLUT_KEY_INSERT:
+                                inst->key_insert();
                                 break;
                 }
         }
