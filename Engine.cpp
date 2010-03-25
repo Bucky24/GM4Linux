@@ -10,6 +10,13 @@ int Engine::instanceid = 0;
 Room *Engine::currentRoom;
 bool Engine::keys[500];
 bool Engine::keyslaststep[500];
+bool Engine::mouse_left_flagged;
+bool Engine::mouse_left_flagged_laststep;
+bool Engine::mouse_right_flagged;
+bool Engine::mouse_right_flagged_laststep;
+bool Engine::mouse_center_flagged;
+bool Engine::mouse_center_flagged_laststep;
+
 void Engine::init() {
         //refs = (references *)malloc(sizeof(struct references));
         objectref = *(new vector<ObjectType *>());
@@ -41,6 +48,82 @@ void Engine::fillRooms() {
         roomref.push_back(new testroom(0,"testroom",800,600));
 
         currentRoom = roomref[0];
+}
+
+void Engine::handleEvents() {
+        vector<Object *> instances = Engine::currentRoom->getInstances();
+        unsigned int i;
+        //int j;
+        //printf("%d %d\n",button,state);
+        for (i=0;i<instances.size();i++) {
+                Object *inst = instances[i];
+                if (keys[GLUT_KEY_F1+200] == true) {
+                        inst->key_F1();
+                }
+                if (keys[GLUT_KEY_F2+200]) {
+                        inst->key_F2();
+                }
+                if (keys[GLUT_KEY_F3+200]) {
+                        inst->key_F3();
+                }
+                if (keys[GLUT_KEY_F4+200]) {
+                        inst->key_F4();
+                }
+                if (keys[GLUT_KEY_F5+200]) {
+                        inst->key_F5();
+                }
+                if (keys[GLUT_KEY_F6+200]) {
+                        inst->key_F6();
+                }
+                if (keys[GLUT_KEY_F7+200]) {
+                        inst->key_F7();
+                }
+                if (keys[GLUT_KEY_F8+200]) {
+                        inst->key_F8();
+                }
+                if (keys[GLUT_KEY_F9+200]) {
+                        inst->key_F9();
+                }
+                if (keys[GLUT_KEY_F10+200]) {
+                        inst->key_F10();
+                }
+                if (keys[GLUT_KEY_F11+200]) {
+                        inst->key_F11();
+                }
+                if (keys[GLUT_KEY_F12+200]) {
+                        inst->key_F12();
+                }
+                if (keys[GLUT_KEY_LEFT+200]) {
+                        inst->key_left();
+                }
+                if (keys[GLUT_KEY_UP+200]) {
+                        inst->key_up();
+                }
+                if (keys[GLUT_KEY_RIGHT+200]) {
+                        inst->key_right();
+                }
+                if (keys[GLUT_KEY_DOWN+200]) {
+                        inst->key_down();
+                }
+                if (keys[GLUT_KEY_PAGE_UP+200]) {
+                        inst->key_page_up();
+                }
+                if (keys[GLUT_KEY_PAGE_DOWN+200]) {
+                        inst->key_page_down();
+                }
+                if (keys[GLUT_KEY_HOME+200]) {
+                        inst->key_home();
+                }
+                if (keys[GLUT_KEY_END+200]) {
+                        inst->key_end();
+                }
+                if (keys[GLUT_KEY_INSERT+200]) {
+                        inst->key_insert();
+                }
+	}
+        for (i=0;i<500;i++) {
+                keyslaststep[i] = keys[i];
+        }
 }
 
 ObjectType *Engine::getObject(unsigned int id) {

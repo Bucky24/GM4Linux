@@ -9,6 +9,13 @@
 #include "ObjectType.h"
 #include "Room.h"
 
+#ifdef __APPLE__
+#include <OpenGL/OpenGL.h>
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 using namespace std;
 
 class Engine {
@@ -17,6 +24,8 @@ public:
         static void fillObjects();
         static void fillImages();
         static void fillRooms();
+
+        static void handleEvents();
 
         static vector<ObjectType *> objectref;
         static vector<Image *> imageref;
@@ -33,12 +42,12 @@ public:
         static Room *getRoom(unsigned int id);
         static Room *currentRoom;
 
-        bool mouse_left_flagged;
-        bool mouse_left_flagged_laststep;
-        bool mouse_right_flagged;
-        bool mouse_right_flagged_laststep;
-        bool mouse_center_flagged;
-        bool mouse_center_flagged_laststep;
+        static bool mouse_left_flagged;
+        static bool mouse_left_flagged_laststep;
+        static bool mouse_right_flagged;
+        static bool mouse_right_flagged_laststep;
+        static bool mouse_center_flagged;
+        static bool mouse_center_flagged_laststep;
         
 };
 

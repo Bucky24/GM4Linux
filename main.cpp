@@ -119,6 +119,8 @@ void drawScene() {
 //Called every 25 milliseconds
 void update(int value) {
         // begin step
+        // fire events
+        Engine::handleEvents();
         // collision
         // step
         // end step
