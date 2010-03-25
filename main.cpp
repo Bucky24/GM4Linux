@@ -41,27 +41,27 @@ void handleMouse(int button, int state, int x, int y) {
         unsigned int i;
         printf("%d %d\n",button,state);
         for (i=0;i<instances.size();i++) {
-                Object *inst = instances[i];
-		if (button == GLUT_LEFT_BUTTON) {
-			if (state == GLUT_DOWN) {
-				
-			} else if (state == GLUT_UP) {
-				
-			}
-		} else if (button == GLUT_RIGHT_BUTTON) {
-			if (state == GLUT_DOWN) {
-				
-			} else if (state == GLUT_UP) {
-				
-			}
-		} else if (button == GLUT_MIDDLE_BUTTON) {
-			if (state == GLUT_DOWN) {
-				
-			} else if (state == GLUT_UP) {
-				
-			}
+                Object *inst = instances[i];*/
+	if (button == GLUT_LEFT_BUTTON) {
+		if (state == GLUT_DOWN) {
+			Engine::mouse_left_flagged = true;
+		} else if (state == GLUT_UP) {
+			Engine::mouse_left_flagged = false;	
 		}
-	}*/
+	} else if (button == GLUT_RIGHT_BUTTON) {
+		if (state == GLUT_DOWN) {
+			Engine::mouse_right_flagged = true;
+		} else if (state == GLUT_UP) {
+			Engine::mouse_right_flagged = false;	
+		}
+	} else if (button == GLUT_MIDDLE_BUTTON) {
+		if (state == GLUT_DOWN) {
+			Engine::mouse_center_flagged = true;
+		} else if (state == GLUT_UP) {
+			Engine::mouse_center_flagged = false;	
+		}
+	}
+	/*}*/
 }
 
 void handleSpecialKeypress(int key, int x, int y) {

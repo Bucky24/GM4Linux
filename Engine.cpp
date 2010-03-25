@@ -34,6 +34,13 @@ void Engine::init() {
                 keyslaststep[i] = false;
         }*/
 
+        mouse_left_flagged = false;
+        mouse_left_flagged_laststep = false;
+        mouse_right_flagged = false;
+        mouse_right_flagged_laststep = false;
+        mouse_center_flagged = false;
+        mouse_center_flagged_laststep = false;
+
         keys = new keyhitmap();
         keyslaststep = new keyhitmap();
         keymaps = new keymap();
@@ -148,6 +155,10 @@ void Engine::handleEvents() {
                 itor ++;
                 itor2 ++;
         }
+
+        mouse_left_flagged_laststep = mouse_left_flagged;
+        mouse_right_flagged_laststep = mouse_right_flagged;
+        mouse_center_flagged_laststep = mouse_center_flagged;
 }
 
 ObjectType *Engine::getObject(unsigned int id) {
