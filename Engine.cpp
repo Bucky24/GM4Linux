@@ -8,6 +8,8 @@ vector<Object *> Engine::instanceref;
 vector<Room *> Engine::roomref;
 int Engine::instanceid = 0;
 Room *Engine::currentRoom;
+bool Engine::keys[500];
+bool Engine::keyslaststep[500];
 void Engine::init() {
         //refs = (references *)malloc(sizeof(struct references));
         objectref = *(new vector<ObjectType *>());
@@ -17,6 +19,12 @@ void Engine::init() {
         fillObjects();
         fillImages();
         fillRooms();
+
+        int i;
+        for (i=0;i<500;i++) {
+                keys[i] = false;
+                keyslaststep[i] = false;
+        }
 }
 
 void Engine::fillObjects() {

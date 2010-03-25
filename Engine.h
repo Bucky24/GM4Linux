@@ -11,12 +11,6 @@
 
 using namespace std;
 
-typedef struct {
-        int code;
-        bool flagged;
-       bool wasflaggedlaststep;
-} keyState;
-
 class Engine {
 public:
         static void init();
@@ -28,6 +22,9 @@ public:
         static vector<Image *> imageref;
         static vector<Object *> instanceref;
         static vector<Room *> roomref;
+
+        static bool keys[500];
+        static bool keyslaststep[500];
 
         static int instanceid;
         static ObjectType *getObject(unsigned int id);
