@@ -11,7 +11,11 @@
 
 using namespace std;
 
-typedef struct references references;
+typedef struct {
+        int code;
+        bool flagged;
+       bool wasflaggedlaststep;
+} keyState;
 
 class Engine {
 public:
@@ -31,6 +35,14 @@ public:
         static Image *getSprite(unsigned int id);
         static Room *getRoom(unsigned int id);
         static Room *currentRoom;
+
+        bool mouse_left_flagged;
+        bool mouse_left_flagged_laststep;
+        bool mouse_right_flagged;
+        bool mouse_right_flagged_laststep;
+        bool mouse_center_flagged;
+        bool mouse_center_flagged_laststep;
+        
 };
 
 #endif

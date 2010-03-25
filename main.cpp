@@ -36,6 +36,7 @@ void handleKeypress(unsigned char key, int x, int y) {
 void handleMouse(int button, int state, int x, int y) {
         vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
+        printf("%d %d\n",button,state);
         for (i=0;i<instances.size();i++) {
                 Object *inst = instances[i];
 		if (button == GLUT_LEFT_BUTTON) {
