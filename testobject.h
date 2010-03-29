@@ -12,6 +12,7 @@ class testobject : public Object {
 public:
 	testobject(int i, ObjectType *obj, float x, float y);
         void key_up();
+	void key_down();
 };
 
 #endif

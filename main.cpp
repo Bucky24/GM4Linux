@@ -7,6 +7,7 @@
 #else
 #include <GL/glut.h>
 #endif
+
 #include "Image.h"
 #include "ObjectType.h"
 #include "Objects.h"

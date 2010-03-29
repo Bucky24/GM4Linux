@@ -10,3 +10,7 @@ testobject::testobject(int i, ObjectType *obj, float x, float y) : Object(i,obj,
 void testobject::key_up() {
         y -= 5;
 }
+
+void testobject::key_down() {
+	y += 5;
+}
