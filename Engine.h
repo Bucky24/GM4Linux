@@ -61,6 +61,7 @@ public:
         static bool mouse_center_flagged_laststep;
         
         static keymap *keymaps;
+	static keymap *keydownmaps;
 };
 
 #endif
