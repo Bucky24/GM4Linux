@@ -62,6 +62,7 @@ public:
         
         static keymap *keymaps;
 	static keymap *keydownmaps;
+        static keymap *keyupmaps;
 };
 
 #endif
