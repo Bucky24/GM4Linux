@@ -18,15 +18,12 @@ Object::Object(int i, ObjectType *obj, float xx, float yy) {
         type = obj;
         x = xx;
         y = yy;
+        create();
 }
 
-void Object::create() {
+void Object::create() {}
 
-}
-
-void Object::destroy() {
-
-}
+void Object::destroy() {}
 
 void Object::draw() {
 	if (sprite != noone) {
