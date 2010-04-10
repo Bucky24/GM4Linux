@@ -86,6 +86,28 @@ public:
         virtual void keyup_end();
         virtual void keyup_insert();
 
+        virtual void keydown_up();
+        virtual void keydown_down();
+        virtual void keydown_left();
+        virtual void keydown_right();
+        virtual void keydown_F1();
+        virtual void keydown_F2();
+        virtual void keydown_F3();
+        virtual void keydown_F4();
+        virtual void keydown_F5();
+        virtual void keydown_F6();
+        virtual void keydown_F7();
+        virtual void keydown_F8();
+        virtual void keydown_F9();
+        virtual void keydown_F10();
+        virtual void keydown_F11();
+        virtual void keydown_F12();
+        virtual void keydown_page_down();
+        virtual void keydown_page_up();
+        virtual void keydown_home();
+        virtual void keydown_end();
+        virtual void keydown_insert();
+
 	string getName();
 	int getId() {return id;}
 	int getSprite() {return sprite;}

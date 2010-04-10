@@ -104,6 +104,28 @@ void Object::keyup_home() {}
 void Object::keyup_end() {}
 void Object::keyup_insert() {}
 
+void Object::keydown_up() {}
+void Object::keydown_down() {}
+void Object::keydown_left() {}
+void Object::keydown_right() {}
+void Object::keydown_F1() {}
+void Object::keydown_F2() {}
+void Object::keydown_F3() {}
+void Object::keydown_F4() {}
+void Object::keydown_F5() {}
+void Object::keydown_F6() {}
+void Object::keydown_F7() {}
+void Object::keydown_F8() {}
+void Object::keydown_F9() {}
+void Object::keydown_F10() {}
+void Object::keydown_F11() {}
+void Object::keydown_F12() {}
+void Object::keydown_page_down() {}
+void Object::keydown_page_up() {}
+void Object::keydown_home() {}
+void Object::keydown_end() {}
+void Object::keydown_insert() {}
+
 int Object::getType() {
         return type->getId();
 }
