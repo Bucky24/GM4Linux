@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <fstream>
 #include <iostream>
+#include <cstdlib>
 
 #include "Image.h"
 
@@ -55,6 +56,7 @@ GLuint Image::loadTexture(char *pixels) {
 Image::Image(char* filename) {
 	loadBMP(filename);
 	_textureId = loadTexture(pixels);
+        computeBlocked();
 }
 
 Image::Image(char* filename, float w, float h, int type) {
@@ -63,6 +65,7 @@ Image::Image(char* filename, float w, float h, int type) {
 		//width = w;
 		//height = h;
 		_textureId = loadTexture(pixels);
+                computeBlocked();
 		width = w;
 		height = h;
 		dwidth = w;
@@ -74,6 +77,7 @@ Image::Image(char* filename, float w, float h, int type) {
 		_textureId = loadTexture(pixels);
 		dwidth = w;
 		dheight = h;
+                computeBlocked();
 	}
 }
 
@@ -273,6 +277,27 @@ void Image::loadBMP(char* filename) {
 	this->height = height;
 	//return pixels2.release();
 	this->pixels = pixels2.release();
+}
+
+void Image::computeBlocked() {
+        blocked = (int *)malloc(sizeof(int)*width*height);
+        float r,g,b,rt,gt,bt;
+        int i,j;
+        r = pixels[((int)height-1)*(int)width*3];
+        g = pixels[((int)height-1)*(int)width*3+1];
+        b = pixels[((int)height-1)*(int)width*3+2];
+        for (i=0;i<height;i++) {
+                for (j=0;j<width;j++) {
+                        rt = pixels[i*(int)width+j*3];
+                        gt = pixels[i*(int)width+j*3+1];
+                        bt = pixels[i*(int)width+j*3+2];
+                        if (rt == r && gt == g && bt == b) {
+                                blocked[i*(int)width+j] = 1;
+                        } else {
+                                blocked[i*(int)width+j] = 0;
+                        }
+                }
+        }
 }
 
 

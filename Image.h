@@ -54,9 +54,13 @@ class Image {
 		float height;
 		float dheight;
 		float dwidth;
+                int *blocked;
+
 		GLuint _textureId;
 		void draw(float,float);
 		GLuint loadTexture(char *);
+        private:
+                void computeBlocked();
 };
 
 
