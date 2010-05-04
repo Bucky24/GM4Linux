@@ -130,7 +130,19 @@ void Engine::step() {
 }
 
 void Engine::endStep() {
+        vector<Object *> instances = Engine::currentRoom->getInstances();
+        unsigned int i;
+        objfunc function = endStepEvent;
+        if (function != NULL) {
+                for (i=0;i<instances.size();i++) {
+                        Object *inst = instances[i];
+                        (inst->*function)();
+                }
+        }
+}
 
+void Engine::checkCollisions() {
+        
 }
 
 ObjectType *Engine::getObject(unsigned int id) {

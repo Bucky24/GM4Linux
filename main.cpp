@@ -126,9 +126,11 @@ void update(int value) {
         // fire events
         Engine::handleEvents();
         // collision
+        Engine::checkCollisions();
         // step
         Engine::step();
         // end step
+        Engine::endStep();
         // draw
 	glutPostRedisplay();
 	glutTimerFunc(1000/Engine::currentRoom->getSpeed(), update, 0);

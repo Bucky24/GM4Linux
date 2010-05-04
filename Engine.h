@@ -38,6 +38,7 @@ public:
         static void beginStep();
         static void step();
         static void endStep();
+        static void checkCollisions();
 
         static vector<ObjectType *> objectref;
         static vector<Image *> imageref;
