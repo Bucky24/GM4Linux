@@ -139,6 +139,11 @@ int main(int argc, char** argv) {
 	
 	glutCreateWindow("Game name!");
 	initRendering();
+
+        if (Engine::currentRoom == NULL) {
+                printf("No rooms defined.\n");
+                exit(1);
+        }
 	
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(handleKeypress);
