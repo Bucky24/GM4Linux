@@ -19,9 +19,9 @@
 
 using namespace std;
 
-typedef void (Object::*keyfunc)();
+typedef void (Object::*objfunc)();
 
-typedef map<int,keyfunc> keymap;
+typedef map<int,objfunc> keymap;
 
 typedef map<int,bool> keyhitmap;
 
@@ -32,7 +32,7 @@ public:
         static void fillImages();
         static void fillRooms();
 
-        static void generateKeyMaps();
+        static void generateFunctionMaps();
 
         static void handleEvents();
         static void beginStep();
