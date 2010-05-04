@@ -19,6 +19,9 @@ bool Engine::mouse_center_flagged_laststep;
 keymap *Engine::keymaps;
 keymap *Engine::keydownmaps;
 keymap *Engine::keyupmaps;
+objfunc Engine::beginStepEvent;
+objfunc Engine::stepEvent;
+objfunc Engine::endStepEvent;
 
 void Engine::init() {
         //refs = (references *)malloc(sizeof(struct references));
@@ -103,11 +106,27 @@ void Engine::handleEvents() {
 }
 
 void Engine::beginStep() {
-
+        vector<Object *> instances = Engine::currentRoom->getInstances();
+        unsigned int i;
+        objfunc function = beginStepEvent;
+        if (function != NULL) {
+                for (i=0;i<instances.size();i++) {
+                        Object *inst = instances[i];
+                        (inst->*function)();
+                }
+        }
 }
 
 void Engine::step() {
-
+        vector<Object *> instances = Engine::currentRoom->getInstances();
+        unsigned int i;
+        objfunc function = stepEvent;
+        if (function != NULL) {
+                for (i=0;i<instances.size();i++) {
+                        Object *inst = instances[i];
+                        (inst->*function)();
+                }
+        }
 }
 
 void Engine::endStep() {
@@ -318,4 +337,8 @@ void Engine::generateFunctionMaps() {
         keymaps->insert(pair<int,objfunc>('z',&Object::key_z));
         keys->insert(pair<int,bool>('z',false));
         keyslaststep->insert(pair<int,bool>('z',false));
+
+        beginStepEvent = &Object::step_begin;
+        stepEvent = &Object::step;
+        endStepEvent = &Object::step_end;
 }

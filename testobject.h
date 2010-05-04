@@ -15,6 +15,7 @@ public:
 	void key_down();
         void key_left();
         void key_right();
+        void step();
 };
 
 #endif

@@ -22,3 +22,7 @@ void testobject::key_left() {
 void testobject::key_right() {
 	x += 5;
 }
+
+void testobject::step() {
+       y += 1;
+}

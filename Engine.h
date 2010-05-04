@@ -48,6 +48,9 @@ public:
         static keyhitmap *keys;
         //static bool keyslaststep[500];
         static keyhitmap *keyslaststep;
+        static objfunc beginStepEvent;
+        static objfunc stepEvent;
+        static objfunc endStepEvent;
 
         static int instanceid;
         static ObjectType *getObject(unsigned int id);

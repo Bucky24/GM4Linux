@@ -122,10 +122,12 @@ void drawScene() {
 //Called every 25 milliseconds
 void update(int value) {
         // begin step
+        Engine::beginStep();
         // fire events
         Engine::handleEvents();
         // collision
         // step
+        Engine::step();
         // end step
         // draw
 	glutPostRedisplay();
