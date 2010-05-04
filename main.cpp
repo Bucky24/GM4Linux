@@ -27,7 +27,7 @@ const float WINDOW_HEIGHT = 600;
 //int instanceid;
 
 void handleKeypress(unsigned char key, int x, int y) {
-        printf("key: %d\n",key);
+        //printf("key: %d\n",key);
         (*Engine::keys->find(key)).second = true;
         //Engine::keys[key] = true;
 	switch (key) {
@@ -66,7 +66,7 @@ void handleMouse(int button, int state, int x, int y) {
 }
 
 void handleSpecialKeypress(int key, int x, int y) {
-        printf("key: %d\n",key);
+        //printf("key: %d\n",key);
         (*Engine::keys->find(key+200)).second = true;
         //Engine::keys[key+200] = true;
 }

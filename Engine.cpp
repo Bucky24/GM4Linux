@@ -102,6 +102,18 @@ void Engine::handleEvents() {
         mouse_center_flagged_laststep = mouse_center_flagged;
 }
 
+void Engine::beginStep() {
+
+}
+
+void Engine::step() {
+
+}
+
+void Engine::endStep() {
+
+}
+
 ObjectType *Engine::getObject(unsigned int id) {
         if (id >= objectref.size()) {
                 return NULL;

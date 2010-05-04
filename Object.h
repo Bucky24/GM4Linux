@@ -108,6 +108,10 @@ public:
         virtual void keydown_end();
         virtual void keydown_insert();
 
+        virtual void step_begin();
+        virtual void step();
+        virtual void step_end();
+
 	string getName();
 	int getId() {return id;}
 	int getSprite() {return sprite;}

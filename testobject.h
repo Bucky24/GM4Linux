@@ -13,6 +13,8 @@ public:
 	testobject(int i, ObjectType *obj, float x, float y);
         void key_up();
 	void key_down();
+        void key_left();
+        void key_right();
 };
 
 #endif

@@ -123,6 +123,10 @@ void Object::keydown_home() {}
 void Object::keydown_end() {}
 void Object::keydown_insert() {}
 
+void Object::step_begin() {}
+void Object::step() {}
+void Object::step_end() {}
+
 int Object::getType() {
         return type->getId();
 }

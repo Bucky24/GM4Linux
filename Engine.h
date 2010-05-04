@@ -35,6 +35,9 @@ public:
         static void generateKeyMaps();
 
         static void handleEvents();
+        static void beginStep();
+        static void step();
+        static void endStep();
 
         static vector<ObjectType *> objectref;
         static vector<Image *> imageref;

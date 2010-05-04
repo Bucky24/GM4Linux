@@ -14,3 +14,11 @@ void testobject::key_up() {
 void testobject::key_down() {
 	y += 5;
 }
+
+void testobject::key_left() {
+	x -= 5;
+}
+
+void testobject::key_right() {
+	x += 5;
+}
