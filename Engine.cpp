@@ -23,6 +23,7 @@ objfunc Engine::beginStepEvent;
 objfunc Engine::stepEvent;
 objfunc Engine::endStepEvent;
 instancemap *Engine::instances;
+collidemap *Engine::collisionmap;
 
 void Engine::init() {
         //refs = (references *)malloc(sizeof(struct references));
@@ -38,6 +39,10 @@ void Engine::init() {
         fillObjects();
         fillImages();
         fillRooms();
+
+        collisionmap = new collidemap();
+
+        registerCollisions();
 
         mouse_left_flagged = false;
         mouse_left_flagged_laststep = false;
@@ -56,10 +61,8 @@ void Engine::init() {
 }
 
 void Engine::fillObjects() {
-        //ObjectType *derp = new ObjectType(0,"object0",0);
-        //objectref.push_back(derp);
-        objectref.push_back(new ObjectType(0,"Object0",0));
-        objectref.push_back(new ObjectType(1,"Object0",0));
+        objectref.push_back(new ObjectType(0,"testobject",0));
+        objectref.push_back(new ObjectType(1,"obj_wall",0));
 }
 
 void Engine::fillImages() {
@@ -70,6 +73,11 @@ void Engine::fillRooms() {
         roomref.push_back(new testroom(0,"testroom",800,600));
 
         currentRoom = roomref[0];
+}
+
+void Engine::registerCollisions() {
+        // collision between testobject and obj_wall;
+        collisionmap->insert(pair<ObjectType *,ObjectType *>(objectref[0],objectref[1]));
 }
 
 void Engine::handleEvents() {
@@ -119,7 +127,7 @@ void Engine::beginStep() {
 }
 
 void Engine::step() {
-        vector<Object *> instances = Engine::currentRoom->getInstances();
+        vector<Object *> instances = currentRoom->getInstances();
         unsigned int i;
         objfunc function = stepEvent;
         if (function != NULL) {
@@ -131,7 +139,7 @@ void Engine::step() {
 }
 
 void Engine::endStep() {
-        vector<Object *> instances = Engine::currentRoom->getInstances();
+        vector<Object *> instances = currentRoom->getInstances();
         unsigned int i;
         objfunc function = endStepEvent;
         if (function != NULL) {
@@ -143,7 +151,16 @@ void Engine::endStep() {
 }
 
 void Engine::checkCollisions() {
-        
+        collidemap::iterator it;
+        unsigned int i;
+        for (it=collisionmap->begin();it!=collisionmap->end();it++) {
+                objlist *list = instances->find((*it).first->getId())->second;
+                for (i=0;i<list->size();i++) {
+                        if (list->at(i)->check_collision_with_object((*it).second->getId())) {
+                                list->at(i)->collide_with((*it).second->getId());
+                        }
+                }
+        }
 }
 
 ObjectType *Engine::getObject(unsigned int id) {

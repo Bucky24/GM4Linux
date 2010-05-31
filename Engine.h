@@ -29,12 +29,15 @@ typedef vector<Object *> objlist;
 
 typedef map<int,objlist *> instancemap;
 
+typedef map<ObjectType *,ObjectType *> collidemap;
+
 class Engine {
 public:
         static void init();
         static void fillObjects();
         static void fillImages();
         static void fillRooms();
+        static void registerCollisions();
 
         static void generateFunctionMaps();
 
@@ -76,6 +79,8 @@ public:
         static keymap *keyupmaps;
 
         static instancemap *instances;
+
+        static collidemap *collisionmap;
 };
 
 #endif

@@ -138,3 +138,7 @@ string Object::getName() {
 bool Object::check_collision_with_object(int objectId) {
         return false;
 }
+
+void Object::collide_with(int objectId) {
+        
+}

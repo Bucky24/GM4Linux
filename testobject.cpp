@@ -26,3 +26,7 @@ void testobject::key_right() {
 void testobject::step() {
        //y += 1;
 }
+
+void testobject::collide_with(int objectid) {
+        
+}

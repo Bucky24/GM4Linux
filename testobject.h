@@ -17,7 +17,7 @@ public:
         void key_right();
         void step();
 
-        void collide_with_obj_wall(int instanceId);
+        void collide_with(int instanceId);
 };
 
 #endif
