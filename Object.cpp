@@ -134,3 +134,7 @@ int Object::getType() {
 string Object::getName() {
         return type->getName();
 }
+
+bool Object::check_collision_with_object(int objectId) {
+        return false;
+}

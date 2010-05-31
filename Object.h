@@ -117,6 +117,8 @@ public:
 	int getSprite() {return sprite;}
         int getType();
 
+        bool check_collision_with_object(int objectId);
+
 protected:
 	int id;
 	int sprite;

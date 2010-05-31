@@ -22,6 +22,7 @@ keymap *Engine::keyupmaps;
 objfunc Engine::beginStepEvent;
 objfunc Engine::stepEvent;
 objfunc Engine::endStepEvent;
+instancemap *Engine::instances;
 
 void Engine::init() {
         //refs = (references *)malloc(sizeof(struct references));
@@ -51,6 +52,8 @@ void Engine::init() {
         keymaps = new keymap();
         keydownmaps = new keymap();
         keyupmaps = new keymap();
+
+        instances = new instancemap();
 
         generateFunctionMaps();
 }

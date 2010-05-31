@@ -25,6 +25,10 @@ typedef map<int,objfunc> keymap;
 
 typedef map<int,bool> keyhitmap;
 
+typedef vector<Object *> objlist;
+
+typedef map<int,objlist> instancemap;
+
 class Engine {
 public:
         static void init();
@@ -70,6 +74,8 @@ public:
         static keymap *keymaps;
 	static keymap *keydownmaps;
         static keymap *keyupmaps;
+
+        static instancemap *instances;
 };
 
 #endif

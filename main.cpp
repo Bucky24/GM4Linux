@@ -119,7 +119,6 @@ void drawScene() {
 	glutSwapBuffers();
 }
 
-//Called every 25 milliseconds
 void update(int value) {
         // begin step
         Engine::beginStep();
@@ -154,7 +153,7 @@ int main(int argc, char** argv) {
 	glutSpecialFunc(handleSpecialKeypress);
 	glutMouseFunc(handleMouse);
 	glutReshapeFunc(handleResize);
-	glutTimerFunc(25, update, 0);
+	glutTimerFunc(1, update, 0);
 	
 	glutMainLoop();
 	return 0;
