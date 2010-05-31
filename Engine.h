@@ -27,7 +27,7 @@ typedef map<int,bool> keyhitmap;
 
 typedef vector<Object *> objlist;
 
-typedef map<int,objlist> instancemap;
+typedef map<int,objlist *> instancemap;
 
 class Engine {
 public:

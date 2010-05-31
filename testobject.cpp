@@ -24,5 +24,5 @@ void testobject::key_right() {
 }
 
 void testobject::step() {
-       y += 1;
+       //y += 1;
 }

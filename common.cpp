@@ -2,9 +2,16 @@
 
 int instance_create(unsigned int id, int x, int y) {
         int ret = noone;
+        Object *inst = NULL;
+        ObjectType *object= Engine::objectref[id];
         if (id == 0) {
-        	testobject *inst = new testobject(Engine::instanceid,Engine::objectref[id],x,y);
+        	inst = new testobject(Engine::instanceid,object,x,y);
+        } else if (id == 1) {
+        	inst = new obj_wall(Engine::instanceid,object,x,y);
+        }
+        if (inst != NULL) {
                 Engine::instanceref.push_back(inst);
+                Engine::instances->find(id)->second->push_back(inst);
                 ret = Engine::instanceid;
                 Engine::instanceid++;
         }

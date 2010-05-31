@@ -26,19 +26,18 @@ instancemap *Engine::instances;
 
 void Engine::init() {
         //refs = (references *)malloc(sizeof(struct references));
+        instanceref = *(new vector<Object *>());
         objectref = *(new vector<ObjectType *>());
         imageref = *(new vector<Image *>());
-        instanceref = *(new vector<Object *>());
         roomref = *(new vector<Room *>());
+
+        instances = new instancemap();
+        instances->insert(pair<int,objlist *>(0,new objlist()));
+        instances->insert(pair<int,objlist *>(0,new objlist()));
+
         fillObjects();
         fillImages();
         fillRooms();
-
-        /*int i;
-        for (i=0;i<500;i++) {
-                keys[i] = false;
-                keyslaststep[i] = false;
-        }*/
 
         mouse_left_flagged = false;
         mouse_left_flagged_laststep = false;
@@ -53,8 +52,6 @@ void Engine::init() {
         keydownmaps = new keymap();
         keyupmaps = new keymap();
 
-        instances = new instancemap();
-
         generateFunctionMaps();
 }
 
@@ -62,6 +59,7 @@ void Engine::fillObjects() {
         //ObjectType *derp = new ObjectType(0,"object0",0);
         //objectref.push_back(derp);
         objectref.push_back(new ObjectType(0,"Object0",0));
+        objectref.push_back(new ObjectType(1,"Object0",0));
 }
 
 void Engine::fillImages() {
