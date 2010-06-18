@@ -16,6 +16,7 @@ public:
         void key_left();
         void key_right();
         void step();
+        void draw();
 
         void collide_with(int instanceId);
 };

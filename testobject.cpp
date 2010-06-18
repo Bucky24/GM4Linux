@@ -1,5 +1,6 @@
 #include "testobject.h"
 #include <string>
+#include "common.h"
 
 using namespace std;
 
@@ -25,6 +26,10 @@ void testobject::key_right() {
 
 void testobject::step() {
        //y += 1;
+}
+
+void testobject::draw() {
+        draw_line(0,0,200,200);
 }
 
 void testobject::collide_with(int objectid) {
