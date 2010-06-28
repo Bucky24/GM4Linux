@@ -21,7 +21,7 @@ public:
         int getheight() {return height;}
         vector<Object *> getInstances() {return instances;}
         int getSpeed() {return speed;}
-protected:
+
 	int id;
 	string title;
         int width;

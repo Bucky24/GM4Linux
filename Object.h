@@ -108,6 +108,14 @@ public:
         virtual void keydown_end();
         virtual void keydown_insert();
 
+	virtual void mousepressed_left();
+	virtual void mousepressed_right();
+	virtual void mousepressed_middle();
+
+	virtual void globalmousepressed_left();
+	virtual void globalmousepressed_right();
+	virtual void globalmousepressed_middle();
+
         virtual void step_begin();
         virtual void step();
         virtual void step_end();
@@ -125,6 +133,8 @@ public:
         float x;
         float y;
         ObjectType *type;
+
+	bool pointInside(float x, float y);
 };
 
 #endif

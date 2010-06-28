@@ -73,6 +73,9 @@ public:
         static bool mouse_right_flagged_laststep;
         static bool mouse_center_flagged;
         static bool mouse_center_flagged_laststep;
+
+	static float mouse_x;
+	static float mouse_y;
         
         static keymap *keymaps;
 	static keymap *keydownmaps;

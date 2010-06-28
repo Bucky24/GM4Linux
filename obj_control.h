@@ -6,7 +6,8 @@
 
 class obj_control : public Object {
 public:
-	
+	obj_control(int i, ObjectType *obj, float x, float y);
+	void globalmousepressed_left();
 };
 
 #endif

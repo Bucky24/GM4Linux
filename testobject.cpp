@@ -41,5 +41,11 @@ void testobject::draw() {
 }
 
 void testobject::collide_with(int objectid) {
-        
+        if (objectid == 1) {
+		collide_with_obj_wall();
+	}
 }
+
+void testobject::collide_with_obj_wall() {
+
+}}

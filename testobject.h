@@ -19,6 +19,7 @@ public:
         void draw();
 
         void collide_with(int instanceId);
+	void collide_with_obj_wall();
 };
 
 #endif

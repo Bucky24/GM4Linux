@@ -26,6 +26,8 @@ instancemap *Engine::instances;
 collidemap *Engine::collisionmap;
 
 void Engine::init() {
+	Engine::currentRoom = NULL;
+
         //refs = (references *)malloc(sizeof(struct references));
         instanceref = *(new vector<Object *>());
         objectref = *(new vector<ObjectType *>());
@@ -63,6 +65,7 @@ void Engine::init() {
 void Engine::fillObjects() {
         objectref.push_back(new ObjectType(0,"testobject",0));
         objectref.push_back(new ObjectType(1,"obj_wall",0));
+        objectref.push_back(new ObjectType(2,"obj_control",0));
 }
 
 void Engine::fillImages() {
@@ -94,12 +97,94 @@ void Engine::handleEvents() {
                         if (function != NULL) {
                                 for (i=0;i<instances.size();i++) {
                                         Object *inst = instances[i];
-                                        (inst->*function)();
+					if (inst != NULL) {
+                                        	(inst->*function)();
+					}
                                 }
                         }
                 }
                 itor ++;
         }
+
+	// left button
+	if (mouse_left_flagged && !mouse_left_flagged_laststep) {
+		for (i=0;i<instances.size();i++) {
+                	Object *inst = instances[i];
+			if (inst != NULL) {
+				if (inst->pointInside(
+                        	inst->mousepressed_left();
+			}
+                }
+	}
+	if (mouse_left_flagged) {
+		for (i=0;i<instances.size();i++) {
+                	Object *inst = instances[i];
+			if (inst != NULL) {
+                        	//inst->mouseclicked_left();
+			}
+                }
+	}
+	if (!mouse_left_flagged && mouse_left_flagged_laststep) {
+		for (i=0;i<instances.size();i++) {
+                	Object *inst = instances[i];
+			if (inst != NULL) {
+                        	//inst->mousereleased_left();
+			}
+                }
+	}
+
+	// right button
+	if (mouse_right_flagged && !mouse_right_flagged_laststep) {
+		for (i=0;i<instances.size();i++) {
+                	Object *inst = instances[i];
+			if (inst != NULL) {
+                        	inst->mousepressed_right();
+			}
+                }
+	}
+	if (mouse_right_flagged) {
+		for (i=0;i<instances.size();i++) {
+                	Object *inst = instances[i];
+			if (inst != NULL) {
+                        	//inst->mouseclicked_right();
+			}
+                }
+	}
+	if (!mouse_right_flagged && mouse_right_flagged_laststep) {
+		for (i=0;i<instances.size();i++) {
+                	Object *inst = instances[i];
+			if (inst != NULL) {
+                        	//inst->mousereleased_right();
+			}
+                }
+	}
+
+	// middle button
+	if (mouse_center_flagged && !mouse_center_flagged_laststep) {
+		for (i=0;i<instances.size();i++) {
+                	Object *inst = instances[i];
+			if (inst != NULL) {
+                        	inst->mousepressed_middle();
+			}
+                }
+	}
+	if (mouse_center_flagged) {
+		for (i=0;i<instances.size();i++) {
+                	Object *inst = instances[i];
+			if (inst != NULL) {
+                        	//inst->mouseclicked_middle();
+			}
+                }
+	}
+	if (!mouse_center_flagged && mouse_center_flagged_laststep) {
+		for (i=0;i<instances.size();i++) {
+                	Object *inst = instances[i];
+			if (inst != NULL) {
+                        	//inst->mousereleased_middle();
+			}
+                }
+	}
+
         itor = keys->begin();
         keyhitmap::iterator itor2 = keyslaststep->begin();
         while (itor != keys->end()) {
@@ -127,7 +212,7 @@ void Engine::beginStep() {
 }
 
 void Engine::step() {
-        vector<Object *> instances = currentRoom->getInstances();
+        vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
         objfunc function = stepEvent;
         if (function != NULL) {
@@ -139,7 +224,7 @@ void Engine::step() {
 }
 
 void Engine::endStep() {
-        vector<Object *> instances = currentRoom->getInstances();
+        vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
         objfunc function = endStepEvent;
         if (function != NULL) {
@@ -154,7 +239,7 @@ void Engine::checkCollisions() {
         collidemap::iterator it;
         unsigned int i;
         for (it=collisionmap->begin();it!=collisionmap->end();it++) {
-                objlist *list = instances->find((*it).first->getId())->second;
+                objlist *list = Engine::instances->find((*it).first->getId())->second;
                 for (i=0;i<list->size();i++) {
                         if (list->at(i)->check_collision_with_object((*it).second->getId())) {
                                 list->at(i)->collide_with((*it).second->getId());

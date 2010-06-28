@@ -66,36 +66,16 @@ void handleMouse(int button, int state, int x, int y) {
 }
 
 void handleSpecialKeypress(int key, int x, int y) {
-        //printf("key: %d\n",key);
         (*Engine::keys->find(key+200)).second = true;
-        //Engine::keys[key+200] = true;
 }
 
 void initRendering() {
-	//objectid = 0;
-	//instanceid = 0;
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_COLOR_MATERIAL);
-
-	/*char *bler = (char *)malloc(sizeof(GL_UNSIGNED_BYTE)*16*16*3);
-
-	for (int i=0;i<16*16*3;i+=1) {
-		bler[i] = 0;
-	}
-	for (int i=0;i<16*16*3;i+=3) {
-		bler[i] = 100;
-	}*/
-	
-	//Image *image = new Image((char *)"vtr.bmp",64,64,IMAGE_FILE);
-	//Image *image = new Image(bler,16,16,IMAGE_DATA);
-	//ObjectType *obj = new ObjectType(objectid,"object",image);
-	//objectid ++;
-	//inst = new testobject(instanceid,obj,20,10);
-	//instanceid ++;
 
         Engine::init();
 }
@@ -113,7 +93,6 @@ void drawScene() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	//inst->draw();
         Engine::currentRoom->draw();
 	
 	glutSwapBuffers();

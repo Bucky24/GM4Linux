@@ -123,6 +123,14 @@ void Object::keydown_home() {}
 void Object::keydown_end() {}
 void Object::keydown_insert() {}
 
+void Object::mousepressed_left() {}
+void Object::mousepressed_right() {}
+void Object::mousepressed_middle() {}
+
+void Object::globalmousepressed_left() {}
+void Object::globalmousepressed_right() {}
+void Object::globalmousepressed_middle() {}
+
 void Object::step_begin() {}
 void Object::step() {}
 void Object::step_end() {}
@@ -141,4 +149,11 @@ bool Object::check_collision_with_object(int objectId) {
 
 void Object::collide_with(int objectId) {
         
+}
+
+bool pointInside(float px, float py) {
+	float width = Engine::getSprite(type->getSprite())->width;
+	float height = Engine::getSprite(type->getSprite())->height;
+
+	return (px >= x && px <= x+width && py >= y && py <= y+height);
 }
