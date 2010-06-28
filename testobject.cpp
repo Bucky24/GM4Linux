@@ -29,7 +29,15 @@ void testobject::step() {
 }
 
 void testobject::draw() {
-        draw_line(0,0,200,200);
+	int i;
+	Object *obj;
+	for (i=0;i<instance_number(0);i++) {
+		obj = instance_find(0,i);
+		if (obj != this) {
+			draw_line(x,y,obj->x,obj->y);
+			cout << x << " " << y << " " << obj->x << " " << obj->y << endl;
+		}
+	}
 }
 
 void testobject::collide_with(int objectid) {

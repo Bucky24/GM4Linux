@@ -120,7 +120,6 @@ public:
         bool check_collision_with_object(int objectId);
         virtual void collide_with(int instanceId);
 
-protected:
 	int id;
 	int sprite;
         float x;

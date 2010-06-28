@@ -33,3 +33,20 @@ void draw_line(int x1, int y1, int x2, int y2) {
 	glEnd();
         glColor3f(0,0,0);
 }
+
+int instance_number(int object) {
+	instancemap::iterator itor = Engine::instances->find(object);
+	if (itor == Engine::instances->end()) {
+		return 0;
+	}
+	return itor->second->size();
+}
+
+Object *instance_find(int object, int number) {
+	instancemap::iterator itor = Engine::instances->find(object);
+	if (itor == Engine::instances->end()) {
+		return 0;
+	}
+	objlist *list = itor->second;
+	return list->at(number);
+}
