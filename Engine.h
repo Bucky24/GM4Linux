@@ -10,6 +10,10 @@
 #include "Room.h"
 #include <map>
 
+#include <iostream>
+
+using namespace std;
+
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <GLUT/glut.h>
@@ -76,6 +80,8 @@ public:
 
 	static float mouse_x;
 	static float mouse_y;
+
+	static void setMouse(int x, int y);
         
         static keymap *keymaps;
 	static keymap *keydownmaps;

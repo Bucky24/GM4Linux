@@ -24,6 +24,8 @@ objfunc Engine::stepEvent;
 objfunc Engine::endStepEvent;
 instancemap *Engine::instances;
 collidemap *Engine::collisionmap;
+float Engine::mouse_x;
+float Engine::mouse_y;
 
 void Engine::init() {
 	Engine::currentRoom = NULL;
@@ -36,7 +38,8 @@ void Engine::init() {
 
         instances = new instancemap();
         instances->insert(pair<int,objlist *>(0,new objlist()));
-        instances->insert(pair<int,objlist *>(0,new objlist()));
+        instances->insert(pair<int,objlist *>(1,new objlist()));
+        instances->insert(pair<int,objlist *>(2,new objlist()));
 
         fillObjects();
         fillImages();
@@ -65,7 +68,7 @@ void Engine::init() {
 void Engine::fillObjects() {
         objectref.push_back(new ObjectType(0,"testobject",0));
         objectref.push_back(new ObjectType(1,"obj_wall",0));
-        objectref.push_back(new ObjectType(2,"obj_control",0));
+        objectref.push_back(new ObjectType(2,"obj_control",-4));
 }
 
 void Engine::fillImages() {
@@ -111,8 +114,10 @@ void Engine::handleEvents() {
 		for (i=0;i<instances.size();i++) {
                 	Object *inst = instances[i];
 			if (inst != NULL) {
-				if (inst->pointInside(
-                        	inst->mousepressed_left();
+				if (inst->pointInside(Engine::mouse_x,Engine::mouse_y)) {
+                        		inst->mousepressed_left();
+				}
+				inst->globalmousepressed_left();
 			}
                 }
 	}
@@ -138,7 +143,10 @@ void Engine::handleEvents() {
 		for (i=0;i<instances.size();i++) {
                 	Object *inst = instances[i];
 			if (inst != NULL) {
-                        	inst->mousepressed_right();
+				if (inst->pointInside(Engine::mouse_x,Engine::mouse_y)) {
+                        		inst->mousepressed_right();
+				}
+				inst->globalmousepressed_right();
 			}
                 }
 	}
@@ -164,7 +172,10 @@ void Engine::handleEvents() {
 		for (i=0;i<instances.size();i++) {
                 	Object *inst = instances[i];
 			if (inst != NULL) {
-                        	inst->mousepressed_middle();
+				if (inst->pointInside(Engine::mouse_x,Engine::mouse_y)) {
+                        		inst->mousepressed_middle();
+				}
+				inst->globalmousepressed_middle();
 			}
                 }
 	}
@@ -202,37 +213,34 @@ void Engine::handleEvents() {
 void Engine::beginStep() {
         vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
-        objfunc function = beginStepEvent;
-        if (function != NULL) {
-                for (i=0;i<instances.size();i++) {
-                        Object *inst = instances[i];
-                        (inst->*function)();
-                }
+        for (i=0;i<instances.size();i++) {
+                Object *inst = instances[i];
+		if (inst != NULL) {
+                	inst->step_begin();
+		}
         }
 }
 
 void Engine::step() {
         vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
-        objfunc function = stepEvent;
-        if (function != NULL) {
-                for (i=0;i<instances.size();i++) {
-                        Object *inst = instances[i];
-                        (inst->*function)();
-                }
+        for (i=0;i<instances.size();i++) {
+                Object *inst = instances[i];
+		if (inst != NULL) {
+                	inst->step();
+		}
         }
 }
 
 void Engine::endStep() {
         vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
-        objfunc function = endStepEvent;
-        if (function != NULL) {
-                for (i=0;i<instances.size();i++) {
-                        Object *inst = instances[i];
-                        (inst->*function)();
-                }
-        }
+        for (i=0;i<instances.size();i++) {
+                Object *inst = instances[i];
+		if (inst != NULL) {
+                	inst->step_end();
+		}
+	}
 }
 
 void Engine::checkCollisions() {
@@ -276,6 +284,10 @@ Room *Engine::getRoom(unsigned int id) {
         return roomref[id];
 }
 
+void Engine::setMouse(int x, int y) {
+	Engine::mouse_x = x;
+	Engine::mouse_y = y;
+}
 
 
 

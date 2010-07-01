@@ -28,6 +28,10 @@ public:
         int height;
         vector<Object *> instances;
         int speed;
+
+	float r;
+	float g;
+	float b;
 };
 
 #endif

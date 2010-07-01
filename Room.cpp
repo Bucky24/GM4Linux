@@ -20,6 +20,8 @@ void Room::create() {
 void Room::draw() {
         unsigned int i;
         for (i=0;i<instances.size();i++) {
-                instances[i]->draw();
+		if (instances[i] != NULL) {
+                	instances[i]->draw();
+		}
         }
 }

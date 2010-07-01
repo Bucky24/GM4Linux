@@ -38,11 +38,6 @@ void handleKeypress(unsigned char key, int x, int y) {
 
 
 void handleMouse(int button, int state, int x, int y) {
-        /*vector<Object *> instances = Engine::currentRoom->getInstances();
-        unsigned int i;
-        printf("%d %d\n",button,state);
-        for (i=0;i<instances.size();i++) {
-                Object *inst = instances[i];*/
 	if (button == GLUT_LEFT_BUTTON) {
 		if (state == GLUT_DOWN) {
 			Engine::mouse_left_flagged = true;
@@ -62,7 +57,11 @@ void handleMouse(int button, int state, int x, int y) {
 			Engine::mouse_center_flagged = false;	
 		}
 	}
-	/*}*/
+	Engine::setMouse(x,y);
+}
+
+void handleMouseMotion(int x, int y) {
+	Engine::setMouse(x,y);
 }
 
 void handleSpecialKeypress(int key, int x, int y) {
@@ -92,6 +91,8 @@ void drawScene() {
 	
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	glClearColor(Engine::currentRoom->r, Engine::currentRoom->g, Engine::currentRoom->b,0);
 
         Engine::currentRoom->draw();
 	
@@ -131,6 +132,8 @@ int main(int argc, char** argv) {
 	glutKeyboardFunc(handleKeypress);
 	glutSpecialFunc(handleSpecialKeypress);
 	glutMouseFunc(handleMouse);
+	glutMotionFunc(handleMouseMotion);
+	glutPassiveMotionFunc(handleMouseMotion);
 	glutReshapeFunc(handleResize);
 	glutTimerFunc(1, update, 0);
 	

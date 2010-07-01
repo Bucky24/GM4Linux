@@ -151,7 +151,10 @@ void Object::collide_with(int objectId) {
         
 }
 
-bool pointInside(float px, float py) {
+bool Object::pointInside(float px, float py) {
+	if (Engine::getSprite(type->getSprite()) == NULL) {
+		return false;
+	}
 	float width = Engine::getSprite(type->getSprite())->width;
 	float height = Engine::getSprite(type->getSprite())->height;
 
