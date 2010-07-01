@@ -26,6 +26,9 @@ instancemap *Engine::instances;
 collidemap *Engine::collisionmap;
 float Engine::mouse_x;
 float Engine::mouse_y;
+float Engine::r;
+float Engine::g;
+float Engine::b;
 
 void Engine::init() {
 	Engine::currentRoom = NULL;
@@ -63,6 +66,10 @@ void Engine::init() {
         keyupmaps = new keymap();
 
         generateFunctionMaps();
+
+	r = 0;
+	g = 0;
+	b = 0;
 }
 
 void Engine::fillObjects() {
@@ -287,6 +294,12 @@ Room *Engine::getRoom(unsigned int id) {
 void Engine::setMouse(int x, int y) {
 	Engine::mouse_x = x;
 	Engine::mouse_y = y;
+}
+
+void Engine::setColors(float r, float g, float b) {
+	Engine::r = r;
+	Engine::g = g;
+	Engine::b = b;
 }
 
 

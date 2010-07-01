@@ -36,7 +36,7 @@ void draw_line(int x1, int y1, int x2, int y2) {
 	glVertex2f(x1,y1);
 	glVertex2f(x2,y2);
 	glEnd();
-        glColor3f(255,255,255);
+        glColor3f(Engine::r,Engine::g,Engine::b);
 }
 
 int instance_number(int object) {
@@ -57,5 +57,7 @@ Object *instance_find(int object, int number) {
 }
 
 void draw_set_color_rgb(int r, int g, int b) {
-	glColor3f(((float)r)/255,((float)g)/255,((float)b)/255);
+	Engine::r = ((float)r)/255;
+	Engine::g = ((float)g)/255;
+	Engine::b = ((float)b)/255;
 }

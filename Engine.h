@@ -87,6 +87,12 @@ public:
 	static keymap *keydownmaps;
         static keymap *keyupmaps;
 
+	static float r;
+	static float g;
+	static float b;
+
+	static void setColors(float,float,float);
+
         static instancemap *instances;
 
         static collidemap *collisionmap;
