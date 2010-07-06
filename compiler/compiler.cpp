@@ -6,6 +6,26 @@
 
 using namespace std;
 
+void Tokenize(const string& str,
+                      vector<string>& tokens,
+                      const string& delimiters = " ")
+{
+    // Skip delimiters at beginning.
+    string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+    // Find first "non-delimiter".
+    string::size_type pos     = str.find_first_of(delimiters, lastPos);
+
+    while (string::npos != pos || string::npos != lastPos)
+    {
+        // Found a token, add it to the vector.
+        tokens.push_back(str.substr(lastPos, pos - lastPos));
+        // Skip delimiters.  Note the "not_of"
+        lastPos = str.find_first_not_of(delimiters, pos);
+        // Find next "non-delimiter"
+        pos = str.find_first_of(delimiters, lastPos);
+    }
+}
+
 void writeString(ofstream &out, const char *str, int count) {
 	int i;
 	for (i=0;i<count;i++) {
@@ -25,7 +45,7 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
-	unsigned int i;
+	//unsigned int i;
 
 	ofstream outfile;
 	ifstream infile;
@@ -53,7 +73,7 @@ int main(int argc, char **argv) {
 
 	string objectName;
 	int objectSprite;
-	vector< vector<string> *> actions;
+	string r,g,b;
 	while (!infile.eof()) {
 		getline(infile,line);
 		if (state == 0 && line == "[sprites]") {
@@ -97,10 +117,6 @@ int main(int argc, char **argv) {
 			secondState = 0;
 			objectName = "";
 			objectSprite = 0;
-			for (i=0;i<actions.size();i++) {
-				delete actions[i];
-			}
-			actions.clear();
 			char s = (char)state;
 			outfile.write(&s,1);
 			outfile.seekp(1,ios_base::cur);
@@ -113,12 +129,7 @@ int main(int argc, char **argv) {
 		} else if (state == 3 && line == "[/object]") {
 			state = 2;
 			secondState = 0;
-			cout << objectName << endl;
-			writeString(outfile,objectName.c_str(),objectName.size());
-			char s = (char)objectSprite;
-			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
-			s = (char)state;
+			char s = (char)state;
 			outfile.write(&s,1);
 			outfile.seekp(1,ios_base::cur);
 		} else if (state == 6 && line == "[/room]") {
@@ -130,7 +141,6 @@ int main(int argc, char **argv) {
 		} else if (state == 3 && line == "[action]") {
 			state = 4;
 			secondState = 0;
-			actions.push_back(new vector<string>);
 			char s = (char)state;
 			outfile.write(&s,1);
 			outfile.seekp(1,ios_base::cur);
@@ -157,11 +167,29 @@ int main(int argc, char **argv) {
 				if (secondState == 0) {
 					objectName = line;
 					secondState = 1;
+					writeString(outfile,objectName.c_str(),objectName.size());
 				} else if (secondState == 1) {
 					objectSprite = atoi(line.c_str());
+					char s = (char)objectSprite;
+					outfile.write(&s,1);
+					outfile.seekp(1,ios_base::cur);
 				}
 			} else if (state == 4) {
-				actions[actions.size()-1]->push_back(line);
+				writeString(outfile,line.c_str(),line.size());
+			} else if (state == 6) {
+				if (secondState == 0) {
+					objectName = line;
+					writeString(outfile,line.c_str(),line.size());
+					secondState = 1;
+				} else if (secondState == 1) {
+					vector<string> toks;
+					Tokenize(line,toks,",");
+					writeString(outfile,toks[0].c_str(),toks[0].size());
+					writeString(outfile,toks[1].c_str(),toks[1].size());
+					writeString(outfile,toks[2].c_str(),toks[2].size());
+				}
+			} else if (state == 7) {
+				writeString(outfile,line.c_str(),line.size());
 			}
 		}
 		cout << state << " " << line << endl;

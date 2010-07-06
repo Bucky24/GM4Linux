@@ -1,0 +1,34 @@
+[sprites]
+[/sprites]
+[objects]
+[object]
+testobject
+[action]
+draw
+int i;
+Object *obj;
+for (i=0;i<instance_number(0);i++) {
+	obj = instance_find(0,i);
+	if (obj != this) {
+		draw_line(x,y,obj->x,obj->y);
+	}
+}
+[/action]
+[/object]
+[object]
+control
+[action]
+globalmousepressed_left
+instance_create(0,Engine::mouse_x,Engine::mouse_y);
+[/action]
+[/object]
+[/objects]
+[rooms]
+[room]
+testroom
+0.82,0.82,0.82
+[instances]
+obj_control,30,30
+[/instances]
+[/room]
+[/rooms]
