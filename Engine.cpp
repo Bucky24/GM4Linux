@@ -83,13 +83,14 @@ void Engine::fillImages() {
 }
 
 void Engine::fillRooms() {
-        roomref.push_back(new testroom(0,"testroom",800,600));
+	/* -- CREATE ROOMS -- */
+        Engine::roomref.push_back(new testroom(0,"testroom",800,600));
 
-        currentRoom = roomref[0];
+        Engine::currentRoom = roomref[0];
+	Engine::currentRoom->create();
 }
 
 void Engine::registerCollisions() {
-        // collision between testobject and obj_wall;
         collisionmap->insert(pair<ObjectType *,ObjectType *>(objectref[0],objectref[1]));
 }
 

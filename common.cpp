@@ -4,11 +4,12 @@ int instance_create(unsigned int id, int x, int y) {
         int ret = noone;
         Object *inst = NULL;
         ObjectType *object= Engine::objectref[id];
-        if (id == 0) {
+	/* ---OBJECT_CREATION--- */
+        if (id == obj_testobject) {
         	inst = new testobject(Engine::instanceid,object,x,y);
         } else if (id == 1) {
         	inst = new obj_wall(Engine::instanceid,object,x,y);
-        } else if (id == 2) {
+        } else if (id == obj_obj_control) {
         	inst = new obj_control(Engine::instanceid,object,x,y);
         }
         if (inst != NULL) {

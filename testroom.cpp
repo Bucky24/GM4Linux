@@ -10,9 +10,8 @@ testroom::testroom(int i, string t, int w, int h, int sp) : Room(i,t,w,h,sp) {
 	g = 0.82;
 	b = 0.82;
         initInstances();
-        create();
 }
 
 void testroom::initInstances() {
-        instances.push_back(Engine::getInstance(instance_create(2,30,30)));
+        instance_create(obj_obj_control,30,30);
 }

@@ -5,6 +5,10 @@
 #include "Engine.h"
 #include <iostream>
 
+/* -- OBJECT DEFINITIONS -- */
+#define obj_testobject 0
+#define obj_obj_control 2
+
 using namespace std;
 
 extern int instance_create(unsigned int id, int x, int y);
