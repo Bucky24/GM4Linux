@@ -31,13 +31,12 @@ void draw_sprite(unsigned int sprite, int offset, float x, float y) {
         Engine::imageref[sprite]->draw(x,y);
 }
 
-void draw_line(int x1, int y1, int x2, int y2) {
-        glColor3f(0,0,0);
+void draw_line(float x1, float y1, float x2, float y2) {
+	glColor3f(Engine::r,Engine::g,Engine::b);
 	glBegin(GL_LINES);
 	glVertex2f(x1,y1);
 	glVertex2f(x2,y2);
 	glEnd();
-        glColor3f(Engine::r,Engine::g,Engine::b);
 }
 
 int instance_number(int object) {
@@ -61,4 +60,11 @@ void draw_set_color_rgb(int r, int g, int b) {
 	Engine::r = ((float)r)/255;
 	Engine::g = ((float)g)/255;
 	Engine::b = ((float)b)/255;
+}
+
+void draw_point(float x, float y) {
+	glColor3f(Engine::r,Engine::g,Engine::b);
+	glBegin(GL_POINTS);
+	glVertex2f(x,y);
+	glEnd();
 }
