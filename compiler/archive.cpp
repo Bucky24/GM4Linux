@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
 		}
 	}
 	outfile << "void initFiles() {\n";
-	outfile << "files = *(new vector<string>());\n";
+	outfile << "files = *(new vector<string *>());\n";
 
 	for (i=0;i<files.size();i++) {
 		string file = files[i];
@@ -117,6 +117,7 @@ int main(int argc, char **argv) {
 		}
 
 	}
+	outfile << "}\n";
 
 	outfile.close();
 	return 0;
