@@ -6,8 +6,6 @@
 #include <iostream>
 
 /* -- OBJECT DEFINITIONS -- */
-#define obj_testobject 0
-#define obj_obj_control 2
 
 using namespace std;
 

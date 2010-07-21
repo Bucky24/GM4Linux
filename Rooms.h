@@ -2,6 +2,6 @@
 #define ROOMSH
 
 #include "Room.h"
-#include "testroom.h"
+/* -- ROOM INCLUDES -- */
 
 #endif

@@ -74,19 +74,22 @@ void Engine::init() {
 
 void Engine::fillObjects() {
 	/* -- CREATE OBJECT TYPES -- */
+        objectref.push_back(new ObjectType(0,"testobject",0));
+        objectref.push_back(new ObjectType(1,"obj_wall",0));
+        objectref.push_back(new ObjectType(2,"obj_control",-4));
 }
 
 void Engine::fillImages() {
 	/* -- CREATE IMAGES -- */
+        imageref.push_back(new Image((char *)"vtr.bmp",64,64,IMAGE_FILE));
 }
 
 void Engine::fillRooms() {
 	/* -- CREATE ROOMS -- */
+        Engine::roomref.push_back(new testroom(0,"testroom",800,600));
 
-	if (roomref.size() > 0) {	
-        	Engine::currentRoom = roomref[0];
-		Engine::currentRoom->create();
-	}
+        Engine::currentRoom = roomref[0];
+	Engine::currentRoom->create();
 }
 
 void Engine::registerCollisions() {

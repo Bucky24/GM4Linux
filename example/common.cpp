@@ -5,6 +5,15 @@ int instance_create(unsigned int id, int x, int y) {
         Object *inst = NULL;
         ObjectType *object= Engine::objectref[id];
 	/* ---OBJECT_CREATION--- */
+        if (id == obj_testobject) {
+        	inst = new testobject(Engine::instanceid,object,x,y);
+        }
+	if (id == 1) {
+        	inst = new obj_wall(Engine::instanceid,object,x,y);
+        }
+	if (id == obj_obj_control) {
+        	inst = new obj_control(Engine::instanceid,object,x,y);
+        }
         if (inst != NULL) {
                 Engine::instanceref.push_back(inst);
                 Engine::instances->find(id)->second->push_back(inst);
