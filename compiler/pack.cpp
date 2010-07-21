@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
 		while (!infile.eof()) {
 			getline(infile,line);
 			line = stripStuff(line);
-			if (line[0] == '#' || (line[0] == '/' && line[1] == '/')) {
+			if (line[0] == '#' || (line.find("//") != string::npos)) {
 				line += "\\n";
 			}
 			outfile << line;

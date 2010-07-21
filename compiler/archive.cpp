@@ -33,15 +33,60 @@ int main(int argc, char **argv) {
 	ifstream infile;
 	ofstream outfile;
 	string outName = argv[1];
-	string outPath = outName + ".h";
+	string outPathH = outName + ".h";
+	string outPathCpp = outName + ".cpp";
 
-	outfile.open(outPath.c_str());
+	outfile.open(outPathH.c_str());
 
 	vector<string> files;
 	getdir(".",files);
 
 	outfile << "#ifndef " << outName << "H\n";
 	outfile << "#define " << outName << "H\n";
+	outfile << "#include <vector>\n";
+	outfile << "#include <string>\n";
+	outfile << "using namespace std;\n";
+	outfile << "extern vector<string *> files;\n";
+
+	for (i=0;i<files.size();i++) {
+		string file = files[i];
+		if (file.find(".pack") != string::npos) {
+			char tmp[200];
+			int length = file.copy(tmp,file.size()-5);
+			tmp[length] = 0;
+			string strName = tmp;
+			for (j=0;j<strName.size();j++) {
+				if (strName[j] == '.') {
+					strName[j] = '_';
+				}
+			}
+			outfile << "extern string " << strName << ";\n";
+		}
+	}
+	outfile << "void initFiles();\n";
+
+	outfile << "#endif\n";
+	outfile.close();
+	outfile.open(outPathCpp.c_str());
+	outfile << "#include \"" << outPathH << "\"\n";
+	outfile << "vector<string *> files;\n";
+	for (i=0;i<files.size();i++) {
+		string file = files[i];
+		if (file.find(".pack") != string::npos) {
+			char tmp[200];
+			int length = file.copy(tmp,file.size()-5);
+			tmp[length] = 0;
+			string strName = tmp;
+			for (j=0;j<strName.size();j++) {
+				if (strName[j] == '.') {
+					strName[j] = '_';
+				}
+			}
+			outfile << "string " << strName << ";\n";
+		}
+	}
+	outfile << "void initFiles() {\n";
+	outfile << "files = *(new vector<string>());\n";
 
 	for (i=0;i<files.size();i++) {
 		string file = files[i];
@@ -59,19 +104,20 @@ int main(int argc, char **argv) {
 				}
 			}
 			//cout << strName << endl;
-			outfile << "extern string " << strName << " = \"";
+			outfile << strName << " = \"";
 			while (!infile.eof()) {
 				getline(infile,line);
 				//cout << line;
 				outfile << line;
 			}
-			outfile << "\"\n";
+			outfile << "\";\n";
+			outfile << "files.push_back(&" << strName << ");\n";
 			infile.close();
 			remove(file.c_str());
 		}
 
 	}
-	outfile << "#endif\n";
+
 	outfile.close();
 	return 0;
 }
