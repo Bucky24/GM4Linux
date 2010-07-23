@@ -1,5 +1,8 @@
 #include <fstream>
 #include <iostream>
+#include <string>
+#include <vector>
+#include <map>
 
 using namespace std;
 
@@ -20,10 +23,29 @@ int main(int argc, char **argv) {
 	infile.seekg(0);
 
 	char input;
+	int state = 0;
+	string name = "";
+	map<string,string> actionMap;
 	while (infile.read(&input,1)) {
-		infile.seekg(1,ios_base::cur);
-		cout << (int)input << input << endl;
+		//infile.seekg(1,ios_base::cur);
+		if (input < 8) {
+			if (state == 3 && name != "") {
+				cout << name << endl;
+			}
+			state = input;
+			cout << "new state " << state << endl;
+			if (state == 3) {
+				name = "";
+			} else if (state == 4) {
+				name = "";
+				actionMap.clear();
+			}
+		} else {
+			if (state == 3) {
+				name += input;
+				cout << (int)input << input << endl;
+			} else if (state == 4
+		}
 	}
-
 	return 0;
 }

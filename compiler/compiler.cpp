@@ -31,11 +31,11 @@ void writeString(ofstream &out, const char *str, int count) {
 	for (i=0;i<count;i++) {
 		char c = str[i];
 		out.write(&c,1);
-		out.seekp(1,ios_base::cur);
+		//out.seekp(1,ios_base::cur);
 	}
-	char c = 10;
-	out.write(&c,1);
-	out.seekp(1,ios_base::cur);
+	//char c = 10;
+	//out.write(&c,1);
+	//out.seekp(1,ios_base::cur);
 }
 
 int main(int argc, char **argv) {
@@ -76,42 +76,43 @@ int main(int argc, char **argv) {
 	string r,g,b;
 	while (!infile.eof()) {
 		getline(infile,line);
+		// cut off newline
 		if (state == 0 && line == "[sprites]") {
 			state = 1;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 0 && line == "[objects]") {
 			state = 2;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 0 && line == "[rooms]") {
 			state = 5;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 1 && line == "[/sprites]") {
 			state = 0;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 2 && line == "[/objects]") {
 			state = 0;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 5 && line == "[/rooms]") {
 			state = 0;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 2 && line == "[object]") {
 			state = 3;
 			secondState = 0;
@@ -119,49 +120,49 @@ int main(int argc, char **argv) {
 			objectSprite = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 5 && line == "[room]") {
 			state = 6;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 3 && line == "[/object]") {
 			state = 2;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 6 && line == "[/room]") {
 			state = 5;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 3 && line == "[action]") {
 			state = 4;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 4 && line == "[/action]") {
 			state = 3;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 6 && line == "[instances]") {
 			state = 7;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else if (state == 7 && line == "[/instances]") {
 			state = 6;
 			secondState = 0;
 			char s = (char)state;
 			outfile.write(&s,1);
-			outfile.seekp(1,ios_base::cur);
+			//outfile.seekp(1,ios_base::cur);
 		} else {
 			if (state == 3) {
 				if (secondState == 0) {
@@ -172,7 +173,7 @@ int main(int argc, char **argv) {
 					objectSprite = atoi(line.c_str());
 					char s = (char)objectSprite;
 					outfile.write(&s,1);
-					outfile.seekp(1,ios_base::cur);
+					//outfile.seekp(1,ios_base::cur);
 				}
 			} else if (state == 4) {
 				writeString(outfile,line.c_str(),line.size());
@@ -192,7 +193,7 @@ int main(int argc, char **argv) {
 				writeString(outfile,line.c_str(),line.size());
 			}
 		}
-		cout << state << " " << line << endl;
+		//cout << state << " " << line << endl;
 	}
 
 	infile.close();
