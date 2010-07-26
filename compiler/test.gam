@@ -7,12 +7,16 @@ testobject
 draw
 int i;
 Object *obj;
-for (i=0;i<instance_number(0);i++) {
-	obj = instance_find(0,i);
+for (i=0;i<instance_number(testobject);i++) {
+	obj = instance_find(testobject,i);
 	if (obj != this) {
 		draw_line(x,y,obj->x,obj->y);
 	}
 }
+[/action]
+[action]
+mousepressed_left
+int i;
 [/action]
 [/object]
 [object]

@@ -176,6 +176,7 @@ int main(int argc, char **argv) {
 					//outfile.seekp(1,ios_base::cur);
 				}
 			} else if (state == 4) {
+				line += "\n";
 				writeString(outfile,line.c_str(),line.size());
 			} else if (state == 6) {
 				if (secondState == 0) {

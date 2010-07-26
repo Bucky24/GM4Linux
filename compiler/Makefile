@@ -1,6 +1,5 @@
 CC = g++
 CFLAGS = -Wall -g
-PROG = compiler
 
 
 
@@ -11,10 +10,8 @@ else
 endif
 
 all:
-	$(CC) $(LIBS) $(CFLAGS) -o $(PROG) compiler.cpp
-	$(CC) $(CFLAGS) -o builder builder.cpp
+	$(CC) $(CFLAGS) -o builder builder.cpp files.h files.cpp
 
 clean:
-	rm -f $(PROG)
 	rm -f builder
 	rm -f *~
