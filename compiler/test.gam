@@ -14,10 +14,6 @@ for (i=0;i<instance_number(testobject);i++) {
 	}
 }
 [/action]
-[action]
-mousepressed_left
-int i;
-[/action]
 [/object]
 [object]
 control

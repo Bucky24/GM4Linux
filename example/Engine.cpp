@@ -88,8 +88,10 @@ void Engine::fillRooms() {
 	/* -- CREATE ROOMS -- */
         Engine::roomref.push_back(new testroom(0,"testroom",800,600));
 
-        Engine::currentRoom = roomref[0];
-	Engine::currentRoom->create();
+	if (Engine::roomref.size() > 0) {
+        	Engine::currentRoom = roomref[0];
+		Engine::currentRoom->create();
+	}
 }
 
 void Engine::registerCollisions() {

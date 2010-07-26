@@ -3,11 +3,10 @@
 
 #include <string>
 #include <map>
-
-using namespace std;
-
 #include "Image.h"
 #include "ObjectType.h"
+
+using namespace std;
 
 class Object {
 public:

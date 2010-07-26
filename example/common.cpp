@@ -4,7 +4,7 @@ int instance_create(unsigned int id, int x, int y) {
         int ret = noone;
         Object *inst = NULL;
         ObjectType *object= Engine::objectref[id];
-	/* ---OBJECT_CREATION--- */
+	/* -- OBJECT CREATION -- */
         if (id == obj_testobject) {
         	inst = new testobject(Engine::instanceid,object,x,y);
         }

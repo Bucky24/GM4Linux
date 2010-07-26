@@ -21,7 +21,7 @@ string stripStuff(string input) {
 
 int main(int argc, char **argv) {
 	if (argc < 2) {
-		cout << "Usage: pack <filename>\n";
+		cout << "Usage: pack <filenames>\n";
 		return 1;
 	}
 	unsigned int i;
@@ -32,14 +32,18 @@ int main(int argc, char **argv) {
 		infile.open(argv[i]);
 		string outname = argv[i];
 		outname += ".pack";
+
+		cout << "Opening " << outname << endl;
 		outfile.open(outname.c_str());
 
 		string line;
 		while (!infile.eof()) {
 			getline(infile,line);
-			line = stripStuff(line);
-			if (line[0] == '#' || (line.find("//") != string::npos)) {
-				line += "\\n";
+			if (outname.find("Makefile.pack") == string::npos) {
+				line = stripStuff(line);
+			}
+			if (line[0] == '#' || (line.find("//") != string::npos) || outname.find("Makefile.pack") != string::npos) {
+				line = "\\n" + line + "\\n";
 			}
 			outfile << line;
 		}

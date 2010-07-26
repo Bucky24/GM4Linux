@@ -27,7 +27,6 @@ const float WINDOW_HEIGHT = 600;
 //int instanceid;
 
 void handleKeypress(unsigned char key, int x, int y) {
-        //printf("key: %d\n",key);
         (*Engine::keys->find(key)).second = true;
         //Engine::keys[key] = true;
 	switch (key) {
@@ -124,7 +123,7 @@ int main(int argc, char** argv) {
 	initRendering();
 
         if (Engine::currentRoom == NULL) {
-                printf("No rooms defined.\n");
+                cout << "No rooms defined." << endl;
                 exit(1);
         }
 	

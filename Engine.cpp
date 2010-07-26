@@ -33,7 +33,6 @@ float Engine::b;
 void Engine::init() {
 	Engine::currentRoom = NULL;
 
-        //refs = (references *)malloc(sizeof(struct references));
         instanceref = *(new vector<Object *>());
         objectref = *(new vector<ObjectType *>());
         imageref = *(new vector<Image *>());
@@ -97,7 +96,6 @@ void Engine::handleEvents() {
         vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
         //int j;
-        //printf("%d %d\n",button,state);
         keyhitmap::iterator itor = keys->begin();
         while (itor != keys->end()) {
                 bool val = (*itor).second;
@@ -132,7 +130,6 @@ void Engine::handleEvents() {
 		for (i=0;i<instances.size();i++) {
                 	Object *inst = instances[i];
 			if (inst != NULL) {
-                        	//inst->mouseclicked_left();
 			}
                 }
 	}
@@ -140,7 +137,6 @@ void Engine::handleEvents() {
 		for (i=0;i<instances.size();i++) {
                 	Object *inst = instances[i];
 			if (inst != NULL) {
-                        	//inst->mousereleased_left();
 			}
                 }
 	}

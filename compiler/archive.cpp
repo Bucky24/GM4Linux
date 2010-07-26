@@ -43,10 +43,10 @@ int main(int argc, char **argv) {
 
 	outfile << "#ifndef " << outName << "H\n";
 	outfile << "#define " << outName << "H\n";
-	outfile << "#include <vector>\n";
+	outfile << "#include <map>\n";
 	outfile << "#include <string>\n";
 	outfile << "using namespace std;\n";
-	outfile << "extern vector<string *> files;\n";
+	outfile << "extern map<string,string *> files;\n";
 
 	for (i=0;i<files.size();i++) {
 		string file = files[i];
@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
 	outfile.close();
 	outfile.open(outPathCpp.c_str());
 	outfile << "#include \"" << outPathH << "\"\n";
-	outfile << "vector<string *> files;\n";
+	outfile << "map<string,string *> files;\n";
 	for (i=0;i<files.size();i++) {
 		string file = files[i];
 		if (file.find(".pack") != string::npos) {
@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
 		}
 	}
 	outfile << "void initFiles() {\n";
-	outfile << "files = *(new vector<string *>());\n";
+	outfile << "files = *(new map<string,string *>());\n";
 
 	for (i=0;i<files.size();i++) {
 		string file = files[i];
@@ -111,7 +111,7 @@ int main(int argc, char **argv) {
 				outfile << line;
 			}
 			outfile << "\";\n";
-			outfile << "files.push_back(&" << strName << ");\n";
+			outfile << "files.insert(pair<string,string*>(\"" << strName << "\",&" << strName << "));\n";
 			infile.close();
 			remove(file.c_str());
 		}

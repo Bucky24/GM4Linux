@@ -4,7 +4,7 @@ int instance_create(unsigned int id, int x, int y) {
         int ret = noone;
         Object *inst = NULL;
         ObjectType *object= Engine::objectref[id];
-	/* ---OBJECT_CREATION--- */
+	/* -- OBJECT CREATION -- */
         if (inst != NULL) {
                 Engine::instanceref.push_back(inst);
                 Engine::instances->find(id)->second->push_back(inst);
