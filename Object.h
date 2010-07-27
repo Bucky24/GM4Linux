@@ -5,6 +5,7 @@
 #include <map>
 #include "Image.h"
 #include "ObjectType.h"
+#include "Variable.h"
 
 using namespace std;
 
@@ -133,7 +134,7 @@ public:
         float y;
         ObjectType *type;
 
-	map<string,void*> variables;
+	map<string,Variable> variables;
 
 	bool pointInside(float x, float y);
 };

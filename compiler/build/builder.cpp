@@ -98,10 +98,11 @@ int main(int argc, char **argv) {
 					string variable = "";
 					bool inVariable = false;
 					int varPos = 0;
+					bool inQuotes = false;
 					for (j=0;j<tmp.size();j++) {
 						cout << tmp[j] << endl;
 						if (!inVariable) {
-							if (isalpha(tmp[j])) {
+							if (isalpha(tmp[j]) && !inQuotes) {
 								cout << "new var" << endl;
 								inVariable = true;
 								varPos = j;
@@ -111,7 +112,7 @@ int main(int argc, char **argv) {
 							if (isalnum(tmp[j]) || tmp[j] == '.') {
 								variable += tmp[j];
 							} else {
-								if (variable != "for" && variable != "if" && variable != "this") {
+								if (variable != "for" && variable != "if" && variable != "this" && variable != "endl" && variable != "cout") {
 									cout << variable << " found" << endl;
 									vector<string> toks2;
 									Tokenize(variable,toks2,".");
@@ -130,6 +131,9 @@ int main(int argc, char **argv) {
 								varPos = 0;
 								variable = "";
 							}
+						}
+						if (tmp[j] == '"') {
+							inQuotes = !inQuotes;
 						}
 					}
 					code += tmp + "\n";
@@ -161,7 +165,7 @@ int main(int argc, char **argv) {
 					outfile << "};\n#endif\n";
 					outfile.close();
 					buildH = true;
-					extraFiles += objectFileName + " ";
+					//extraFiles += objectFileName + " ";
 				} else {
 					cout << "Can't open " << objectFileName << " for some reason or another\n";
 				}
@@ -179,7 +183,7 @@ int main(int argc, char **argv) {
 					}
 					outfile.close();
 					buildCpp = true;
-					extraFiles += objectFileName + " ";
+					//extraFiles += objectFileName + " ";
 				} else {
 					cout << "Can't open " << objectFileName << "for some reason or another\n";
 				}
@@ -201,6 +205,8 @@ int main(int argc, char **argv) {
 				objectIncludes += "\n#include \"" + className + ".h\"\n";
 
 				extraFiles += className + ".h " + className + ".cpp ";
+
+				cout << "extras: " << extraFiles << endl;
 
 				instanceMap += "instances->insert(pair<int,objlist *>(" + count + ",new objlist()));\n";
 
