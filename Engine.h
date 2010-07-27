@@ -96,6 +96,8 @@ public:
         static instancemap *instances;
 
         static collidemap *collisionmap;
+
+	static void updateObjects();
 };
 
 #endif

@@ -262,6 +262,8 @@ void Engine::endStep() {
                 	inst->step_end();
 		}
 	}
+	
+	updateObjects();
 }
 
 void Engine::checkCollisions() {
@@ -314,6 +316,22 @@ void Engine::setColors(float r, float g, float b) {
 	Engine::r = r;
 	Engine::g = g;
 	Engine::b = b;
+}
+
+void Engine::updateObjects() {
+	vector<Object *> instances = Engine::currentRoom->getInstances();
+        unsigned int i;
+        for (i=0;i<instances.size();i++) {
+                Object *inst = instances[i];
+		if (inst != NULL) {
+                	
+
+			// do various things to move objects, etc
+
+			inst->variables["x"] = inst->x;
+			inst->variables["y"] = inst->y;
+		}
+	}
 }
 
 

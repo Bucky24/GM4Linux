@@ -7,7 +7,9 @@
 
 /* -- OBJECT DEFINITIONS -- */
 
-# define c_white 1,1,1
+#define c_white 1,1,1
+
+#define self (*this)
 
 using namespace std;
 
