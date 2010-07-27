@@ -39,6 +39,34 @@ Variable &Variable::operator++(int unused) {
 	return *this;
 }
 
+Variable Variable::operator+(const Variable &var2) {
+	Variable ret = *(new Variable());
+	if (type == var2.type) {
+		ret.type = type;
+	}
+	ret.idata = idata+var2.idata;
+	ret.sdata = sdata+var2.sdata;
+	return ret;
+}
+
+Variable Variable::operator+(const int data) {
+	Variable ret = *(new Variable());
+	if (type == 1) {
+		ret.type = 1;
+		ret.idata = idata+data;
+	}
+	return ret;
+}
+
+Variable Variable::operator+(const string data) {
+	Variable ret = *(new Variable());
+	if (type == 2) {
+		ret.type = 2;
+		ret.sdata = sdata+data;
+	}
+	return ret;
+}
+
 bool operator<(const Variable &var1, int data) {
 	if (var1.type == 1) {
 		if (var1.idata < data) {
@@ -62,6 +90,8 @@ ostream& operator<<(ostream &output, const Variable &var) {
 		output << var.idata;
 	} else if (var.type == 2) {
 		output << var.sdata;
+	} else {
+		output << "UNDEF";
 	}
 	return output;
 }

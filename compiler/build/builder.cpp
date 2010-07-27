@@ -9,6 +9,9 @@
 
 using namespace std;
 
+void buildReserved(vector<string> &);
+bool isReserved(string word, vector<string> &vec);
+
 void Tokenize(const string& str,
                       vector<string>& tokens,
                       const string& delimiters = " ")
@@ -82,6 +85,10 @@ int main(int argc, char **argv) {
 	string objectIncludes = "";
 	// Rooms.h
 	string roomIncludes = "";
+	
+	vector<string> reserved;
+	buildReserved(reserved);
+
 	while (infile.read(&input,1)) {
 		//infile.seekg(1,ios_base::cur);
 		if (input < 8) {
@@ -109,10 +116,10 @@ int main(int argc, char **argv) {
 								j--;
 							}
 						} else {
-							if (isalnum(tmp[j]) || tmp[j] == '.') {
+							if (isalnum(tmp[j]) || tmp[j] == '.' || tmp[j] == '_') {
 								variable += tmp[j];
 							} else {
-								if (variable != "for" && variable != "if" && variable != "this" && variable != "endl" && variable != "cout") {
+								if (!isReserved(variable,reserved)) {
 									cout << variable << " found" << endl;
 									vector<string> toks2;
 									Tokenize(variable,toks2,".");
@@ -369,4 +376,30 @@ int main(int argc, char **argv) {
 	}	
 
 	return 0;
+}
+
+void buildReserved(vector<string> &ret) {
+	ret.push_back("for");
+	ret.push_back("if");
+	ret.push_back("this");
+	ret.push_back("endl");
+	ret.push_back("cout");
+	ret.push_back("instance_create");
+	ret.push_back("draw_sprite");
+	ret.push_back("draw_line");
+	ret.push_back("instance_number");
+	ret.push_back("instance_find");
+	ret.push_back("draw_set_color_rgb");
+	ret.push_back("draw_point");
+	ret.push_back("draw_line_color");
+}
+
+bool isReserved(string word, vector<string> &vec) {
+	int i;
+	for (i=0;i<vec.size();i++ ) {
+		if (vec[i] == word) {
+			return true;
+		}
+	}
+	return false;
 }

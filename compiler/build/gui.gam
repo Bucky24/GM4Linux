@@ -10,7 +10,10 @@ height = 15;
 [/action]
 [action]
 draw
-
+draw_line(x,y,x+width,y);
+draw_line(x,y,x,y+height);
+draw_line(x,y+height,x+width,y+height);
+draw_line(x+width,y,x+width,y+height);
 [/action]
 [/object]
 [/objects]

@@ -15,8 +15,11 @@ all:
 	$(CC) $(LIBS) $(CFLAGS) -o $(PROG) $(CORE_FILES) $(EXTRA_FILES)
 
 clean:
+	rm -f $(PROG)
+
+cleancode:
 	rm -f $(CORE_FILES) $(EXTRA_FILES)
 
 cleanall:
-	rm -f $(CORE_FILES) $(EXTRA_FILES) $(PROG)
+	rm -f $(CORE_FILES) $(EXTRA_FILES) $(PROG) Makefile
 

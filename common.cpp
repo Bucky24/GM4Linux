@@ -32,6 +32,10 @@ void draw_line(float x1, float y1, float x2, float y2) {
 	glVertex2f(x1,y1);
 	glVertex2f(x2,y2);
 	glEnd();
+	// this point needed because gl vertex never draws the starting point
+	glBegin(GL_POINTS);
+	glVertex2f(x1,y1);
+	glEnd();
 }
 
 void draw_line_color(float x1, float y1, float x2, float y2, float r, float g, float b) {
@@ -39,6 +43,10 @@ void draw_line_color(float x1, float y1, float x2, float y2, float r, float g, f
 	glBegin(GL_LINES);
 	glVertex2f(x1,y1);
 	glVertex2f(x2,y2);
+	glEnd();
+	// this point needed because gl vertex never draws the starting point
+	glBegin(GL_POINTS);
+	glVertex2f(x1,y1);
 	glEnd();
 	glColor3f(Engine::r,Engine::g,Engine::b);
 }
