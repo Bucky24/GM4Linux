@@ -69,20 +69,22 @@ int main(int argc, char **argv) {
 	string objectDefinitions = "";
 	// engine.cpp
 	string objectTypes = "";
+	string createRooms = "";
 	// common.cpp
 	string objectCreation = "";
 	// Makefile
 	string extraFiles = "";
 	// Objects.h
 	string objectIncludes = "";
+	// Rooms.h
+	string roomIncludes = "";
 	while (infile.read(&input,1)) {
 		//infile.seekg(1,ios_base::cur);
 		if (input < 8) {
-			if (state == 3 && objectName != "") {
-				cout << objectName << endl;
+			if (state == 6 && instanceString != "") {
+				instances.push_back(instanceString);
+				instanceString = "";
 			} else if (state == 4 && actionName != "") {
-				cout << actionName << endl;
-				cout << code;
 				actionMap.insert(pair<string,string>(actionName,code));
 			}
 			state = input;
@@ -153,24 +155,26 @@ int main(int argc, char **argv) {
 				
 				objectName = "";
 				actionMap.clear();
-			} else if (state == 2 && roomName != "") {
+				readName = false;
+			} else if (state == 5 && roomName != "") {
 				cout << "creating new room!" << endl;
 				bool buildH = false;
 				bool buildCpp = false;
-				string className = "obj_" + roomName;
+				string className = roomName;
 
 				string fileName = className + ".h";
 				outfile.open(fileName.c_str());
 				if (outfile.is_open()) {
 					outfile << "#ifndef " << className << "HFILE\n";
 					outfile << "#define " << className << "HFILE\n";
-					outfile << "#include \"room.h\"\n"; 
+					outfile << "#include \"Room.h\"\n"; 
 					outfile << "class " << className << " : public Room {\npublic:\n" << className << "(int i, string t, int w, int h, int sp=30);\nvoid initInstances();\n};\n";
 					outfile << "#endif\n";
 					buildH = true;
 				} else {
 					cout << "Couldn't open " << fileName << " for some reason\n";
 				}
+				outfile.close();
 				fileName = className + ".cpp";
 				outfile.open(fileName.c_str());
 				if (outfile.is_open()) {
@@ -184,7 +188,7 @@ int main(int argc, char **argv) {
 					for (i=0;i<instances.size();i++) {
 						temptoks.clear();
 						Tokenize(instances[i],temptoks,",");
-						outfile << "instance_create(obj" << temptoks[0] << "," << temptoks[1] << "," << temptoks[2] << ");\n";
+						outfile << "instance_create(" << temptoks[0] << "," << temptoks[1] << "," << temptoks[2] << ");\n";
 					}
 					outfile << "}\n";
 					buildCpp = true;
@@ -194,6 +198,12 @@ int main(int argc, char **argv) {
 				roomName = "";
 				roomColors = "";
 				instances.clear();
+				readName = false;
+				readColors = false;
+				outfile.close();
+				roomIncludes += "#include \"" + className + ".h\"\n";
+				extraFiles += className + ".h " + className + ".cpp ";
+				createRooms += "Engine::roomref.push_back(new " + className + "(0,\"" + roomName + "\",800,600));";
 			} else if (state == 7) {
 				instanceString = "";
 			}
@@ -230,6 +240,7 @@ int main(int argc, char **argv) {
 					if (instanceString != "") {
 						instances.push_back(instanceString);
 					}
+					instanceString = "";
 				} else {
 					instanceString += input;
 				}
@@ -265,6 +276,14 @@ int main(int argc, char **argv) {
 			if (output.find("/* -- OBJECT INCLUDES -- */") != string::npos) {
 				output.replace(output.find("/* -- OBJECT INCLUDES -- */"),27,objectIncludes);
 			}
+			if (output.find("/* -- ROOM INCLUDES -- */") != string::npos) {
+				output.replace(output.find("/* -- ROOM INCLUDES -- */"),25,roomIncludes);
+			}
+			if (output.find("/* -- CREATE ROOMS -- */") != string::npos) {
+				output.replace(output.find("/* -- CREATE ROOMS -- */"),25,createRooms);
+			}
+
+
 			outfile << output;
 			outfile.close();
 		} else {

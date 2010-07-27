@@ -7,7 +7,7 @@ PROG = game
 
 CORE_FILES = Engine.cpp Engine.h Image.cpp Image.h ObjectType.cpp ObjectType.h Object.cpp Object.h Objects.h Room.cpp Room.h Rooms.h common.cpp common.h main.cpp
 
-EXTRA_FILES = obj_testobject.h obj_testobject.cpp obj_control.h obj_control.cpp 
+EXTRA_FILES = obj_testobject.h obj_testobject.cpp obj_control.h obj_control.cpp testroom.h testroom.cpp 
 
 
 

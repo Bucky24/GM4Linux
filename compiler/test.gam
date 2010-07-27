@@ -19,7 +19,7 @@ for (i=0;i<instance_number(testobject);i++) {
 control
 [action]
 globalmousepressed_left
-instance_create(0,Engine::mouse_x,Engine::mouse_y);
+instance_create(testobject,Engine::mouse_x,Engine::mouse_y);
 [/action]
 [/object]
 [/objects]
@@ -28,7 +28,7 @@ instance_create(0,Engine::mouse_x,Engine::mouse_y);
 testroom
 0.82,0.82,0.82
 [instances]
-obj_control,30,30
+control,30,30
 [/instances]
 [/room]
 [/rooms]
