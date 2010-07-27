@@ -38,4 +38,10 @@ clean:
 
 
 
+cleanall:
+
+	rm -f $(CORE_FILES) $(EXTRA_FILES) $(PROG)
+
+
+
 

@@ -7,6 +7,7 @@
 using namespace std;
 
 #include "Objects.h"
+#include "Engine.h"
 
 class Room {
 public:

@@ -2,9 +2,6 @@
 #include "Objects.h"
 #include "common.h"
 
-// all object cpp files must include Engine
-#include "Engine.h"
-
 testroom::testroom(int i, string t, int w, int h, int sp) : Room(i,t,w,h,sp) {
 	r = 0.82;
 	g = 0.82;

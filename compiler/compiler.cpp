@@ -182,13 +182,13 @@ int main(int argc, char **argv) {
 				if (secondState == 0) {
 					objectName = line;
 					writeString(outfile,line.c_str(),line.size());
+					char s = '\n';
+					outfile.write(&s,1);
 					secondState = 1;
 				} else if (secondState == 1) {
-					vector<string> toks;
-					Tokenize(line,toks,",");
-					writeString(outfile,toks[0].c_str(),toks[0].size());
-					writeString(outfile,toks[1].c_str(),toks[1].size());
-					writeString(outfile,toks[2].c_str(),toks[2].size());
+					writeString(outfile,line.c_str(),line.size());
+					char s = '\n';
+					outfile.write(&s,1);
 				}
 			} else if (state == 7) {
 				writeString(outfile,line.c_str(),line.size());

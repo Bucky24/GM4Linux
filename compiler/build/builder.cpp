@@ -8,6 +8,26 @@
 
 using namespace std;
 
+void Tokenize(const string& str,
+                      vector<string>& tokens,
+                      const string& delimiters = " ")
+{
+    // Skip delimiters at beginning.
+    string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+    // Find first "non-delimiter".
+    string::size_type pos     = str.find_first_of(delimiters, lastPos);
+
+    while (string::npos != pos || string::npos != lastPos)
+    {
+        // Found a token, add it to the vector.
+        tokens.push_back(str.substr(lastPos, pos - lastPos));
+        // Skip delimiters.  Note the "not_of"
+        lastPos = str.find_first_not_of(delimiters, pos);
+        // Find next "non-delimiter"
+        pos = str.find_first_of(delimiters, lastPos);
+    }
+}
+
 int main(int argc, char **argv) {
 	if (argc < 2) {
 		cout << "Usage: builder file_name\n";
@@ -30,14 +50,21 @@ int main(int argc, char **argv) {
 
 	infile.seekg(0);
 
+	// 0=none, 1=sprites, 2=objects, 3=object, 4=object action, 5=rooms, 6=room, 7=room instances
+
 	char input;
 	int state = 0;
 	string objectName = "";
 	string actionName = "";
+	string roomName = "";
 	map<string,string> actionMap;
 	bool readName = false;
+	bool readColors = false;
 	string code = "";
 	int objectCount = 0;
+	vector<string> instances;
+	string roomColors = "";
+	string instanceString = "";
 	// common.h
 	string objectDefinitions = "";
 	// engine.cpp
@@ -126,6 +153,49 @@ int main(int argc, char **argv) {
 				
 				objectName = "";
 				actionMap.clear();
+			} else if (state == 2 && roomName != "") {
+				cout << "creating new room!" << endl;
+				bool buildH = false;
+				bool buildCpp = false;
+				string className = "obj_" + roomName;
+
+				string fileName = className + ".h";
+				outfile.open(fileName.c_str());
+				if (outfile.is_open()) {
+					outfile << "#ifndef " << className << "HFILE\n";
+					outfile << "#define " << className << "HFILE\n";
+					outfile << "#include \"room.h\"\n"; 
+					outfile << "class " << className << " : public Room {\npublic:\n" << className << "(int i, string t, int w, int h, int sp=30);\nvoid initInstances();\n};\n";
+					outfile << "#endif\n";
+					buildH = true;
+				} else {
+					cout << "Couldn't open " << fileName << " for some reason\n";
+				}
+				fileName = className + ".cpp";
+				outfile.open(fileName.c_str());
+				if (outfile.is_open()) {
+					vector<string> temptoks;
+					Tokenize(roomColors,temptoks,",");
+					outfile << "#include \"" << className << ".h\"\n";
+					outfile << "#include \"Objects.h\"\n";
+					outfile << "#include \"common.h\"\n";
+					outfile << className << "::" << className << "(int i, string t, int w, int h, int sp) : Room(i,t,w,h,sp) {\nr=" << temptoks[0] << ";\ng=" << temptoks[1] << ";\nb=" << temptoks[2] << ";\ninitInstances();\n}\n";
+					outfile << "void " << className << "::initInstances() {\n";
+					for (i=0;i<instances.size();i++) {
+						temptoks.clear();
+						Tokenize(instances[i],temptoks,",");
+						outfile << "instance_create(obj" << temptoks[0] << "," << temptoks[1] << "," << temptoks[2] << ");\n";
+					}
+					outfile << "}\n";
+					buildCpp = true;
+				} else {
+					cout << "Couldn't open " << fileName << " for some reason\n";
+				}
+				roomName = "";
+				roomColors = "";
+				instances.clear();
+			} else if (state == 7) {
+				instanceString = "";
 			}
 		} else {
 			if (state == 3) {
@@ -140,6 +210,28 @@ int main(int argc, char **argv) {
 					}
 				} else {
 					code += input;
+				}
+			} else if (state == 6) {
+				if (!readName) {
+					if (input == '\n') {
+						readName = true;
+					} else {
+						roomName += input;
+					}
+				} else if (!readColors) {
+					if (input == '\n') {
+						readColors = true;
+					} else {
+						roomColors += input;
+					}
+				}
+			} else if (state == 7) {
+				if (input == '\n') {
+					if (instanceString != "") {
+						instances.push_back(instanceString);
+					}
+				} else {
+					instanceString += input;
 				}
 			}
 		}
