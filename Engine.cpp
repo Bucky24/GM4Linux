@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include "Rooms.h"
 
-vector<ObjectType *> Engine::objectref;
+/*vector<ObjectType *> Engine::objectref;
 vector<Image *> Engine::imageref;
 vector<Object *> Engine::instanceref;
 vector<Room *> Engine::roomref;
@@ -28,20 +28,24 @@ float Engine::mouse_x;
 float Engine::mouse_y;
 float Engine::r;
 float Engine::g;
-float Engine::b;
+float Engine::b;*/
 
 void Engine::init() {
+
+	cout << "engine.cpp init begin initialization" << endl;
 	Engine::currentRoom = NULL;
 
-        instanceref = *(new vector<Object *>());
-        objectref = *(new vector<ObjectType *>());
-        imageref = *(new vector<Image *>());
-        roomref = *(new vector<Room *>());
+	cout << "engine.cpp init creating reference vectors" << endl;
+        Engine::instanceref = *(new vector<Object *>());
+        Engine::objectref = *(new vector<ObjectType *>());
+        Engine:;imageref = *(new vector<Image *>());
+        Engine::roomref = *(new vector<Room *>());
 
-        instances = new instancemap();
-        instances->insert(pair<int,objlist *>(0,new objlist()));
-        instances->insert(pair<int,objlist *>(1,new objlist()));
-        instances->insert(pair<int,objlist *>(2,new objlist()));
+	cout << "engine.cpp init creating instance maps" << endl;
+        Engine::instances = new instancemap();
+	/* -- INSTANCE MAP -- */
+
+	cout << "engine.cpp init creating objects/rooms/images" << endl;
 
         fillObjects();
         fillImages();
@@ -49,26 +53,34 @@ void Engine::init() {
 
         collisionmap = new collidemap();
 
+	cout << "engine.cpp init registering collisions" << endl;
+
         registerCollisions();
 
-        mouse_left_flagged = false;
-        mouse_left_flagged_laststep = false;
-        mouse_right_flagged = false;
-        mouse_right_flagged_laststep = false;
-        mouse_center_flagged = false;
-        mouse_center_flagged_laststep = false;
+        Engine::mouse_left_flagged = false;
+        Engine::mouse_left_flagged_laststep = false;
+        Engine::mouse_right_flagged = false;
+        Engine::mouse_right_flagged_laststep = false;
+        Engine::mouse_center_flagged = false;
+        Engine::mouse_center_flagged_laststep = false;
 
-        keys = new keyhitmap();
-        keyslaststep = new keyhitmap();
-        keymaps = new keymap();
-        keydownmaps = new keymap();
-        keyupmaps = new keymap();
+	cout << "engine.cpp init creating keymaps" << endl;
+
+        Engine::keys = new keyhitmap();
+        Engine::keyslaststep = new keyhitmap();
+        Engine::keymaps = new keymap();
+        Engine::keydownmaps = new keymap();
+        Engine::keyupmaps = new keymap();
+
+	cout << "engine.cpp init creating function maps " << endl;
 
         generateFunctionMaps();
 
-	r = 0;
-	g = 0;
-	b = 0;
+	Engine::r = 0;
+	Engine::g = 0;
+	Engine::b = 0;
+
+	cout << "engine.cpp init initialization complete " << endl;
 }
 
 void Engine::fillObjects() {
@@ -82,9 +94,14 @@ void Engine::fillImages() {
 void Engine::fillRooms() {
 	/* -- CREATE ROOMS -- */
 
-	if (roomref.size() > 0) {	
+	cout << "engine.cpp fillRooms there are " << Engine::roomref.size() << " rooms" << endl;
+	if (Engine::roomref.size() > 0) {	
         	Engine::currentRoom = roomref[0];
+		cout << "engine.cpp fillRooms room creation code " << endl;
+		Engine::currentRoom->initInstances();
 		Engine::currentRoom->create();
+		// forcing a reshape will cause main program to change to current room size
+		glutReshapeWindow(Engine::currentRoom.width,Engine::currentRoom.height);
 	}
 }
 
@@ -116,11 +133,12 @@ void Engine::handleEvents() {
 
 	// left button
 	if (mouse_left_flagged && !mouse_left_flagged_laststep) {
+		cout << "engine.cpp handleEvents mouse left click " << instances.size() << endl;
 		for (i=0;i<instances.size();i++) {
-                	Object *inst = instances[i];
+			Object *inst = instances[i];
 			if (inst != NULL) {
 				if (inst->pointInside(Engine::mouse_x,Engine::mouse_y)) {
-                        		inst->mousepressed_left();
+	                		inst->mousepressed_left();
 				}
 				inst->globalmousepressed_left();
 			}

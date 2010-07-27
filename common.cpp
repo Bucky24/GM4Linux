@@ -5,10 +5,12 @@ int instance_create(unsigned int id, int x, int y) {
         Object *inst = NULL;
         ObjectType *object= Engine::objectref[id];
 	/* -- OBJECT CREATION -- */
+	cout << "common.cpp instance_create " << id << " " << (int)inst << endl;
         if (inst != NULL) {
                 Engine::instanceref.push_back(inst);
                 Engine::instances->find(id)->second->push_back(inst);
 		if (Engine::currentRoom != NULL) {
+			cout << "common.cpp instance_create room is not null" << endl;
 			Engine::currentRoom->instances.push_back(inst);
 		}
                 ret = Engine::instanceid;
@@ -30,6 +32,15 @@ void draw_line(float x1, float y1, float x2, float y2) {
 	glVertex2f(x1,y1);
 	glVertex2f(x2,y2);
 	glEnd();
+}
+
+void draw_line_color(float x1, float y1, float x2, float y2, float r, float g, float b) {
+	glColor3f(r,g,b);
+	glBegin(GL_LINES);
+	glVertex2f(x1,y1);
+	glVertex2f(x2,y2);
+	glEnd();
+	glColor3f(Engine::r,Engine::g,Engine::b);
 }
 
 int instance_number(int object) {

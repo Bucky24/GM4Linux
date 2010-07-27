@@ -189,6 +189,12 @@ int main(int argc, char **argv) {
 					writeString(outfile,line.c_str(),line.size());
 					char s = '\n';
 					outfile.write(&s,1);
+					secondState = 2;
+				} else if (secondState == 2) {
+					writeString(outfile,line.c_str(),line.size());
+					char s = '\n';
+					outfile.write(&s,1);
+					secondState = 3;
 				}
 			} else if (state == 7) {
 				writeString(outfile,line.c_str(),line.size());

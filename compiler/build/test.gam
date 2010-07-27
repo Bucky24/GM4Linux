@@ -10,7 +10,7 @@ Object *obj;
 for (i=0;i<instance_number(testobject);i++) {
 	obj = instance_find(testobject,i);
 	if (obj != this) {
-		draw_line(x,y,obj->x,obj->y);
+		draw_line_color(x,y,obj->x,obj->y,c_white);
 	}
 }
 [/action]
@@ -19,7 +19,6 @@ for (i=0;i<instance_number(testobject);i++) {
 control
 [action]
 globalmousepressed_left
-cout << "here" << endl;
 instance_create(testobject,Engine::mouse_x,Engine::mouse_y);
 [/action]
 [/object]
@@ -28,6 +27,7 @@ instance_create(testobject,Engine::mouse_x,Engine::mouse_y);
 [room]
 testroom
 0,0,0
+1024,768
 [instances]
 control,30,30
 [/instances]

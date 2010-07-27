@@ -1,4 +1,7 @@
 #include "Room.h"
+#include <iostream>
+
+using namespace std;
 
 Room::Room(int i, string t, int w, int h, int sp) {
         id = i;

@@ -39,6 +39,7 @@ void handleKeypress(unsigned char key, int x, int y) {
 void handleMouse(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON) {
 		if (state == GLUT_DOWN) {
+			cout << "main.cpp handleMouse" << endl;
 			Engine::mouse_left_flagged = true;
 		} else if (state == GLUT_UP) {
 			Engine::mouse_left_flagged = false;	
@@ -75,6 +76,7 @@ void initRendering() {
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_COLOR_MATERIAL);
 
+	cout << "main.cpp initRendering initializing engine" << endl;
         Engine::init();
 }
 
@@ -82,7 +84,7 @@ void handleResize(int w, int h) {
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(0,WINDOW_WIDTH,WINDOW_HEIGHT,0,-100,1000);
+	glOrtho(0,w,h,0,-100,1000);
 }
 
 void drawScene() {
@@ -118,7 +120,9 @@ int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-	
+
+	cout << "main.cpp main program entered" << endl;	
+
 	glutCreateWindow("Game name!");
 	initRendering();
 

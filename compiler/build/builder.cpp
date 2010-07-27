@@ -65,11 +65,14 @@ int main(int argc, char **argv) {
 	vector<string> instances;
 	string roomColors = "";
 	string instanceString = "";
+	string roomSize = "";
+	bool readSize = false;
 	// common.h
 	string objectDefinitions = "";
 	// engine.cpp
 	string objectTypes = "";
 	string createRooms = "";
+	string instanceMap = "";
 	// common.cpp
 	string objectCreation = "";
 	// Makefile
@@ -151,6 +154,8 @@ int main(int argc, char **argv) {
 
 				objectIncludes += "\n#include \"" + className + ".h\"\n";
 
+				instanceMap += "instances->insert(pair<int,objlist *>(" + count + ",new objlist()));\n";
+
 				objectCount ++;
 				
 				objectName = "";
@@ -183,7 +188,7 @@ int main(int argc, char **argv) {
 					outfile << "#include \"" << className << ".h\"\n";
 					outfile << "#include \"Objects.h\"\n";
 					outfile << "#include \"common.h\"\n";
-					outfile << className << "::" << className << "(int i, string t, int w, int h, int sp) : Room(i,t,w,h,sp) {\nr=" << temptoks[0] << ";\ng=" << temptoks[1] << ";\nb=" << temptoks[2] << ";\ninitInstances();\n}\n";
+					outfile << className << "::" << className << "(int i, string t, int w, int h, int sp) : Room(i,t,w,h,sp) {\nr=" << temptoks[0] << ";\ng=" << temptoks[1] << ";\nb=" << temptoks[2] << ";\n}\n";
 					outfile << "void " << className << "::initInstances() {\n";
 					for (i=0;i<instances.size();i++) {
 						temptoks.clear();
@@ -195,15 +200,22 @@ int main(int argc, char **argv) {
 				} else {
 					cout << "Couldn't open " << fileName << " for some reason\n";
 				}
+				outfile.close();
+				roomIncludes += "#include \"" + className + ".h\"\n";
+				extraFiles += className + ".h " + className + ".cpp ";
+
+				vector<string> temptoks;
+				Tokenize(roomSize,temptoks,",");
+				createRooms += "Engine::roomref.push_back(new " + className + "(0,\"" + roomName + "\"," + temptoks[0] + "," + temptoks[1] + "));";
+
+
 				roomName = "";
 				roomColors = "";
 				instances.clear();
 				readName = false;
 				readColors = false;
-				outfile.close();
-				roomIncludes += "#include \"" + className + ".h\"\n";
-				extraFiles += className + ".h " + className + ".cpp ";
-				createRooms += "Engine::roomref.push_back(new " + className + "(0,\"" + roomName + "\",800,600));";
+				readSize = false;
+				roomSize = "";
 			} else if (state == 7) {
 				instanceString = "";
 			}
@@ -222,6 +234,7 @@ int main(int argc, char **argv) {
 					code += input;
 				}
 			} else if (state == 6) {
+				//cout << (char)input << endl;
 				if (!readName) {
 					if (input == '\n') {
 						readName = true;
@@ -233,6 +246,12 @@ int main(int argc, char **argv) {
 						readColors = true;
 					} else {
 						roomColors += input;
+					}
+				} else if (!readSize) {
+					if (input == '\n') {
+						readSize = true;
+					} else {
+						roomSize += input;
 					}
 				}
 			} else if (state == 7) {
@@ -280,7 +299,10 @@ int main(int argc, char **argv) {
 				output.replace(output.find("/* -- ROOM INCLUDES -- */"),25,roomIncludes);
 			}
 			if (output.find("/* -- CREATE ROOMS -- */") != string::npos) {
-				output.replace(output.find("/* -- CREATE ROOMS -- */"),25,createRooms);
+				output.replace(output.find("/* -- CREATE ROOMS -- */"),24,createRooms);
+			}
+			if (output.find("/* -- INSTANCE MAP -- */") != string::npos) {
+				output.replace(output.find("/* -- INSTANCE MAP -- */"),24,instanceMap);
 			}
 
 
