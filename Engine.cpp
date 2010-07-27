@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include "Rooms.h"
 
-/*vector<ObjectType *> Engine::objectref;
+vector<ObjectType *> Engine::objectref;
 vector<Image *> Engine::imageref;
 vector<Object *> Engine::instanceref;
 vector<Room *> Engine::roomref;
@@ -28,7 +28,7 @@ float Engine::mouse_x;
 float Engine::mouse_y;
 float Engine::r;
 float Engine::g;
-float Engine::b;*/
+float Engine::b;
 
 void Engine::init() {
 
@@ -101,12 +101,12 @@ void Engine::fillRooms() {
 		Engine::currentRoom->initInstances();
 		Engine::currentRoom->create();
 		// forcing a reshape will cause main program to change to current room size
-		glutReshapeWindow(Engine::currentRoom.width,Engine::currentRoom.height);
+		glutReshapeWindow(Engine::currentRoom->width,Engine::currentRoom->height);
 	}
 }
 
 void Engine::registerCollisions() {
-        collisionmap->insert(pair<ObjectType *,ObjectType *>(objectref[0],objectref[1]));
+	/* -- COLLISIONS -- */
 }
 
 void Engine::handleEvents() {

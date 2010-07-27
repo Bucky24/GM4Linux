@@ -5,6 +5,7 @@
 #include <map>
 #include <sstream>
 #include "files.h"
+#include <cstdlib>
 
 using namespace std;
 
@@ -154,6 +155,8 @@ int main(int argc, char **argv) {
 
 				objectIncludes += "\n#include \"" + className + ".h\"\n";
 
+				extraFiles += className + ".h " + className + ".cpp ";
+
 				instanceMap += "instances->insert(pair<int,objlist *>(" + count + ",new objlist()));\n";
 
 				objectCount ++;
@@ -165,7 +168,7 @@ int main(int argc, char **argv) {
 				cout << "creating new room!" << endl;
 				bool buildH = false;
 				bool buildCpp = false;
-				string className = roomName;
+				string className = "rm_" + roomName;
 
 				string fileName = className + ".h";
 				outfile.open(fileName.c_str());

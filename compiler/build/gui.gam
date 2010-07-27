@@ -1,0 +1,22 @@
+[sprites]
+[/sprites]
+[objects]
+[object]
+obj_button
+[action]
+create
+object::width = 40;
+[/action]
+[action]
+draw
+
+[/action]
+[/object]
+[/objects]
+[rooms]
+[room]
+main
+0.4,0.4,0.4
+800,600
+[/room]
+[rooms]
