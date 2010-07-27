@@ -133,6 +133,8 @@ public:
         float y;
         ObjectType *type;
 
+	map<string,void*> variables;
+
 	bool pointInside(float x, float y);
 };
 

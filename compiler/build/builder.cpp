@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
-	unsigned int i;
+	unsigned int i, j,k,l;
 
 	initFiles();
 
@@ -89,6 +89,51 @@ int main(int argc, char **argv) {
 				instances.push_back(instanceString);
 				instanceString = "";
 			} else if (state == 4 && actionName != "") {
+				// do code processing
+				vector<string> toks;
+				Tokenize(code,toks,"\n");
+				code = "";
+				for (i=0;i<toks.size();i++) {
+					string tmp = toks[i];
+					string variable = "";
+					bool inVariable = false;
+					int varPos = 0;
+					for (j=0;j<tmp.size();j++) {
+						cout << tmp[j] << endl;
+						if (!inVariable) {
+							if (isalpha(tmp[j])) {
+								cout << "new var" << endl;
+								inVariable = true;
+								varPos = j;
+								j--;
+							}
+						} else {
+							if (isalnum(tmp[j]) || tmp[j] == '.') {
+								variable += tmp[j];
+							} else {
+								if (variable != "for" && variable != "if" && variable != "this") {
+									cout << variable << " found" << endl;
+									vector<string> toks2;
+									Tokenize(variable,toks2,".");
+									if (toks2.size() > 1) {
+										cout << "builder.cpp todo: multi-object variable name" << endl;
+									} else {
+										cout << varPos << " " << variable.size() << endl;
+										tmp.replace(varPos,variable.size(),"variables[\"" + variable + "\"]");
+										j += 13;
+									}
+								} else {
+									cout << "reserved" << endl;
+									//j += variable.size();
+								}
+								inVariable = false;
+								varPos = 0;
+								variable = "";
+							}
+						}
+					}
+					code += tmp + "\n";
+				}
 				actionMap.insert(pair<string,string>(actionName,code));
 			}
 			state = input;

@@ -72,3 +72,7 @@ void draw_point(float x, float y) {
 	glVertex2f(x,y);
 	glEnd();
 }
+
+void* cast(string name, void* context) {
+	
+}

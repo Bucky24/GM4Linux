@@ -6,7 +6,7 @@ testobject
 [action]
 draw
 int i;
-Object *obj;
+int obj;
 for (i=0;i<instance_number(testobject);i++) {
 	obj = instance_find(testobject,i);
 	if (obj != this) {

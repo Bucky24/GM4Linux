@@ -18,6 +18,7 @@ Object::Object(int i, ObjectType *obj, float xx, float yy) {
         type = obj;
         x = xx;
         y = yy;
+	variables = *(new map<string, void*>());
         create();
 }
 

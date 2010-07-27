@@ -5,11 +5,14 @@
 obj_button
 [action]
 create
-object::width = 40;
+width = 40;
+height = 15;
 [/action]
 [action]
 draw
+for (i=0;i<width;i++) {
 
+}
 [/action]
 [/object]
 [/objects]
