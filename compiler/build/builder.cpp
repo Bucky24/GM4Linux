@@ -9,6 +9,32 @@
 
 using namespace std;
 
+class Object {
+public:
+	Object(string, map<string,string> *);
+	string name;
+	map<string,string> * actionMap;
+};
+
+Object::Object(string n, map<string,string> *a) {
+	name = n;
+	actionMap = a;
+}
+
+class Room {
+public:
+	Room(string, string, vector<string> *);
+	string name;
+	string colors;
+	vector<string> *instances;
+};
+
+Room::Room(string n, string c, vector<string> *i) {
+	name = n;
+	colors = c;
+	instances = i;
+}
+
 void buildReserved(vector<string> &);
 bool isReserved(string word, vector<string> &vec);
 
@@ -85,11 +111,101 @@ int main(int argc, char **argv) {
 	string objectIncludes = "";
 	// Rooms.h
 	string roomIncludes = "";
+
+	vector<Object *> objects;
+	vector<Room *> rooms;
 	
 	vector<string> reserved;
 	buildReserved(reserved);
 
 	while (infile.read(&input,1)) {
+
+		//infile.seekg(1,ios_base::cur);
+		if (input < 8) {
+			if (state == 6 && instanceString != "") {
+				instances.push_back(instanceString);
+				instanceString = "";
+			} else if (state == 4 && actionName != "") {
+				
+				actionMap.insert(pair<string,string>(actionName,code));
+			}
+			state = input;
+			cout << "new state " << state << endl;
+			if (state == 4) {
+				actionName = "";
+				code = "";
+				readName = false;
+			} else if (state == 2 && objectName != "") {
+				cout << "new object" << endl;
+				Object *obj = new Object(objectName,&actionMap);
+				objects.push_back(obj);				
+
+				objectName = "";
+				actionMap = *(new map<string,string>());
+				readName = false;
+			} else if (state == 5 && roomName != "") {
+				cout << "new room" << endl;
+				Room *rm = new Room(roomName,roomColors,&instances);
+				rooms.push_back(rm);	
+				roomName = "";
+				roomColors = "";
+				instances = *(new vector<string>());
+				readName = false;
+				readColors = false;
+				readSize = false;
+				roomSize = "";
+			} else if (state == 7) {
+				instanceString = "";
+			}
+		} else {
+			if (state == 3) {
+				objectName += input;
+				//cout << (int)input << input << endl;
+			} else if (state == 4) {
+				if (!readName) {
+					if (input == '\n') {
+						readName = true;
+					} else {
+						actionName += input; 
+					}
+				} else {
+					code += input;
+				}
+			} else if (state == 6) {
+				//cout << (char)input << endl;
+				if (!readName) {
+					if (input == '\n') {
+						readName = true;
+					} else {
+						roomName += input;
+					}
+				} else if (!readColors) {
+					if (input == '\n') {
+						readColors = true;
+					} else {
+						roomColors += input;
+					}
+				} else if (!readSize) {
+					if (input == '\n') {
+						readSize = true;
+					} else {
+						roomSize += input;
+					}
+				}
+			} else if (state == 7) {
+				if (input == '\n') {
+					if (instanceString != "") {
+						instances.push_back(instanceString);
+					}
+					instanceString = "";
+				} else {
+					instanceString += input;
+				}
+			}
+		}
+	}
+
+	/*while (infile.read(&input,1)) {
 		//infile.seekg(1,ios_base::cur);
 		if (input < 8) {
 			if (state == 6 && instanceString != "") {
@@ -326,7 +442,7 @@ int main(int argc, char **argv) {
 				}
 			}
 		}
-	}
+	}*/
 
 	// begin output of files.
 	map<string,string*>::iterator itor;

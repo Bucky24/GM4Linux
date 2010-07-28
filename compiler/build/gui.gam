@@ -16,6 +16,17 @@ draw_line(x,y+height,x+width,y+height);
 draw_line(x+width,y,x+width,y+height);
 [/action]
 [/object]
+[object]
+obj_textfield
+[action]
+create
+width = 100
+height = 100
+[/action]
+[action]
+draw
+[/action]
+[/object]
 [/objects]
 [rooms]
 [room]
