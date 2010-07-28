@@ -91,7 +91,7 @@ ostream& operator<<(ostream &output, const Variable &var) {
 	} else if (var.type == 2) {
 		output << var.sdata;
 	} else {
-		output << "UNDEF";
+		output << "(UNDEF)";
 	}
 	return output;
 }

@@ -32,7 +32,7 @@ void draw_line(float x1, float y1, float x2, float y2) {
 	glVertex2f(x1,y1);
 	glVertex2f(x2,y2);
 	glEnd();
-	// this point needed because gl vertex never draws the starting point
+	// this point needed because gl lines never draws the starting point
 	glBegin(GL_POINTS);
 	glVertex2f(x1,y1);
 	glEnd();
@@ -44,7 +44,7 @@ void draw_line_color(float x1, float y1, float x2, float y2, float r, float g, f
 	glVertex2f(x1,y1);
 	glVertex2f(x2,y2);
 	glEnd();
-	// this point needed because gl vertex never draws the starting point
+	// this point needed because gl lines never draws the starting point
 	glBegin(GL_POINTS);
 	glVertex2f(x1,y1);
 	glEnd();
@@ -59,13 +59,13 @@ int instance_number(int object) {
 	return itor->second->size();
 }
 
-Object *instance_find(int object, int number) {
+int instance_find(int object, int number) {
 	instancemap::iterator itor = Engine::instances->find(object);
 	if (itor == Engine::instances->end()) {
 		return 0;
 	}
 	objlist *list = itor->second;
-	return list->at(number);
+	return list->at(number)->id;
 }
 
 void draw_set_color_rgb(int r, int g, int b) {
