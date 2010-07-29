@@ -15,9 +15,9 @@ public:
 
 class Font {
 public:
-	Font(char *filename);
-	Font(string filename);
+	Font(char *);
 	map<char,Letter *> letters;
+	void create(const char *);
 };
 
 #endif

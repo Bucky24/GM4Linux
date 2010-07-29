@@ -5,15 +5,7 @@
 
 using namespace std;
 
-Font::Font(string filename) {
-	create(filename.c_str());
-}
-
 Font::Font(char *filename) {
-	create(filename);
-}
-
-void create(char *filename) {
 	ifstream infile;
 	infile.open(filename, ios::in | ios::binary);
 	char c;
