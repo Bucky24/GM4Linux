@@ -9,6 +9,7 @@
 #include "ObjectType.h"
 #include "Room.h"
 #include <map>
+#include "Font.h"
 
 #include <iostream>
 
@@ -41,6 +42,7 @@ public:
         static void fillObjects();
         static void fillImages();
         static void fillRooms();
+	static void fillFonts();
         static void registerCollisions();
 
         static void generateFunctionMaps();
@@ -98,6 +100,8 @@ public:
         static collidemap *collisionmap;
 
 	static void updateObjects();
+
+	static vector<Font *> fonts;
 };
 
 #endif

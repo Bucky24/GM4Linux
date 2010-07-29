@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
 	}
 
 	string line;
-	int state = 0; // 0=none, 1=sprites, 2=objects, 3=object, 4=object action, 5=rooms, 6=room, 7=room instances
+	int state = 0; // 0=none, 1=sprites, 2=objects, 3=object, 4=object action, 5=rooms, 6=room, 7=room instances, 8=fonts
 	int secondState = 0;
 
 	string objectName;
@@ -163,6 +163,14 @@ int main(int argc, char **argv) {
 			char s = (char)state;
 			outfile.write(&s,1);
 			//outfile.seekp(1,ios_base::cur);
+		} else if (state == 0 && line == "[fonts]") {
+			state = 8;
+			char s = (char)state;
+			outfile.write(&s,1);
+		} else if (state == 8 && line == "[/fonts]") {
+			state = 0;
+			char s = (char)state;
+			outfile.write(&s,1);
 		} else {
 			if (state == 3) {
 				if (secondState == 0) {
@@ -198,6 +206,12 @@ int main(int argc, char **argv) {
 				}
 			} else if (state == 7) {
 				writeString(outfile,line.c_str(),line.size());
+				char s = '\n';
+				outfile.write(&s,1);
+			} else if (state == 8) {
+				writeString(outfile,line.c_str(),line.size());
+				char s = '\n';
+				outfile.write(&s,1);
 			}
 		}
 		//cout << state << " " << line << endl;

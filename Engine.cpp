@@ -6,6 +6,7 @@ vector<ObjectType *> Engine::objectref;
 vector<Image *> Engine::imageref;
 vector<Object *> Engine::instanceref;
 vector<Room *> Engine::roomref;
+vector< Font *> Engine::fonts;
 int Engine::instanceid = 0;
 Room *Engine::currentRoom;
 keyhitmap *Engine::keys;
@@ -38,8 +39,9 @@ void Engine::init() {
 	cout << "engine.cpp init creating reference vectors" << endl;
         Engine::instanceref = *(new vector<Object *>());
         Engine::objectref = *(new vector<ObjectType *>());
-        Engine:;imageref = *(new vector<Image *>());
+        Engine::imageref = *(new vector<Image *>());
         Engine::roomref = *(new vector<Room *>());
+	Engine::fonts = *(new vector<Font *>());
 
 	cout << "engine.cpp init creating instance maps" << endl;
         Engine::instances = new instancemap();
@@ -50,6 +52,7 @@ void Engine::init() {
         fillObjects();
         fillImages();
         fillRooms();
+	fillFonts();
 
         collisionmap = new collidemap();
 
@@ -103,6 +106,10 @@ void Engine::fillRooms() {
 		// forcing a reshape will cause main program to change to current room size
 		glutReshapeWindow(Engine::currentRoom->width,Engine::currentRoom->height);
 	}
+}
+
+void Engine::fillFonts() {
+	/* -- CREATE FONTS -- */
 }
 
 void Engine::registerCollisions() {

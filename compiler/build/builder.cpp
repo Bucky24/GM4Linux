@@ -100,12 +100,14 @@ int main(int argc, char **argv) {
 	string instanceString = "";
 	string roomSize = "";
 	bool readSize = false;
+	string fontString = "";
 	// common.h
 	string objectDefinitions = "";
 	// engine.cpp
 	string objectTypes = "";
 	string createRooms = "";
 	string instanceMap = "";
+	string createFonts = "";
 	// common.cpp
 	string objectCreation = "";
 	// Makefile
@@ -117,6 +119,7 @@ int main(int argc, char **argv) {
 
 	vector<Object *> objects;
 	vector<Room *> rooms;
+	vector<string> fonts;
 	
 	vector<string> reserved;
 	buildReserved(reserved);
@@ -124,7 +127,7 @@ int main(int argc, char **argv) {
 	while (infile.read(&input,1)) {
 
 		//infile.seekg(1,ios_base::cur);
-		if (input < 8) {
+		if (input < 9) {
 			if (state == 6 && instanceString != "") {
 				instances->push_back(instanceString);
 				instanceString = "";
@@ -133,13 +136,13 @@ int main(int argc, char **argv) {
 				actionMap->insert(pair<string,string>(actionName,code));
 			}
 			state = input;
-			cout << "new state " << state << endl;
+			//cout << "new state " << state << endl;
 			if (state == 4) {
 				actionName = "";
 				code = "";
 				readName = false;
 			} else if (state == 2 && objectName != "") {
-				cout << "new object" << endl;
+				//cout << "new object" << endl;
 				Object *obj = new Object(objectName,actionMap);
 				objects.push_back(obj);				
 
@@ -147,7 +150,7 @@ int main(int argc, char **argv) {
 				actionMap = new map<string,string>();
 				readName = false;
 			} else if (state == 5 && roomName != "") {
-				cout << "new room" << endl;
+				//cout << "new room" << endl;
 				Room *rm = new Room(roomName,roomColors,roomSize,instances);
 				rooms.push_back(rm);	
 				roomName = "";
@@ -204,6 +207,17 @@ int main(int argc, char **argv) {
 				} else {
 					instanceString += input;
 				}
+			} else if (state == 8) {
+				//cout << input << endl;
+				if (input == '\n') {
+					if (fontString != "") {
+						//cout << "found font " << fontString << endl;
+						fonts.push_back(fontString);
+					}
+					fontString = "";
+				} else {
+					fontString += input;
+				}
 			}
 		}
 	}
@@ -220,7 +234,7 @@ int main(int argc, char **argv) {
 	for (i=0;i<objects.size();i++) {
 		objectName = objects[i]->name;
 		actionMap = objects[i]->actionMap;
-		cout << "creating new object\n";
+		//cout << "creating new object\n";
 		bool buildH = false;
 		bool buildCpp = false;
 		string className = "obj_" + objectName;
@@ -281,7 +295,7 @@ int main(int argc, char **argv) {
 
 		extraFiles += className + ".h " + className + ".cpp ";
 
-		cout << "extras: " << extraFiles << endl;
+		//cout << "extras: " << extraFiles << endl;
 
 		instanceMap += "instances->insert(pair<int,objlist *>(" + count + ",new objlist()));\n";
 
@@ -293,7 +307,7 @@ int main(int argc, char **argv) {
 		roomColors = rooms[i]->colors;
 		instances = rooms[i]->instances;
 		roomSize = rooms[i]->size;
-		cout << "creating new room!" << endl;
+		//cout << "creating new room!" << endl;
 		bool buildH = false;
 		bool buildCpp = false;
 		string className = "rm_" + roomName;
@@ -340,6 +354,11 @@ int main(int argc, char **argv) {
 		createRooms += "Engine::roomref.push_back(new " + className + "(0,\"" + roomName + "\"," + temptoks[0] + "," + temptoks[1] + "));";
 	}
 
+	for (i=0;i<fonts.size();i++) {
+		string font = fonts[i];
+		createFonts += "Engine::fonts.push_back(new Font(\"" + font + ".font\"));\n";
+	}
+
 	// begin output of files.
 	map<string,string*>::iterator itor;
 	for (itor=files.begin();itor!=files.end();itor++) {
@@ -376,6 +395,9 @@ int main(int argc, char **argv) {
 			}
 			if (output.find("/* -- INSTANCE MAP -- */") != string::npos) {
 				output.replace(output.find("/* -- INSTANCE MAP -- */"),24,instanceMap);
+			}
+			if (output.find("/* -- CREATE FONTS -- */") != string::npos) {
+				output.replace(output.find("/* -- CREATE FONTS -- */"),24,createFonts);
 			}
 
 
@@ -417,7 +439,7 @@ bool isReserved(string word, vector<string> &vec) {
 }
 
 string processCode(string code, vector<string> reserved) {
-	unsigned int i,j;
+	int i,j;
 	// do code processing
 	vector<string> toks;
 	Tokenize(code,toks,"\n");
@@ -429,32 +451,36 @@ string processCode(string code, vector<string> reserved) {
 		int varPos = 0;
 		bool inQuotes = false;
 		for (j=0;j<tmp.size();j++) {
-			cout << tmp[j] << endl;
+			//cout << tmp[j] << endl;
 			if (!inVariable) {
 				if (isalpha(tmp[j]) && !inQuotes) {
-					cout << "new var" << endl;
+					//cout << "new var " << variable << endl;
 					inVariable = true;
 					varPos = j;
 					j--;
+					//cout << j << endl;
 				}
 			} else {
 				if (isalnum(tmp[j]) || tmp[j] == '.' || tmp[j] == '_') {
 					variable += tmp[j];
 				} else {
-					if (!isReserved(variable,reserved)) {
-						cout << variable << " found" << endl;
-						vector<string> toks2;
-						Tokenize(variable,toks2,".");
-						if (toks2.size() > 1) {
-							cout << "builder.cpp todo: multi-object variable name" << endl;
+					if (variable != "") {
+						//cout << "running " << variable << endl;
+						if (!isReserved(variable,reserved)) {
+							//cout << variable << " found" << endl;
+							vector<string> toks2;
+							Tokenize(variable,toks2,".");
+							if (toks2.size() > 1) {
+								cout << "builder.cpp todo: multi-object variable name" << endl;
+							} else {
+								//cout << varPos << " " << variable.size() << endl;
+								tmp.replace(varPos,variable.size(),"variables[\"" + variable + "\"]");
+								j += 13;
+							}
 						} else {
-							cout << varPos << " " << variable.size() << endl;
-							tmp.replace(varPos,variable.size(),"variables[\"" + variable + "\"]");
-							j += 13;
+							//cout << "reserved" << endl;
+							//j += variable.size();
 						}
-					} else {
-						cout << "reserved" << endl;
-						//j += variable.size();
 					}
 					inVariable = false;
 					varPos = 0;
@@ -467,5 +493,6 @@ string processCode(string code, vector<string> reserved) {
 		}
 		code += tmp + "\n";
 	}
+	//cout << "processed code" << endl;
 	return code;
 }

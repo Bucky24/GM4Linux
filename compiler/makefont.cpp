@@ -24,6 +24,25 @@ Letter::Letter(int w, int h, char *p) {
 	pixels = p;
 }
 
+void Tokenize(const string& str,
+                      vector<string>& tokens,
+                      const string& delimiters = " ")
+{
+    // Skip delimiters at beginning.
+    string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+    // Find first "non-delimiter".
+    string::size_type pos     = str.find_first_of(delimiters, lastPos);
+
+    while (string::npos != pos || string::npos != lastPos)
+    {
+        // Found a token, add it to the vector.
+        tokens.push_back(str.substr(lastPos, pos - lastPos));
+        // Skip delimiters.  Note the "not_of"
+        lastPos = str.find_first_not_of(delimiters, pos);
+        // Find next "non-delimiter"
+        pos = str.find_first_of(delimiters, lastPos);
+    }
+}
 
 int main(int argc, char **argv) {
 	if (argc < 2) {
@@ -247,18 +266,83 @@ int main(int argc, char **argv) {
 		}
 
 		// now format for font thingy
-		// first byte is height
-		// second is width
+		// first byte is width
+		// second is height
+		// third is the ASCII value of the character
 		// then letter data
 		// then next height, width, data, ect
 		// letters in the following order a-zA-z
-		outfile.open("output", ios::out | ios::binary);
+
+		vector<char> letterVec;
+		letterVec.push_back('a');
+		letterVec.push_back('b');
+		letterVec.push_back('c');
+		letterVec.push_back('d');
+		letterVec.push_back('e');
+		letterVec.push_back('f');
+		letterVec.push_back('g');
+		letterVec.push_back('h');
+		letterVec.push_back('i');
+		letterVec.push_back('j');
+		letterVec.push_back('k');
+		letterVec.push_back('l');
+		letterVec.push_back('m');
+		letterVec.push_back('n');
+		letterVec.push_back('o');
+		letterVec.push_back('p');
+		letterVec.push_back('q');
+		letterVec.push_back('r');
+		letterVec.push_back('s');
+		letterVec.push_back('t');
+		letterVec.push_back('u');
+		letterVec.push_back('v');
+		letterVec.push_back('w');
+		letterVec.push_back('x');
+		letterVec.push_back('y');
+		letterVec.push_back('z');
+		letterVec.push_back('A');
+		letterVec.push_back('B');
+		letterVec.push_back('C');
+		letterVec.push_back('D');
+		letterVec.push_back('E');
+		letterVec.push_back('F');
+		letterVec.push_back('G');
+		letterVec.push_back('H');
+		letterVec.push_back('I');
+		letterVec.push_back('J');
+		letterVec.push_back('K');
+		letterVec.push_back('L');
+		letterVec.push_back('M');
+		letterVec.push_back('N');
+		letterVec.push_back('O');
+		letterVec.push_back('P');
+		letterVec.push_back('Q');
+		letterVec.push_back('R');
+		letterVec.push_back('S');
+		letterVec.push_back('T');
+		letterVec.push_back('U');
+		letterVec.push_back('V');
+		letterVec.push_back('W');
+		letterVec.push_back('X');
+		letterVec.push_back('Y');
+		letterVec.push_back('Z');
+
+		// get output name
+		string outname = argv[i];
+		vector<string> toks;
+		Tokenize(outname,toks,".");
+		outname = toks[0];
+		outname += ".font";
+
+		outfile.open(outname.c_str(), ios::out | ios::binary);
 		for (l=0;l<letters.size();l++) {
 			Letter *let = letters[l];
 			char *image2 = let->pixels;
-			char c = let->height;
+			char c = let->width;
 			outfile.write(&c,1);
-			c = let->width;
+			c = let->height;
+			outfile.write(&c,1);
+			c = letterVec[l];
 			outfile.write(&c,1);
 			for (j=0;j<let->height;j++) {
 				for (k=0;k<let->width;k++) {
