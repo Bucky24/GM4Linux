@@ -246,22 +246,31 @@ int main(int argc, char **argv) {
 			prev = splits[l+1];
 		}
 
-		outfile.open("output");
+		// now format for font thingy
+		// first byte is height
+		// second is width
+		// then letter data
+		// then next height, width, data, ect
+		// letters in the following order a-zA-z
+		outfile.open("output", ios::out | ios::binary);
 		for (l=0;l<letters.size();l++) {
 			Letter *let = letters[l];
 			char *image2 = let->pixels;
+			char c = let->height;
+			outfile.write(&c,1);
+			c = let->width;
+			outfile.write(&c,1);
 			for (j=0;j<let->height;j++) {
 				for (k=0;k<let->width;k++) {
 					int index = (j*let->width+k)*3;
-					if (image2[index] != -1 || image2[index+1] != -1 || image2[index+2] != -1) {
-						outfile << "*";
-					} else {
-						outfile << " ";
-					}
+					c = image2[index];
+					outfile.write(&c,1);
+					c = image2[index+1];
+					outfile.write(&c,1);
+					c = image2[index+2];
+					outfile.write(&c,1);
 				}
-				outfile << endl;
 			}
-			outfile << endl;
 		}
 		outfile.close();
 	}
