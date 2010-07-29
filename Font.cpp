@@ -35,3 +35,10 @@ Letter::Letter(int w, int h, char *pix) {
 	height = h;
 	pixels = pix;
 }
+
+Font::widthOf(char c) {
+	if (letters[c] != NULL) {
+		return letters[c]->width;
+	}
+	return 0;
+}

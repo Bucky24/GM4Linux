@@ -93,6 +93,8 @@ public:
 	static float g;
 	static float b;
 
+	static Font *currentFont;
+
 	static void setColors(float,float,float);
 
         static instancemap *instances;

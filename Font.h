@@ -18,6 +18,7 @@ public:
 	Font(char *);
 	map<char,Letter *> letters;
 	void create(const char *);
+	int widthOf(char);
 };
 
 #endif

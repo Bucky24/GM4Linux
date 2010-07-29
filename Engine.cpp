@@ -110,6 +110,10 @@ void Engine::fillRooms() {
 
 void Engine::fillFonts() {
 	/* -- CREATE FONTS -- */
+
+	if (Engine::fonts.size() > 0) {
+		Engine::currentFont = fonts[0];
+	}
 }
 
 void Engine::registerCollisions() {

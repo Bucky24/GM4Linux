@@ -1,5 +1,11 @@
 #include "common.h"
 
+void draw_character(char letter, float x, float y) {
+	Letter *letter = Engine::currentFont->letters[letter];
+	int i,j;
+	for (i=x;i<
+}
+
 int instance_create(unsigned int id, int x, int y) {
         int ret = noone;
         Object *inst = NULL;
@@ -79,4 +85,8 @@ void draw_point(float x, float y) {
 	glBegin(GL_POINTS);
 	glVertex2f(x,y);
 	glEnd();
+}
+
+void drawText(string text, float x, float y) {
+	
 }
