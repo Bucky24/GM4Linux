@@ -30,6 +30,7 @@ float Engine::mouse_y;
 float Engine::r;
 float Engine::g;
 float Engine::b;
+Font *Engine::currentFont;
 
 void Engine::init() {
 

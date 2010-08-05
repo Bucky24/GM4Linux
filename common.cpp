@@ -1,9 +1,11 @@
 #include "common.h"
 
 void draw_character(char letter, float x, float y) {
-	Letter *letter = Engine::currentFont->letters[letter];
+	Letter *let = Engine::currentFont->letters[letter];
 	int i,j;
-	for (i=x;i<
+	for (i=x;i<x+let->width;i++) {
+		
+	}
 }
 
 int instance_create(unsigned int id, int x, int y) {

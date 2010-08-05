@@ -36,7 +36,7 @@ Letter::Letter(int w, int h, char *pix) {
 	pixels = pix;
 }
 
-Font::widthOf(char c) {
+int Font::widthOf(char c) {
 	if (letters[c] != NULL) {
 		return letters[c]->width;
 	}
