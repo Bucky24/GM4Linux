@@ -85,6 +85,7 @@ void handleResize(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0,w,h,0,-100,1000);
+	cout << "main.cpp handling resize " << endl;
 	Engine::currentRoom->width = w;
 	Engine::currentRoom->height = h;
 }

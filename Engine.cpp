@@ -53,6 +53,7 @@ void Engine::init() {
         fillObjects();
         fillImages();
         fillRooms();
+	cout << "engine.cpp completed creation of rooms " << endl;
 	fillFonts();
 
         collisionmap = new collidemap();
@@ -101,17 +102,20 @@ void Engine::fillRooms() {
 	cout << "engine.cpp fillRooms there are " << Engine::roomref.size() << " rooms" << endl;
 	if (Engine::roomref.size() > 0) {	
         	Engine::currentRoom = roomref[0];
-		cout << "engine.cpp fillRooms room creation code " << endl;
+		cout << "engine.cpp fillRooms current room creation code " << endl;
 		Engine::currentRoom->initInstances();
 		Engine::currentRoom->create();
+		cout << "engine.cpp fillRooms reshaping window to " << Engine::currentRoom->width << "," << Engine::currentRoom->height << endl;
 		// forcing a reshape will cause main program to change to current room size
 		glutReshapeWindow(Engine::currentRoom->width,Engine::currentRoom->height);
+		cout << "engine.cpp window reshaped " << endl;
 	}
 }
 
 void Engine::fillFonts() {
 	/* -- CREATE FONTS -- */
 
+	cout << "engine.cpp fillFonts there are " << Engine::fonts.size() << " fonts" << endl;
 	if (Engine::fonts.size() > 0) {
 		Engine::currentFont = fonts[0];
 	}

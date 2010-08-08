@@ -426,6 +426,7 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("draw_set_color_rgb");
 	ret.push_back("draw_point");
 	ret.push_back("draw_line_color");
+	ret.push_back("draw_text");
 }
 
 bool isReserved(string word, vector<string> &vec) {

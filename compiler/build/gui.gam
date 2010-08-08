@@ -10,6 +10,7 @@ obj_button
 create
 width = 40;
 height = 15;
+text = "button";
 [/action]
 [action]
 draw
@@ -17,6 +18,7 @@ draw_line(x,y,x+width,y);
 draw_line(x,y,x,y+height);
 draw_line(x,y+height,x+width,y+height);
 draw_line(x+width,y,x+width,y+height);
+draw_text(text,x,y);
 [/action]
 [/object]
 [object]
@@ -37,7 +39,7 @@ main
 0.6,0.6,0.6
 800,600
 [instances]
-obj_button,100,100
+obj_button,0,0
 [/instances]
 [/room]
 [rooms]
