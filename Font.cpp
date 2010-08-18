@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Font::Font(char *filename) {
+Font::Font(const char *filename) {
 	cout << "font.cpp font creating new font " << filename << endl;
 	ifstream infile;
 	infile.open(filename, ios::in | ios::binary);

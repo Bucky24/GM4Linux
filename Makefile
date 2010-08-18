@@ -15,7 +15,7 @@ all:
 	$(CC) $(LIBS) $(CFLAGS) -o $(PROG) $(CORE_FILES) $(EXTRA_FILES)
 
 clean:
-	rm -f $(PROG)
+	rm -f *.o
 
 cleancode:
 	rm -f $(CORE_FILES) $(EXTRA_FILES)

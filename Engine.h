@@ -80,8 +80,8 @@ public:
         static bool mouse_center_flagged;
         static bool mouse_center_flagged_laststep;
 
-	static float mouse_x;
-	static float mouse_y;
+	static float mousex;
+	static float mousey;
 
 	static void setMouse(int x, int y);
         

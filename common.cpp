@@ -1,6 +1,8 @@
 #include "common.h"
 
 void draw_character(char letter, float x, float y) {
+	x++;
+	y++;
 	glColor3f(0,0,0);
 	Letter *let = Engine::currentFont->letters[letter];
 	unsigned int i,j;
@@ -47,6 +49,8 @@ void draw_sprite(unsigned int sprite, int offset, float x, float y) {
 void draw_line(float x1, float y1, float x2, float y2) {
 	x1++;
 	x2++;
+	y1++;
+	y2++;
 	glColor3f(Engine::r,Engine::g,Engine::b);
 	glBegin(GL_LINES);
 	glVertex3f(x1,y1,0);
@@ -58,6 +62,8 @@ void draw_line(float x1, float y1, float x2, float y2) {
 void draw_line_color(float x1, float y1, float x2, float y2, float r, float g, float b) {
 	x1++;
 	x2++;
+	y1++;
+	y2++;
 	glColor3f(r,g,b);
 	glBegin(GL_LINES);
 	glVertex3f(x1,y1,0);

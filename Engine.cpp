@@ -25,8 +25,8 @@ objfunc Engine::stepEvent;
 objfunc Engine::endStepEvent;
 instancemap *Engine::instances;
 collidemap *Engine::collisionmap;
-float Engine::mouse_x;
-float Engine::mouse_y;
+float Engine::mousex;
+float Engine::mousey;
 float Engine::r;
 float Engine::g;
 float Engine::b;
@@ -153,7 +153,7 @@ void Engine::handleEvents() {
 		for (i=0;i<instances.size();i++) {
 			Object *inst = instances[i];
 			if (inst != NULL) {
-				if (inst->pointInside(Engine::mouse_x,Engine::mouse_y)) {
+				if (inst->pointInside(Engine::mousex,Engine::mousey)) {
 	                		inst->mousepressed_left();
 				}
 				inst->globalmousepressed_left();
@@ -180,7 +180,7 @@ void Engine::handleEvents() {
 		for (i=0;i<instances.size();i++) {
                 	Object *inst = instances[i];
 			if (inst != NULL) {
-				if (inst->pointInside(Engine::mouse_x,Engine::mouse_y)) {
+				if (inst->pointInside(Engine::mousex,Engine::mousey)) {
                         		inst->mousepressed_right();
 				}
 				inst->globalmousepressed_right();
@@ -209,7 +209,7 @@ void Engine::handleEvents() {
 		for (i=0;i<instances.size();i++) {
                 	Object *inst = instances[i];
 			if (inst != NULL) {
-				if (inst->pointInside(Engine::mouse_x,Engine::mouse_y)) {
+				if (inst->pointInside(Engine::mousex,Engine::mousey)) {
                         		inst->mousepressed_middle();
 				}
 				inst->globalmousepressed_middle();
@@ -324,8 +324,8 @@ Room *Engine::getRoom(unsigned int id) {
 }
 
 void Engine::setMouse(int x, int y) {
-	Engine::mouse_x = x;
-	Engine::mouse_y = y;
+	Engine::mousex = x;
+	Engine::mousey = y;
 }
 
 void Engine::setColors(float r, float g, float b) {

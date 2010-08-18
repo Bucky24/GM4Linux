@@ -15,7 +15,7 @@ public:
 
 class Font {
 public:
-	Font(char *);
+	Font(const char *);
 	map<char,Letter *> letters;
 	void create(const char *);
 	int widthOf(char);

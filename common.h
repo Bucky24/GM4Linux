@@ -11,6 +11,9 @@
 
 #define self (*this)
 
+#define mouse_x Engine::mousex
+#define mouse_y Engine::mousey
+
 using namespace std;
 
 extern int instance_create(unsigned int id, int x, int y);

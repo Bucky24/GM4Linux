@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
 	string objectTypes = "";
 	string createRooms = "";
 	string instanceMap = "";
-	string createFonts = "";
+	string createFonts = "string fontName;";
 	// common.cpp
 	string objectCreation = "";
 	// Makefile
@@ -356,7 +356,7 @@ int main(int argc, char **argv) {
 
 	for (i=0;i<fonts.size();i++) {
 		string font = fonts[i];
-		createFonts += "Engine::fonts.push_back(new Font(\"" + font + ".font\"));\n";
+		createFonts += "fontName = \"" + font + ".font\";Engine::fonts.push_back(new Font(fontName.c_str()));\n";
 	}
 
 	// begin output of files.
@@ -427,6 +427,8 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("draw_point");
 	ret.push_back("draw_line_color");
 	ret.push_back("draw_text");
+	ret.push_back("mouse_x");
+	ret.push_back("mouse_y");
 }
 
 bool isReserved(string word, vector<string> &vec) {
