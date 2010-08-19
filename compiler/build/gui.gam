@@ -11,9 +11,13 @@ create
 width = 40;
 height = 15;
 text = "button";
+status = "up";
 [/action]
 [action]
 draw
+if (status == "down") {
+	draw_rectangle(x,y,x+width,y+height);
+}
 draw_line(x,y,x+width,y);
 draw_line(x,y,x,y+height);
 draw_line(x,y+height,x+width,y+height);
@@ -23,8 +27,12 @@ draw_text(text,x,y);
 [action]
 globalmousepressed_left
 if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height) {
-	cout << "here" << endl;
+	status = "down";
 }
+[/action]
+[action]
+globalmousereleased_left
+status = "up";
 [/action]
 [/object]
 [object]

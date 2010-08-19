@@ -25,5 +25,6 @@ extern void draw_set_color_rgb(int r, int g, int b);
 extern void draw_point(float x, float y);;
 extern void draw_line_color(float x1, float y1, float x2, float y2, float r, float g, float b);
 extern void draw_text(string text, float x, float y);
+extern void draw_rectangle(float x1, float y1, float x2, float y2);
 
 #endif

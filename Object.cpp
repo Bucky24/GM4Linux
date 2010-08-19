@@ -132,6 +132,10 @@ void Object::globalmousepressed_left() {}
 void Object::globalmousepressed_right() {}
 void Object::globalmousepressed_middle() {}
 
+void Object::globalmousereleased_left() {}
+void Object::globalmousereleased_right() {}
+void Object::globalmousereleased_middle() {}
+
 void Object::step_begin() {}
 void Object::step() {}
 void Object::step_end() {}

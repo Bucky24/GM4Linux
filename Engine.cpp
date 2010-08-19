@@ -171,6 +171,7 @@ void Engine::handleEvents() {
 		for (i=0;i<instances.size();i++) {
                 	Object *inst = instances[i];
 			if (inst != NULL) {
+				inst->globalmousereleased_left();
 			}
                 }
 	}
@@ -200,6 +201,7 @@ void Engine::handleEvents() {
                 	Object *inst = instances[i];
 			if (inst != NULL) {
                         	//inst->mousereleased_right();
+				inst->globalmousereleased_right();
 			}
                 }
 	}
@@ -229,6 +231,7 @@ void Engine::handleEvents() {
                 	Object *inst = instances[i];
 			if (inst != NULL) {
                         	//inst->mousereleased_middle();
+				inst->globalmousereleased_middle();
 			}
                 }
 	}

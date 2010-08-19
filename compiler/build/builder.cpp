@@ -429,6 +429,7 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("draw_text");
 	ret.push_back("mouse_x");
 	ret.push_back("mouse_y");
+	ret.push_back("draw_rectangle");
 }
 
 bool isReserved(string word, vector<string> &vec) {

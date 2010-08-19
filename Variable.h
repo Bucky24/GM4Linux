@@ -22,6 +22,9 @@ public:
 	friend bool operator<(const Variable &, const Variable &);
 	operator float() {return (float)idata;}
 	operator string() {return sdata;}
+	friend bool operator==(const Variable &, string);
+	friend bool operator==(const Variable &, int);
+	friend bool operator==(const Variable &, const Variable &);
 private:
 	int type; // 1=int, 2=string
 	string sdata;

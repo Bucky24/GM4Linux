@@ -95,3 +95,34 @@ ostream& operator<<(ostream &output, const Variable &var) {
 	}
 	return output;
 }
+
+bool operator==(const Variable &var1, string data) {
+	if (var1.type == 2) {
+		if (var1.sdata == data) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool operator==(const Variable &var1, int data) {
+	if (var1.type == 1) {
+		if (var1.idata == data) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool operator==(const Variable &var1, const Variable &var2) {
+	if (var1.type == 1 && var2.type == 1) {
+		if (var1.idata == var2.idata) {
+			return true;
+		}
+	} else if (var1.type == 2 && var2.type == 2) {
+		if (var1.sdata == var2.sdata) {
+			return true;
+		}
+	}
+	return false;
+}

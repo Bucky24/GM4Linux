@@ -116,6 +116,10 @@ public:
 	virtual void globalmousepressed_right();
 	virtual void globalmousepressed_middle();
 
+	virtual void globalmousereleased_left();
+	virtual void globalmousereleased_right();
+	virtual void globalmousereleased_middle();
+
         virtual void step_begin();
         virtual void step();
         virtual void step_end();
