@@ -37,6 +37,18 @@ Room::Room(string n, string c, string s, vector<string> *i) {
 	instances = i;
 }
 
+class Sprite {
+public:
+	Sprite(string, vector<char> *);
+	string name;
+	vector<char> *data;
+}
+
+Sprite::Sprite(string n, vector<char> *d) {
+	name = n;
+	data = d;
+}
+
 void buildReserved(vector<string> &);
 bool isReserved(string word, vector<string> &vec);
 string processCode(string code, vector<string>);
@@ -83,7 +95,7 @@ int main(int argc, char **argv) {
 
 	infile.seekg(0);
 
-	// 0=none, 1=sprites, 2=objects, 3=object, 4=object action, 5=rooms, 6=room, 7=room instances
+	// 0=none, 1=sprites, 2=objects, 3=object, 4=object action, 5=rooms, 6=room, 7=room instances, 8=font
 
 	char input;
 	int state = 0;
@@ -120,15 +132,37 @@ int main(int argc, char **argv) {
 	vector<Object *> objects;
 	vector<Room *> rooms;
 	vector<string> fonts;
+	vector<Sprite *> sprites;
 	
 	vector<string> reserved;
 	buildReserved(reserved);
+
+	vector<char> spriteData;
 
 	while (infile.read(&input,1)) {
 
 		//infile.seekg(1,ios_base::cur);
 		if (input < 9) {
-			if (state == 6 && instanceString != "") {
+			if (state == 1 && spriteData.size() != 0) {
+				while (spriteData.size() > 0) {
+					string name = "";
+					while (true) {
+						char data = spriteData[0]
+						spriteData.erase(spriteData.begin());
+						if (data == 0) break;
+						name += data;
+					}
+					vector<char> tempData = new vector<char>();
+					int width = spriteData[0]*256+spriteData[1];
+					int height = spriteData[2]*256+spriteData[3];
+					for (i=0;i<width*height*3;i++) {
+						tempData.push_back(spriteData[i+4]);
+					}
+					spriteData.erase(spriteData.begin(),spriteData.begin()+4+width*height*3);
+					Sprite *sprite = new Sprite(name,tempData);
+					spriteData.push_back(sprite);
+				}
+			} else if (state == 6 && instanceString != "") {
 				instances->push_back(instanceString);
 				instanceString = "";
 			} else if (state == 4 && actionName != "") {
@@ -137,7 +171,9 @@ int main(int argc, char **argv) {
 			}
 			state = input;
 			//cout << "new state " << state << endl;
-			if (state == 4) {
+			if (state == 1) {
+				spriteData = *(new vector<char>());
+			} else if (state == 4) {
 				actionName = "";
 				code = "";
 				readName = false;
@@ -164,7 +200,9 @@ int main(int argc, char **argv) {
 				instanceString = "";
 			}
 		} else {
-			if (state == 3) {
+			if (state == 1) {
+				spriteData.push_back(input);
+			} else if (state == 3) {
 				objectName += input;
 				//cout << (int)input << input << endl;
 			} else if (state == 4) {

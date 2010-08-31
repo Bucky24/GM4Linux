@@ -1,0 +1,12 @@
+[sprites]
+pen.bmp
+[/sprites]
+[objects]
+[/objects]
+[rooms]
+[room]
+main
+0.6,0.6,0.6
+800,600
+[/room]
+[/rooms]
