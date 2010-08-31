@@ -63,6 +63,7 @@ public:
 	virtual void key_x();
 	virtual void key_y();
 	virtual void key_z();
+	virtual void key_any();
 
 	virtual void keyup_up();
         virtual void keyup_down();
@@ -85,6 +86,33 @@ public:
         virtual void keyup_home();
         virtual void keyup_end();
         virtual void keyup_insert();
+	virtual void keyup_a();
+	virtual void keyup_b();
+	virtual void keyup_c();
+	virtual void keyup_d();
+	virtual void keyup_e();
+	virtual void keyup_f();
+	virtual void keyup_g();
+	virtual void keyup_h();
+	virtual void keyup_i();
+	virtual void keyup_j();
+	virtual void keyup_k();
+	virtual void keyup_l();
+	virtual void keyup_m();
+	virtual void keyup_n();
+	virtual void keyup_o();
+	virtual void keyup_p();
+	virtual void keyup_q();
+	virtual void keyup_r();
+	virtual void keyup_s();
+	virtual void keyup_t();
+	virtual void keyup_u();
+	virtual void keyup_v();
+	virtual void keyup_w();
+	virtual void keyup_x();
+	virtual void keyup_y();
+	virtual void keyup_z();
+	virtual void keyup_any();
 
         virtual void keydown_up();
         virtual void keydown_down();

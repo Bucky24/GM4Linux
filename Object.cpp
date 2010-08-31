@@ -79,6 +79,7 @@ void Object::key_w() {}
 void Object::key_x() {}
 void Object::key_y() {}
 void Object::key_z() {}
+void Object::key_any() {}
 
 void Object::keyup_up() {}
 void Object::keyup_down() {}
@@ -101,6 +102,33 @@ void Object::keyup_page_up() {}
 void Object::keyup_home() {}
 void Object::keyup_end() {}
 void Object::keyup_insert() {}
+void Object::keyup_a() {}
+void Object::keyup_b() {}
+void Object::keyup_c() {}
+void Object::keyup_d() {}
+void Object::keyup_e() {}
+void Object::keyup_f() {}
+void Object::keyup_g() {}
+void Object::keyup_h() {}
+void Object::keyup_i() {}
+void Object::keyup_j() {}
+void Object::keyup_k() {}
+void Object::keyup_l() {}
+void Object::keyup_m() {}
+void Object::keyup_n() {}
+void Object::keyup_o() {}
+void Object::keyup_p() {}
+void Object::keyup_q() {}
+void Object::keyup_r() {}
+void Object::keyup_s() {}
+void Object::keyup_t() {}
+void Object::keyup_u() {}
+void Object::keyup_v() {}
+void Object::keyup_w() {}
+void Object::keyup_x() {}
+void Object::keyup_y() {}
+void Object::keyup_z() {}
+void Object::keyup_any() {}
 
 void Object::keydown_up() {}
 void Object::keydown_down() {}
