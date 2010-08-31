@@ -40,7 +40,7 @@ class Image {
 	public:
 		void loadBMP(char* filename);
 		Image(char* ps);
-		Image(char* ps, float,float,int);
+		Image(char* ps,float, float);
 		~Image();
 		
 		/* An array of the form (R1, G1, B1, R2, G2, B2, ...) indicating the

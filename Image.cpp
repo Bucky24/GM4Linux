@@ -53,32 +53,18 @@ GLuint Image::loadTexture(char *pixels) {
 	return textureId;
 }
 
-Image::Image(char* filename) {
-	loadBMP(filename);
+Image::Image(char* filename, float w, float h) {
+	pixels = filename;
+	width = w;
+	height = h;
 	_textureId = loadTexture(pixels);
         computeBlocked();
 }
 
-Image::Image(char* filename, float w, float h, int type) {
-	if (type == IMAGE_FILE) {
-		loadBMP(filename);
-		//width = w;
-		//height = h;
-		_textureId = loadTexture(pixels);
-                computeBlocked();
-		width = w;
-		height = h;
-		dwidth = w;
-		dheight = h;
-	} else if (type == IMAGE_DATA) {
-		pixels = filename;
-		width = w;
-		height = h;
-		_textureId = loadTexture(pixels);
-		dwidth = w;
-		dheight = h;
-                computeBlocked();
-	}
+Image::Image(char* filename) {
+	loadBMP(filename);
+	_textureId = loadTexture(pixels);
+        computeBlocked();
 }
 
 Image::~Image() {
