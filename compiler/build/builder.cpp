@@ -39,14 +39,18 @@ Room::Room(string n, string c, string s, vector<string> *i) {
 
 class Sprite {
 public:
-	Sprite(string, vector<char> *);
+	Sprite(string, vector<char> *, float, float);
 	string name;
 	vector<char> *data;
-}
+	float width;
+	float height;
+};
 
-Sprite::Sprite(string n, vector<char> *d) {
+Sprite::Sprite(string n, vector<char> *d, float w, float h) {
 	name = n;
 	data = d;
+	width = w;
+	height = h;
 }
 
 void buildReserved(vector<string> &);
@@ -120,6 +124,7 @@ int main(int argc, char **argv) {
 	string createRooms = "";
 	string instanceMap = "";
 	string createFonts = "string fontName;";
+	string createImages = "";
 	// common.cpp
 	string objectCreation = "";
 	// Makefile
@@ -128,6 +133,8 @@ int main(int argc, char **argv) {
 	string objectIncludes = "";
 	// Rooms.h
 	string roomIncludes = "";
+	// sprites.cpp
+	string spriteData = "";
 
 	vector<Object *> objects;
 	vector<Room *> rooms;
@@ -139,30 +146,13 @@ int main(int argc, char **argv) {
 
 	vector<char> spriteData;
 
+	char data, data2;
+
 	while (infile.read(&input,1)) {
 
 		//infile.seekg(1,ios_base::cur);
 		if (input < 9) {
-			if (state == 1 && spriteData.size() != 0) {
-				while (spriteData.size() > 0) {
-					string name = "";
-					while (true) {
-						char data = spriteData[0]
-						spriteData.erase(spriteData.begin());
-						if (data == 0) break;
-						name += data;
-					}
-					vector<char> tempData = new vector<char>();
-					int width = spriteData[0]*256+spriteData[1];
-					int height = spriteData[2]*256+spriteData[3];
-					for (i=0;i<width*height*3;i++) {
-						tempData.push_back(spriteData[i+4]);
-					}
-					spriteData.erase(spriteData.begin(),spriteData.begin()+4+width*height*3);
-					Sprite *sprite = new Sprite(name,tempData);
-					spriteData.push_back(sprite);
-				}
-			} else if (state == 6 && instanceString != "") {
+			if (state == 6 && instanceString != "") {
 				instances->push_back(instanceString);
 				instanceString = "";
 			} else if (state == 4 && actionName != "") {
@@ -173,6 +163,34 @@ int main(int argc, char **argv) {
 			//cout << "new state " << state << endl;
 			if (state == 1) {
 				spriteData = *(new vector<char>());
+				
+				while (infile.read(&data,1)) {
+					if (data == 0) break;
+					string name = "";
+					while (true) {
+						if (data == 0) break;
+						name += data;
+						//cout << name << " " << data << endl;
+						infile.read(&data,1);
+					}
+					//cout << "here?" << endl;
+					vector<char> *tempData = new vector<char>();
+					//cout << "here " << endl;
+					infile.read(&data,1);
+					infile.read(&data2,1);
+					int width = data*256+data2;
+					infile.read(&data,1);
+					infile.read(&data2,1);
+					int height = data*256+data2;
+					//cout << width*height*3+4 << endl;
+					for (i=0;i<width*height*3;i++) {
+						infile.read(&data,1);
+						tempData->push_back(data);
+					}
+					Sprite *sprite = new Sprite(name,tempData,width,height);
+					sprites.push_back(sprite);
+				}
+				state = 0;
 			} else if (state == 4) {
 				actionName = "";
 				code = "";
@@ -267,6 +285,9 @@ int main(int argc, char **argv) {
 	}
 	for (i=0;i<rooms.size();i++) {
 		reserved.push_back(rooms[i]->name);
+	}
+	for (i=0;i<sprites.size();i++) {
+		reserved.push_back(sprites[i]->name);
 	}
 
 	for (i=0;i<objects.size();i++) {
@@ -395,6 +416,11 @@ int main(int argc, char **argv) {
 	for (i=0;i<fonts.size();i++) {
 		string font = fonts[i];
 		createFonts += "fontName = \"" + font + ".font\";Engine::fonts.push_back(new Font(fontName.c_str()));\n";
+	}
+
+	for (i=0;i<sprites.size();i++) {
+		Sprite *sprite = sprites[i];
+		cout << sprite->name << endl;
 	}
 
 	// begin output of files.
