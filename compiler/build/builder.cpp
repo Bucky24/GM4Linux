@@ -134,7 +134,7 @@ int main(int argc, char **argv) {
 	// Rooms.h
 	string roomIncludes = "";
 	// sprites.cpp
-	string spriteData = "";
+	string spriteFileData = "";
 
 	vector<Object *> objects;
 	vector<Room *> rooms;
@@ -421,7 +421,29 @@ int main(int argc, char **argv) {
 	for (i=0;i<sprites.size();i++) {
 		Sprite *sprite = sprites[i];
 		cout << sprite->name << endl;
+
+		char w[6];
+		char h[6];
+		sprintf(w,"%d",(int)sprite->width);
+		sprintf(h,"%d",(int)sprite->height);
+		spriteFileData += "sizes.insert(\"" + sprite->name + "\",pair<int,int>(" + w + "," + h + "));";
+		spriteFileData += "char " + sprite->name + " = {";
+		
+		for (j=0;j<sprite->data->size();j++) {
+			char d[3];
+			int dat = (int)sprite->data->at(j);
+			if (dat == -1) dat = 255;
+			sprintf(d,"%d",dat);
+			spriteFileData += d;
+			if (j != sprite->data->size()-1) {
+				spriteFileData += ",";
+			}
+		}
+
+		spriteFileData += "};";
 	}
+
+	//cout << spriteFileData << endl;
 
 	// begin output of files.
 	map<string,string*>::iterator itor;
@@ -462,6 +484,9 @@ int main(int argc, char **argv) {
 			}
 			if (output.find("/* -- CREATE FONTS -- */") != string::npos) {
 				output.replace(output.find("/* -- CREATE FONTS -- */"),24,createFonts);
+			}
+			if (output.find("/* -- SPRITE DATA -- */") != string::npos) {
+				output.replace(output.find("/* -- SPRITE DATA -- */"),24,spriteFileData);
 			}
 
 
