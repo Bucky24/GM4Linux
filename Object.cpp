@@ -12,10 +12,8 @@
 
 using namespace std;
 
-Object::Object(int i, ObjectType *obj, float xx, float yy) {
+Object::Object(int i, float xx, float yy) {
 	id = i;
-	sprite = obj->getSprite();
-        type = obj;
         x = xx;
         y = yy;
 	variables = *(new map<string, Variable>());
@@ -168,15 +166,11 @@ void Object::step_begin() {}
 void Object::step() {}
 void Object::step_end() {}
 
-int Object::getType() {
-        return type->getId();
-}
-
 string Object::getName() {
-        return type->getName();
+        return name;
 }
 
-bool Object::check_collision_with_object(int objectId) {
+bool Object::check_collision_with_object(Object *object) {
         return false;
 }
 
@@ -185,11 +179,11 @@ void Object::collide_with(int objectId) {
 }
 
 bool Object::pointInside(float px, float py) {
-	if (Engine::getSprite(type->getSprite()) == NULL) {
+	if (Engine::getSprite(sprite) == NULL) {
 		return false;
 	}
-	float width = Engine::getSprite(type->getSprite())->width;
-	float height = Engine::getSprite(type->getSprite())->height;
+	float width = Engine::getSprite(sprite)->width;
+	float height = Engine::getSprite(sprite)->height;
 
 	return (px >= x && px <= x+width && py >= y && py <= y+height);
 }

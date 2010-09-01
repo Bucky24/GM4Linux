@@ -6,6 +6,8 @@ font
 [objects]
 [object]
 obj_button
+-1
+1
 [action]
 create
 width = 40;

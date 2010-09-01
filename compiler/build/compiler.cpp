@@ -78,6 +78,7 @@ int main(int argc, char **argv) {
 	int objectSprite;
 	string spriteName;
 	string r,g,b;
+	int objectId;
 	while (!infile.eof()) {
 		getline(infile,line);
 		// cut off newline
@@ -187,9 +188,23 @@ int main(int argc, char **argv) {
 					objectName = line;
 					secondState = 1;
 					writeString(outfile,objectName.c_str(),objectName.size());
+					char s = '\n';
+					outfile.write(&s,1);
 				} else if (secondState == 1) {
 					objectSprite = atoi(line.c_str());
-					char s = (char)objectSprite;
+					char s = (char)(objectSprite/256);
+					outfile.write(&s,1);
+					objectSprite -= objectSprite/256;
+					s = (char)objectSprite;
+					outfile.write(&s,1);
+					secondState = 2;
+					//outfile.seekp(1,ios_base::cur);
+				} else if (secondState == 2) {
+					objectId = atoi(line.c_str());
+					char s = (char)(objectId/256);
+					outfile.write(&s,1);
+					objectId -= objectId/256;
+					s = (char)objectId;
 					outfile.write(&s,1);
 					//outfile.seekp(1,ios_base::cur);
 				}

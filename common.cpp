@@ -23,7 +23,6 @@ void draw_character(char letter, float x, float y) {
 int instance_create(unsigned int id, int x, int y) {
         int ret = noone;
         Object *inst = NULL;
-        ObjectType *object= Engine::objectref[id];
 	/* -- OBJECT CREATION -- */
 	cout << "common.cpp instance_create " << id << endl;
         if (inst != NULL) {

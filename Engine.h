@@ -6,7 +6,6 @@
 #include "Objects.h"
 #include <vector>
 #include "Image.h"
-#include "ObjectType.h"
 #include "Room.h"
 #include <map>
 #include "Font.h"
@@ -34,7 +33,7 @@ typedef vector<Object *> objlist;
 
 typedef map<int,objlist *> instancemap;
 
-typedef map<ObjectType *,ObjectType *> collidemap;
+typedef map<int,int> collidemap;
 
 class Engine {
 public:
@@ -53,7 +52,7 @@ public:
         static void endStep();
         static void checkCollisions();
 
-        static vector<ObjectType *> objectref;
+        //static vector<ObjectType *> objectref;
         static vector<Image *> imageref;
         static vector<Object *> instanceref;
         static vector<Room *> roomref;
@@ -67,7 +66,7 @@ public:
         static objfunc endStepEvent;
 
         static int instanceid;
-        static ObjectType *getObject(unsigned int id);
+        //static ObjectType *getObject(unsigned int id);
         static Object *getInstance(unsigned int id);
         static Image *getSprite(unsigned int id);
         static Room *getRoom(unsigned int id);

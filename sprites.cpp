@@ -1,4 +1,5 @@
 #include "sprites.h"
+#include <cstdlib>
 
 map<string,char *> spriteData;
 map<string,int> spriteWidths;

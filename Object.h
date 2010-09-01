@@ -4,14 +4,13 @@
 #include <string>
 #include <map>
 #include "Image.h"
-#include "ObjectType.h"
 #include "Variable.h"
 
 using namespace std;
 
 class Object {
 public:
-	Object(int i, ObjectType *obj, float x, float y);
+	Object(int i, float x, float y);
 	virtual void create();
 	virtual void destroy();
 	virtual void draw();
@@ -155,16 +154,17 @@ public:
 	string getName();
 	int getId() {return id;}
 	int getSprite() {return sprite;}
-        int getType();
 
-        bool check_collision_with_object(int objectId);
-        virtual void collide_with(int instanceId);
+        bool check_collision_with_object(Object *object);
+        virtual void collide_with(int objectId);
 
 	int id;
 	int sprite;
         float x;
         float y;
-        ObjectType *type;
+	int objectId;
+
+	string name;
 
 	map<string,Variable> variables;
 

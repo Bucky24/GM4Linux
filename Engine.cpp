@@ -3,7 +3,7 @@
 #include "Rooms.h"
 #include "sprites.h"
 
-vector<ObjectType *> Engine::objectref;
+//vector<ObjectType *> Engine::objectref;
 vector<Image *> Engine::imageref;
 vector<Object *> Engine::instanceref;
 vector<Room *> Engine::roomref;
@@ -40,7 +40,7 @@ void Engine::init() {
 
 	cout << "engine.cpp init creating reference vectors" << endl;
         Engine::instanceref = *(new vector<Object *>());
-        Engine::objectref = *(new vector<ObjectType *>());
+        //Engine::objectref = *(new vector<ObjectType *>());
         Engine::imageref = *(new vector<Image *>());
         Engine::roomref = *(new vector<Room *>());
 	Engine::fonts = *(new vector<Font *>());
@@ -96,6 +96,7 @@ void Engine::fillObjects() {
 void Engine::fillImages() {
 	initSprites();
 	/* -- CREATE IMAGES -- */
+	Image *i = new Image("test.bmp");
 }
 
 void Engine::fillRooms() {
@@ -289,23 +290,27 @@ void Engine::endStep() {
 
 void Engine::checkCollisions() {
         collidemap::iterator it;
-        unsigned int i;
+        unsigned int i,j;
         for (it=collisionmap->begin();it!=collisionmap->end();it++) {
-                objlist *list = Engine::instances->find((*it).first->getId())->second;
+                objlist *list = Engine::instances->find(it->first)->second;
+                objlist *list2 = Engine::instances->find(it->second)->second;
                 for (i=0;i<list->size();i++) {
-                        if (list->at(i)->check_collision_with_object((*it).second->getId())) {
-                                list->at(i)->collide_with((*it).second->getId());
-                        }
+			for (j=0;j<list2->size();j++) {
+                        	if (list->at(i)->check_collision_with_object(list2->at(j))) {
+                        	        list->at(i)->collide_with(list2->at(i)->getId());
+                        	        list2->at(j)->collide_with(list->at(i)->getId());
+                        	}
+			}
                 }
         }
 }
 
-ObjectType *Engine::getObject(unsigned int id) {
+/*ObjectType *Engine::getObject(unsigned int id) {
         if (id >= objectref.size()) {
                 return NULL;
         }
         return objectref[id];
-}
+}*/
 
 Object *Engine::getInstance(unsigned int id) {
         if (id >= instanceref.size()) {

@@ -247,7 +247,7 @@ void Image::loadBMP(char* filename) {
 	input.read(pixels.get(), size);
 	
 	//Get the data into the right format
-	auto_array<char> pixels2(new char[width * height * 3]);
+	char *pixels2 = (char *)malloc(sizeof(char)*width * height * 3);
 	for(int y = 0; y < height; y++) {
 		for(int x = 0; x < width; x++) {
 			for(int c = 0; c < 3; c++) {
@@ -262,7 +262,7 @@ void Image::loadBMP(char* filename) {
 	this->width = width;
 	this->height = height;
 	//return pixels2.release();
-	this->pixels = pixels2.release();
+	this->pixels = pixels2;
 }
 
 void Image::computeBlocked() {

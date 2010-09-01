@@ -11,14 +11,18 @@ using namespace std;
 
 class Object {
 public:
-	Object(string, map<string,string> *);
+	Object(string, map<string,string> *,int,int);
 	string name;
 	map<string,string> *actionMap;
+	int sprite;
+	int objectId;
 };
 
-Object::Object(string n, map<string,string> *a) {
+Object::Object(string n, map<string,string> *a, int s, int id) {
 	name = n;
 	actionMap = a;
+	sprite = s;
+	objectId = id;
 }
 
 class Room {
@@ -107,6 +111,8 @@ int main(int argc, char **argv) {
 	string actionName = "";
 	string roomName = "";
 	map<string,string> *actionMap = new map<string,string>;
+	int objectSprite = -1;
+	int objectId = -1;
 	bool readName = false;
 	bool readColors = false;
 	string code = "";
@@ -117,6 +123,8 @@ int main(int argc, char **argv) {
 	string roomSize = "";
 	bool readSize = false;
 	string fontString = "";
+	bool readSprite = false;
+	bool readId = false;
 	// common.h
 	string objectDefinitions = "";
 	// engine.cpp
@@ -197,12 +205,16 @@ int main(int argc, char **argv) {
 				readName = false;
 			} else if (state == 2 && objectName != "") {
 				//cout << "new object" << endl;
-				Object *obj = new Object(objectName,actionMap);
+				Object *obj = new Object(objectName,actionMap,objectSprite,objectId);
 				objects.push_back(obj);				
 
 				objectName = "";
 				actionMap = new map<string,string>();
+				objectSprite = -1;
+				objectId = 2;
 				readName = false;
+				readSprite = false;
+				readId = false;
 			} else if (state == 5 && roomName != "") {
 				//cout << "new room" << endl;
 				Room *rm = new Room(roomName,roomColors,roomSize,instances);
@@ -221,8 +233,19 @@ int main(int argc, char **argv) {
 			if (state == 1) {
 				spriteData.push_back(input);
 			} else if (state == 3) {
-				objectName += input;
-				//cout << (int)input << input << endl;
+				char input2;
+				while (input != '\n') {
+					objectName += input;
+					infile.read(&input,1);
+				}
+
+				infile.read(&input,1);
+				infile.read(&input2,1);
+				objectSprite = input*256+input2;
+
+				infile.read(&input,1);
+				infile.read(&input2,1);
+				objectId = input*256+input2;
 			} else if (state == 4) {
 				if (!readName) {
 					if (input == '\n') {
@@ -293,6 +316,8 @@ int main(int argc, char **argv) {
 	for (i=0;i<objects.size();i++) {
 		objectName = objects[i]->name;
 		actionMap = objects[i]->actionMap;
+		objectSprite = objects[i]->sprite;
+		objectId = objects[i]->objectId;
 		//cout << "creating new object\n";
 		bool buildH = false;
 		bool buildCpp = false;
@@ -303,7 +328,7 @@ int main(int argc, char **argv) {
 			outfile << "#ifndef " << objectName << "HFILE\n";
 			outfile << "#define " << objectName << "HFILE\n";
 			outfile << "#include \"Object.h\"\n";
-			outfile << "class " << className << " : public Object {\npublic:\n" << className << "(int, ObjectType *, float, float);\n";
+			outfile << "class " << className << " : public Object {\npublic:\n" << className << "(int, float, float);\n";
 			map<string,string>::iterator itor;
 			for (itor=actionMap->begin();itor!=actionMap->end();itor++) {
 				outfile << "void " << itor->first << "();\n";
@@ -320,7 +345,7 @@ int main(int argc, char **argv) {
 		if (outfile.is_open()) {
 			outfile << "#include \"" << className << ".h\"\n";
 			outfile << "#include \"common.h\"\n"; 
-			outfile << className << "::" << className << "(int i, ObjectType *obj, float x, float y) : Object(i,obj,x,y) {\ncreate();\n}\n";
+			outfile << className << "::" << className << "(int i, float x, float y) : Object(i,x,y) {\nname=\"" << objectName << "\";\nsprite=" << objectSprite << ";\nobjectId=" << objectId << ";\ncreate();\n}\n";
 			map<string,string>::iterator itor;
 			for (itor=actionMap->begin();itor!=actionMap->end();itor++) {
 				string code = itor->second;
@@ -346,9 +371,9 @@ int main(int argc, char **argv) {
 
 		objectDefinitions += "#define " + objectName + " " + count + "\n";
 
-		objectTypes += "objectref.push_back(new ObjectType(" + count + ",\"" + objectName + "\",-4));\n";
+		//objectTypes += "objectref.push_back(new ObjectType(" + count + ",\"" + objectName + "\",-4));\n";
 
-		objectCreation += "if (id == " + objectName + ") {\ninst = new " + className + "(Engine::instanceid,object,x,y);\n}\n";
+		objectCreation += "if (id == " + objectName + ") {\ninst = new " + className + "(Engine::instanceid,x,y);\n}\n";
 
 		objectIncludes += "\n#include \"" + className + ".h\"\n";
 
@@ -429,20 +454,22 @@ int main(int argc, char **argv) {
 		cout << sprite->width << " " << w << endl;
 		spriteFileData += "spriteWidths.insert(pair<string,int>(\"" + sprite->name + "\"," + w + "));";
 		spriteFileData += "spriteHeights.insert(pair<string,int>(\"" + sprite->name + "\"," + h + "));";
-		spriteFileData += "char " + sprite->name + "[] = {";
+		spriteFileData += "char *" + sprite->name + " = (char *)malloc(sizeof(char)*3*" + w + "*" + h + ");";
 		
 		for (j=0;j<sprite->data->size();j++) {
 			char d[3];
 			int dat = (int)sprite->data->at(j);
 			if (dat == -1) dat = 255;
 			sprintf(d,"%d",dat);
-			spriteFileData += d;
+			char derp[6];
+			sprintf(derp,"%d",j);
+			//spriteFileData += d;
+			spriteFileData += sprite->name + "[" + derp + "] = " + d + ";";
 			if (j != sprite->data->size()-1) {
-				spriteFileData += ",";
 			}
 		}
 
-		spriteFileData += "};spriteData.insert(pair<string,char *>(\"" + sprite->name + "\"," + sprite->name + "));";
+		spriteFileData += "spriteData.insert(pair<string,char *>(\"" + sprite->name + "\"," + sprite->name + "));";
 
 		//createImages += "Engine::imageref.push_back(new Image(sprites.find(\"" + sprite->name + "\")->second,widths.find(\"" + sprite->name + "\")->second,heights.find(\"" + sprite->name + "\")->second));";
 		createImages += "Engine::imageref.push_back(new Image(spriteData[\"" + sprite->name + "\"],spriteWidths[\"" + sprite->name + "\"],spriteHeights[\"" + sprite->name + "\"]));";
@@ -466,9 +493,9 @@ int main(int argc, char **argv) {
 			if (output.find("/* -- OBJECT DEFINITIONS -- */") != string::npos) {
 				output.replace(output.find("/* -- OBJECT DEFINITIONS -- */"),30,objectDefinitions);
 			}
-			if (output.find("/* -- CREATE OBJECT TYPES -- */") != string::npos) {
-				output.replace(output.find("/* -- CREATE OBJECT TYPES -- */"),31,objectTypes);
-			}
+			//if (output.find("/* -- CREATE OBJECT TYPES -- */") != string::npos) {
+			//	output.replace(output.find("/* -- CREATE OBJECT TYPES -- */"),31,objectTypes);
+			//}
 			if (output.find("/* -- OBJECT CREATION -- */") != string::npos) {
 				output.replace(output.find("/* -- OBJECT CREATION -- */"),27,objectCreation);
 			}
