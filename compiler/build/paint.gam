@@ -8,6 +8,10 @@ pen.bmp
 obj_pen_button
 0
 0
+[action]
+mousepressed_left
+cout << "hi" << endl;
+[/action]
 [/object]
 [/objects]
 [rooms]

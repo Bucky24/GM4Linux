@@ -185,5 +185,7 @@ bool Object::pointInside(float px, float py) {
 	float width = Engine::getSprite(sprite)->width;
 	float height = Engine::getSprite(sprite)->height;
 
+	cout << "object.cpp pointInside " << px << " " << x << " " << py << " " << y << endl;
+
 	return (px >= x && px <= x+width && py >= y && py <= y+height);
 }

@@ -72,7 +72,7 @@ Image::~Image() {
 }
 
 void Image::draw(float x, float y) {
-	if (!(width != dwidth || height != dheight)) {
+	//if (!(width != dwidth || height != dheight)) {
 	//if ((int)dwidth % 2 != 0 || (int)dheight % 2 != 0) {
 		glTranslatef(x, y, 0.0f);
 		glEnable(GL_TEXTURE_2D);
@@ -85,17 +85,17 @@ void Image::draw(float x, float y) {
 		glTexCoord2f(0.0f, 0.0f);
 		glVertex2f(0,0);
 		glTexCoord2f(1.0f, 0.0f);
-		glVertex2f(dwidth, 0);
+		glVertex2f(width, 0);
 		glTexCoord2f(1.0f, -1.0f);
-		glVertex2f(dwidth, dheight);
+		glVertex2f(width, height);
 		glTexCoord2f(0.0f, -1.0f);
-		glVertex2f(0, dheight);
+		glVertex2f(0, height);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
-	} else {
-		glRasterPos2f(x+1,y+16);
-		glDrawPixels(width,height,GL_RGB,GL_UNSIGNED_BYTE,pixels);
-	}
+	//} else {
+	//	glRasterPos2f(x+1,y+16);
+	//	glDrawPixels(width,height,GL_RGB,GL_UNSIGNED_BYTE,pixels);
+	//}
 }
 
 namespace {

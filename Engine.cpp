@@ -96,7 +96,6 @@ void Engine::fillObjects() {
 void Engine::fillImages() {
 	initSprites();
 	/* -- CREATE IMAGES -- */
-	Image *i = new Image("test.bmp");
 }
 
 void Engine::fillRooms() {
@@ -152,7 +151,7 @@ void Engine::handleEvents() {
 
 	// left button
 	if (mouse_left_flagged && !mouse_left_flagged_laststep) {
-		cout << "engine.cpp handleEvents mouse left click " << instances.size() << endl;
+		cout << "engine.cpp handleEvents mouse left click at " << Engine::mousex << "," << Engine::mousey << " " << instances.size() << endl;
 		for (i=0;i<instances.size();i++) {
 			Object *inst = instances[i];
 			if (inst != NULL) {
