@@ -178,9 +178,6 @@ int main(int argc, char **argv) {
 		} else {
 			if (state == 1) {
 				spriteName = line;
-				vector<string> temptoks;
-				Tokenize(spriteName,temptoks,".");
-				writeString(outfile,temptoks[0].c_str(),temptoks[0].size());
 				writeBitmapData(spriteName,outfile);
 			} else if (state == 3) {
 				if (secondState == 0) {
@@ -396,7 +393,7 @@ void writeBitmapData(string filename, ofstream &output) {
 	input.close();
 	char *myPixels = pixels2.release();
 
-	//writeString(output,filename.c_str(),filename.size());
+	writeString(output,filename.c_str(),filename.size());
 	char tmp = 0;
 	output.write(&tmp,1);
 	char byte1 = width/256;
