@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include <cstdlib>
 #include "Rooms.h"
+#include "sprites.h"
 
 vector<ObjectType *> Engine::objectref;
 vector<Image *> Engine::imageref;
@@ -93,6 +94,7 @@ void Engine::fillObjects() {
 }
 
 void Engine::fillImages() {
+	initSprites();
 	/* -- CREATE IMAGES -- */
 }
 
