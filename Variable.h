@@ -10,6 +10,8 @@ class Variable {
 	friend ostream& operator<<(ostream &, const Variable &);
 public:
 	Variable();
+	Variable(int);
+	Variable(string);
 	Variable &operator=(int);
 	Variable &operator=(string);
 	Variable &operator=(const Variable &);

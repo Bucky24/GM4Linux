@@ -7,6 +7,18 @@ Variable::Variable() {
 	type = 1;
 }
 
+Variable::Variable(int d) {
+	sdata = "";
+	idata = d;
+	type = 1;
+}
+
+Variable::Variable(string d) {
+	sdata = d;
+	idata = 0;
+	type = 2;
+}
+
 Variable &Variable::operator=(int data) {
 	type = 1;
 	idata = data;

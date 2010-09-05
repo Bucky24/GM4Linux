@@ -1,8 +1,6 @@
 #ifndef ENGINE
 #define ENGINE
 
-#define noone -4
-
 #include "Objects.h"
 #include <vector>
 #include "Image.h"

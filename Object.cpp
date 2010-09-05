@@ -197,8 +197,26 @@ Variables::Variables() {
 }
 
 Variable &Variables::operator[](string key) {
-	if (vars.find(key) == vars.end()) {
-		vars[key] = *(new Variable());
+	vector<string> toks;
+	Tokenize(key,toks,".");
+
+	if (toks.size() > 1) {
+		if (vars.find(toks[0]) == vars.end()) {
+			return *(new Variable(0));
+		}
+		int instanceId = vars[toks[0]];
+		//cout << "object.cpp variables[] " << key << " translates to " << instanceId << endl;
+		unsigned int i;
+		for (i=0;i<Engine::instanceref.size();i++) {
+			if (Engine::instanceref[i]->id == instanceId) {
+				return Engine::instanceref[i]->variables[toks[1]];
+			}
+		}
+		return *(new Variable(0));
+	} else {
+		if (vars.find(key) == vars.end()) {
+			vars[key] = *(new Variable());
+		}
+		return vars[key];
 	}
-	return vars[key];
 }

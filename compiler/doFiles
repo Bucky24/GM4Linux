@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./pack ../*.cpp ../*.h ../Makefile
+mv ../*.pack .
+./archive files
+mv files.* build
+cd build
+g++ -o builder builder.cpp files.cpp files.h
+cd ..

@@ -27,6 +27,7 @@ int main(int argc, char **argv) {
 	unsigned int i;
 	ifstream infile;
 	ofstream outfile;
+	bool newLines = true;
 
 	for (i=1;i<argc;i++) {
 		infile.open(argv[i]);
@@ -42,10 +43,14 @@ int main(int argc, char **argv) {
 			if (outname.find("Makefile.pack") == string::npos) {
 				line = stripStuff(line);
 			}
-			if (line[0] == '#' || (line.find("//") != string::npos) || outname.find("Makefile.pack") != string::npos) {
+			if ((line[0] == '#' || (line.find("//") != string::npos) || outname.find("Makefile.pack") != string::npos) && !newLines) {
 				line = "\\n" + line + "\\n";
 			}
 			outfile << line;
+
+			if (newLines) {
+				outfile << "\\n" << endl;
+			}
 		}
 
 		infile.close();

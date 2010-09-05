@@ -590,7 +590,7 @@ string processCode(string code, vector<string> reserved) {
 					//cout << j << endl;
 				}
 			} else {
-				if (isalnum(tmp[j]) || tmp[j] == '.' || tmp[j] == '_' || tmp[j] == '>') {
+				if (isalnum(tmp[j]) || tmp[j] == '.' || tmp[j] == '_') {
 					variable += tmp[j];
 				} else {
 					if (variable != "") {

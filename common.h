@@ -12,6 +12,8 @@
 #define mouse_x Engine::mousex
 #define mouse_y Engine::mousey
 
+#define noone -4
+
 using namespace std;
 
 extern int instance_create(unsigned int id, int x, int y);
@@ -24,5 +26,6 @@ extern void draw_point(float x, float y);
 extern void draw_line_color(float x1, float y1, float x2, float y2, float r, float g, float b);
 extern void draw_text(string text, float x, float y);
 extern void draw_rectangle(float x1, float y1, float x2, float y2);
+extern void Tokenize(const string& str, vector<string>& tokens, const string& delimiters);
 
 #endif
