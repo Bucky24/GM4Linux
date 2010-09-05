@@ -1,4 +1,3 @@
-#include "ObjectType.h"
 #include "Object.h"
 #include <string>
 #include "common.h"
@@ -16,7 +15,8 @@ Object::Object(int i, float xx, float yy) {
 	id = i;
         x = xx;
         y = yy;
-	variables = *(new map<string, Variable>());
+	variables = *(new Variables());
+	variables["id"] = id;
         create();
 }
 
@@ -188,4 +188,17 @@ bool Object::pointInside(float px, float py) {
 	cout << "object.cpp pointInside " << px << " " << x << " " << py << " " << y << endl;
 
 	return (px >= x && px <= x+width && py >= y && py <= y+height);
+}
+
+/* variables class stuff */
+
+Variables::Variables() {
+	vars = *(new map<string,Variable>());
+}
+
+Variable &Variables::operator[](string key) {
+	if (vars.find(key) == vars.end()) {
+		vars[key] = *(new Variable());
+	}
+	return vars[key];
 }

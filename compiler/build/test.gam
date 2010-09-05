@@ -3,23 +3,25 @@
 [objects]
 [object]
 testobject
+0
+0
 [action]
 draw
-int i;
-int obj;
 for (i=0;i<instance_number(testobject);i++) {
 	obj = instance_find(testobject,i);
-	if (obj != this) {
-		draw_line_color(x,y,obj->x,obj->y,c_white);
+	if (obj != id) {
+		draw_line_color(x,y,obj.x,obj.y,c_white);
 	}
 }
 [/action]
 [/object]
 [object]
 control
+0
+1
 [action]
 globalmousepressed_left
-instance_create(testobject,Engine::mouse_x,Engine::mouse_y);
+instance_create(testobject,mouse_x,mouse_y);
 [/action]
 [/object]
 [/objects]

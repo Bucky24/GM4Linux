@@ -8,6 +8,13 @@
 
 using namespace std;
 
+class Variables {
+public:
+	Variables();
+	map<string,Variable> vars;
+	Variable &operator[](string key);
+};
+
 class Object {
 public:
 	Object(int i, float x, float y);
@@ -166,7 +173,7 @@ public:
 
 	string name;
 
-	map<string,Variable> variables;
+	Variables variables;
 
 	bool pointInside(float x, float y);
 };

@@ -3,7 +3,8 @@
 Variable::Variable() {
 	sdata = "";
 	idata = 0;
-	type = 0;
+	/* default to int */
+	type = 1;
 }
 
 Variable &Variable::operator=(int data) {
@@ -125,4 +126,16 @@ bool operator==(const Variable &var1, const Variable &var2) {
 		}
 	}
 	return false;
+}
+
+bool operator!=(const Variable &var1, string data) {
+	return !(var1 == data);
+}
+
+bool operator!=(const Variable &var1, int data) {
+	return !(var1 == data);
+}
+
+bool operator!=(const Variable &var1, const Variable &var2) {
+	return !(var1 == var2);
 }

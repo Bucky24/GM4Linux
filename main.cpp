@@ -9,7 +9,6 @@
 #endif
 
 #include "Image.h"
-#include "ObjectType.h"
 #include "Objects.h"
 #include "Room.h"
 #include <cstdio>

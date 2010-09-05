@@ -318,7 +318,7 @@ int main(int argc, char **argv) {
 		actionMap = objects[i]->actionMap;
 		objectSprite = objects[i]->sprite;
 		objectId = objects[i]->objectId;
-		//cout << "creating new object\n";
+		cout << "creating new object " << objectName << endl;
 		bool buildH = false;
 		bool buildCpp = false;
 		string className = "obj_" + objectName;
@@ -554,6 +554,7 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("mouse_x");
 	ret.push_back("mouse_y");
 	ret.push_back("draw_rectangle");
+	ret.push_back("c_white");
 }
 
 bool isReserved(string word, vector<string> &vec) {
@@ -589,22 +590,22 @@ string processCode(string code, vector<string> reserved) {
 					//cout << j << endl;
 				}
 			} else {
-				if (isalnum(tmp[j]) || tmp[j] == '.' || tmp[j] == '_') {
+				if (isalnum(tmp[j]) || tmp[j] == '.' || tmp[j] == '_' || tmp[j] == '>') {
 					variable += tmp[j];
 				} else {
 					if (variable != "") {
 						//cout << "running " << variable << endl;
 						if (!isReserved(variable,reserved)) {
 							//cout << variable << " found" << endl;
-							vector<string> toks2;
-							Tokenize(variable,toks2,".");
-							if (toks2.size() > 1) {
-								cout << "builder.cpp todo: multi-object variable name" << endl;
-							} else {
+							//vector<string> toks2;
+							//Tokenize(variable,toks2,".");
+							//if (toks2.size() > 1) {
+							//	cout << "builder.cpp todo: multi-object variable name" << endl;
+							//} else {
 								//cout << varPos << " " << variable.size() << endl;
 								tmp.replace(varPos,variable.size(),"variables[\"" + variable + "\"]");
 								j += 13;
-							}
+							//}
 						} else {
 							//cout << "reserved" << endl;
 							//j += variable.size();
