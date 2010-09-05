@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
 		string outname = argv[i];
 		outname += ".pack";
 
-		cout << "Opening " << outname << endl;
+		//cout << "Opening " << outname << endl;
 		outfile.open(outname.c_str());
 
 		string line;

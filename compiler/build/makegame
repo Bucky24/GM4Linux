@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "pre-load"
+echo
+./compiler $1
+echo
+echo "code generation"
+echo
+./builder $1.dat
+echo
+echo "compile"
+echo
+make

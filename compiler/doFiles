@@ -1,9 +1,12 @@
 #!/bin/bash
 
+echo "packing"
 ./pack ../*.cpp ../*.h ../Makefile
 mv ../*.pack .
+echo "archiving"
 ./archive files
 mv files.* build
 cd build
+echo "building"
 g++ -o builder builder.cpp files.cpp files.h
 cd ..

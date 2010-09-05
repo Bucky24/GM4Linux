@@ -318,7 +318,7 @@ int main(int argc, char **argv) {
 		actionMap = objects[i]->actionMap;
 		objectSprite = objects[i]->sprite;
 		objectId = objects[i]->objectId;
-		cout << "creating new object " << objectName << endl;
+		cout << "object " << objectName << endl;
 		bool buildH = false;
 		bool buildCpp = false;
 		string className = "obj_" + objectName;
@@ -391,7 +391,7 @@ int main(int argc, char **argv) {
 		roomColors = rooms[i]->colors;
 		instances = rooms[i]->instances;
 		roomSize = rooms[i]->size;
-		//cout << "creating new room!" << endl;
+		cout << "room " << roomName << endl;
 		bool buildH = false;
 		bool buildCpp = false;
 		string className = "rm_" + roomName;
@@ -440,12 +440,13 @@ int main(int argc, char **argv) {
 
 	for (i=0;i<fonts.size();i++) {
 		string font = fonts[i];
+		cout << "font " << font << endl;
 		createFonts += "fontName = \"" + font + ".font\";Engine::fonts.push_back(new Font(fontName.c_str()));\n";
 	}
 
 	for (i=0;i<sprites.size();i++) {
 		Sprite *sprite = sprites[i];
-		cout << sprite->name << endl;
+		cout << "sprite " << sprite->name << endl;
 
 		char w[6];
 		char h[6];
@@ -555,6 +556,7 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("mouse_y");
 	ret.push_back("draw_rectangle");
 	ret.push_back("c_white");
+	ret.push_back("else");
 }
 
 bool isReserved(string word, vector<string> &vec) {

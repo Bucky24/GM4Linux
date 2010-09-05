@@ -80,6 +80,28 @@ Variable Variable::operator+(const string data) {
 	return ret;
 }
 
+void Variable::operator+=(const Variable &var2) {
+	if (type == var2.type) {
+		if (type == 1) {
+			idata = idata+var2.idata;
+		} else if (type == 2) {
+			sdata = sdata+var2.sdata;
+		}
+	}
+}
+
+void Variable::operator+=(const int data) {
+	if (type == 1) {
+		idata = idata+data;
+	}
+}
+
+void Variable::operator+=(const string data) {
+	if (type == 2) {
+		sdata = sdata+data;
+	}
+}
+
 bool operator<(const Variable &var1, int data) {
 	if (var1.type == 1) {
 		if (var1.idata < data) {

@@ -1,0 +1,75 @@
+[sprites]
+[/sprites]
+[fonts]
+[/fonts]
+[objects]
+[object]
+obj_control
+0
+0
+[action]
+create
+p1x = 100;
+p1y = 100;
+p2x = 600;
+p2y = 600;
+p1xSpeed = -10;
+p1ySpeed = 10;
+p2xSpeed = 10;
+p2ySpeed = -10;
+[/action]
+[action]
+step
+p1x += p1xSpeed;
+p1y += p1ySpeed;
+p2x += p2xSpeed;
+p2y += p2ySpeed;
+
+if (p1x < 0) {
+	p1x = 0;
+	p1xSpeed = 10;
+} else if (p1x > 1024) {
+	p1x = 1024;
+	p1xSpeed = -10;
+}
+
+if (p1y < 0) {
+	p1y = 0;
+	p1ySpeed = 10;
+} else if (p1y > 756) {
+	p1y = 756;
+	p1ySpeed = -10;
+}
+
+if (p2x < 0) {
+	p2x = 0;
+	p2xSpeed = 10;
+} else if (p2x > 1024) {
+	p2x = 1024;
+	p2xSpeed = -10;
+}
+
+if (p2y < 0) {
+	p2y = 0;
+	p2ySpeed = 10;
+} else if (p2y > 756) {
+	p2y = 756;
+	p2ySpeed = -10;
+}
+[/action]
+[action]
+draw
+draw_line(p1x,p1y,p2x,p2y);
+[/action]
+[/object]
+[/objects]
+[rooms]
+[room]
+main
+0.6,0.6,0.6
+1024,756
+[instances]
+obj_control,0,0
+[/instances]
+[/room]
+[/rooms]
