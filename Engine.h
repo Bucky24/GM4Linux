@@ -9,6 +9,7 @@
 #include "Font.h"
 
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -105,6 +106,9 @@ public:
 	static vector<Font *> fonts;
 
 	static arraymap *vecList;
+
+	static vector<fstream *> *filePtrRead;
+	static vector<fstream *> *filePtrWrite;
 };
 
 #endif

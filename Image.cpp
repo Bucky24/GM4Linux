@@ -92,6 +92,7 @@ void Image::draw(float x, float y) {
 		glVertex2f(0, height);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
+		glTranslatef(-x,-y,0.0f);
 	//} else {
 	//	glRasterPos2f(x+1,y+16);
 	//	glDrawPixels(width,height,GL_RGB,GL_UNSIGNED_BYTE,pixels);

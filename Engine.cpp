@@ -33,6 +33,8 @@ float Engine::g;
 float Engine::b;
 Font *Engine::currentFont;
 arraymap *Engine::vecList;
+vector<fstream *> *Engine::filePtrRead;
+vector<fstream *> *Engine::filePtrWrite;
 
 void Engine::init() {
 
@@ -47,6 +49,9 @@ void Engine::init() {
 	Engine::fonts = *(new vector<Font *>());
 
 	Engine::vecList = new vector<map<int, Variable *> *>();
+
+	Engine::filePtrRead = new vector<fstream *>();
+	Engine::filePtrWrite = new vector<fstream *>();
 
 	cout << "engine.cpp init creating instance maps" << endl;
         Engine::instances = new instancemap();

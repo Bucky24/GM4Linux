@@ -452,7 +452,7 @@ int main(int argc, char **argv) {
 		char h[6];
 		sprintf(w,"%d",(int)sprite->width);
 		sprintf(h,"%d",(int)sprite->height);
-		cout << sprite->width << " " << w << endl;
+		//cout << sprite->width << " " << w << endl;
 		spriteFileData += "spriteWidths.insert(pair<string,int>(\"" + sprite->name + "\"," + w + "));";
 		spriteFileData += "spriteHeights.insert(pair<string,int>(\"" + sprite->name + "\"," + h + "));";
 		spriteFileData += "char *" + sprite->name + " = (char *)malloc(sizeof(char)*3*" + w + "*" + h + ");";

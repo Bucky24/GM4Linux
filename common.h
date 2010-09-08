@@ -4,6 +4,7 @@
 #include <vector>
 #include "Engine.h"
 #include <iostream>
+#include <string>
 
 /* -- OBJECT DEFINITIONS -- */
 
@@ -27,5 +28,7 @@ extern void draw_line_color(float x1, float y1, float x2, float y2, float r, flo
 extern void draw_text(string text, float x, float y);
 extern void draw_rectangle(float x1, float y1, float x2, float y2);
 extern void Tokenize(const string& str, vector<string>& tokens, const string& delimiters);
+extern int file_text_open_write(string filename);
+extern void file_text_close(int handle);
 
 #endif

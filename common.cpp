@@ -55,7 +55,6 @@ void draw_line(float x1, float y1, float x2, float y2) {
 	glVertex3f(x1,y1,0);
 	glVertex3f(x2,y2,0);
 	glEnd();
-	glEnd();
 }
 
 void draw_line_color(float x1, float y1, float x2, float y2, float r, float g, float b) {
@@ -142,4 +141,41 @@ void Tokenize(const string& str,
         // Find next "non-delimiter"
         pos = str.find_first_of(delimiters, lastPos);
     }
+}
+
+
+int file_text_open_write(string filename) {
+	fstream file;
+	file.open(filename.c_str(),ios::out);
+	if (!file.is_open()) {
+		cout << "common.cpp file_text_open_write cannot open " << filename << endl;
+		return -4;
+	}
+	
+	unsigned int i;
+	for (i=0;i<Engine::filePtrWrite->size();i++) {
+		if (Engine::filePtrWrite->at(i) == NULL) {
+			Engine::filePtrWrite->at(i) = &file;
+			return i;
+		}
+	}
+
+	Engine::filePtrWrite->push_back(&file);
+	return Engine::filePtrWrite->size()-1;
+}
+
+void file_text_close(int handle) {
+	if (handle < 0) return;
+	if (Engine::filePtrWrite->size() > (unsigned int)handle) {
+		fstream *file = Engine::filePtrWrite->at(handle);
+		if (file != NULL) {
+			file->close();
+			delete(file);
+		}
+		Engine::filePtrWrite->at(handle) = NULL;
+	}
+}
+
+void file_text_write_string(int handle, string data) {
+	
 }

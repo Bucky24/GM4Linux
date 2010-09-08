@@ -13,6 +13,42 @@ mousepressed_left
 cout << "hi" << endl;
 [/action]
 [/object]
+[object]
+obj_control
+-1
+0
+[action]
+create
+px = 0;
+py = 0;
+mdown = 0;
+linecount = 0;
+[/action]
+[action]
+draw
+if (mdown) {
+	draw_line(px,py,mouse_x,mouse_y);
+}
+for (i=0;i<linecount;i++) {
+	draw_line(linesx[i],linesy[i],lineex[i],lineey[i]);
+}
+[/action]
+[action]
+globalmousepressed_left
+mdown = 1;
+px = mouse_x;
+py = mouse_y;
+[/action]
+[action]
+globalmousereleased_left
+mdown = 0;
+linesx[linecount] = px;
+linesy[linecount] = py;
+lineex[linecount] = mouse_x;
+lineey[linecount] = mouse_y;
+linecount ++;
+[/action]
+[/object]
 [/objects]
 [rooms]
 [room]
@@ -20,7 +56,8 @@ main
 0.6,0.6,0.6
 800,600
 [instances]
-obj_pen_button,50,50
+obj_pen_button,0,0
+obj_control,0,0
 [/instances]
 [/room]
 [/rooms]
