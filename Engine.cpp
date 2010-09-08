@@ -32,6 +32,7 @@ float Engine::r;
 float Engine::g;
 float Engine::b;
 Font *Engine::currentFont;
+arraymap *Engine::vecList;
 
 void Engine::init() {
 
@@ -44,6 +45,8 @@ void Engine::init() {
         Engine::imageref = *(new vector<Image *>());
         Engine::roomref = *(new vector<Room *>());
 	Engine::fonts = *(new vector<Font *>());
+
+	Engine::vecList = new vector<map<int, Variable *> *>();
 
 	cout << "engine.cpp init creating instance maps" << endl;
         Engine::instances = new instancemap();

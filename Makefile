@@ -18,8 +18,8 @@ clean:
 	rm -f *.o
 
 cleancode:
-	rm -f $(CORE_FILES) $(EXTRA_FILES)
+	rm -f $(CORE_FILES) $(EXTRA_FILES) *.o
 
 cleanall:
-	rm -f $(CORE_FILES) $(EXTRA_FILES) $(PROG) Makefile
+	rm -f $(CORE_FILES) $(EXTRA_FILES) $(PROG) Makefile *.o
 

@@ -179,6 +179,7 @@ int main(int argc, char **argv) {
 		} else {
 			if (state == 1) {
 				spriteName = line;
+				cout << "sprite " << spriteName << endl;
 				vector<string> temptoks;
 				Tokenize(spriteName,temptoks,".");
 				writeString(outfile,temptoks[0].c_str(),temptoks[0].size());
@@ -186,6 +187,7 @@ int main(int argc, char **argv) {
 			} else if (state == 3) {
 				if (secondState == 0) {
 					objectName = line;
+					cout << "object " << objectName << endl;
 					secondState = 1;
 					writeString(outfile,objectName.c_str(),objectName.size());
 					char s = '\n';
@@ -214,6 +216,7 @@ int main(int argc, char **argv) {
 			} else if (state == 6) {
 				if (secondState == 0) {
 					objectName = line;
+					cout << "room " << objectName << endl;
 					writeString(outfile,line.c_str(),line.size());
 					char s = '\n';
 					outfile.write(&s,1);

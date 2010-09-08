@@ -6,6 +6,8 @@
 
 using namespace std;
 
+class Engine;
+
 class Variable {
 	friend ostream& operator<<(ostream &, const Variable &);
 public:
@@ -26,6 +28,8 @@ public:
 	void operator+=(const Variable &);
 	void operator+=(const int);
 	void operator+=(const string);
+
+	Variable &operator[](int);
 
 	friend bool operator<(const Variable &, int);
 	friend bool operator<(const Variable &, const Variable &);

@@ -1,4 +1,5 @@
 #include "Variable.h"
+#include "Engine.h"
 
 Variable::Variable() {
 	sdata = "";
@@ -100,6 +101,28 @@ void Variable::operator+=(const string data) {
 	if (type == 2) {
 		sdata = sdata+data;
 	}
+}
+
+Variable &Variable::operator[](int index) {
+	if (type == 1) {
+		map<int, Variable *> *vec;
+		if ((unsigned int)idata < Engine::vecList->size() && idata >= 0) {
+			vec = Engine::vecList->at(idata);
+		} else {
+			vec = new map<int, Variable *>();
+			Engine::vecList->push_back(vec);
+			idata = Engine::vecList->size()-1;
+			cout << "new vector " << idata << endl;
+		}
+		if (vec->find(index) != vec->end()) {
+			return *(vec->find(index)->second);
+		} else {
+			Variable *var = new Variable(0);
+			vec->insert(vec->begin(),pair<int,Variable*>(index,var));
+			return *(var);
+		}
+	}
+	return *(new Variable(-4));
 }
 
 bool operator<(const Variable &var1, int data) {

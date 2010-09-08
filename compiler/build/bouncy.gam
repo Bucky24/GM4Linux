@@ -9,18 +9,53 @@ obj_control
 0
 [action]
 create
-p1x = 100;
+/*p1x = 100;
 p1y = 100;
 p2x = 600;
 p2y = 600;
 p1xSpeed = -10;
 p1ySpeed = 10;
 p2xSpeed = 10;
-p2ySpeed = -10;
+p2ySpeed = -10;*/
+
+pointx[0] = 100;
+pointy[0] = 100;
+pointx[1] = 600;
+pointy[1] = 600;
+
+pointxsp[0] = -10;
+pointysp[0] = 10;
+pointxsp[1] = 10;
+pointysp[1] = -10;
+
+//cout << pointx[0] << endl;
+
+points = 1;
 [/action]
 [action]
 step
-p1x += p1xSpeed;
+for (i=0;i<points;i++) {
+	pointx[i] += pointxsp[i];
+	//pointy[i] += pointysp[i];
+
+	if (pointx[i] < 0) {
+		pointx[i] = 0;
+		pointxsp[i] = 10;
+	} else if (pointx[i] > 1024) {
+		pointx[i] = 1024;
+		pointxsp[i] = -10;
+	}
+
+	if (pointy[i] < 0) {
+		pointy[i] = 0;
+		pointysp[i] = 10;
+	} else if (pointy[i] > 756) {
+		pointy[i] = 756;
+		pointysp[i] = -10;
+	}
+	cout << pointx[i] << endl;
+}
+/*p1x += p1xSpeed;
 p1y += p1ySpeed;
 p2x += p2xSpeed;
 p2y += p2ySpeed;
@@ -55,11 +90,22 @@ if (p2y < 0) {
 } else if (p2y > 756) {
 	p2y = 756;
 	p2ySpeed = -10;
-}
+}*/
 [/action]
 [action]
 draw
-draw_line(p1x,p1y,p2x,p2y);
+if (points > 0) {
+	px = pointx[0];
+	py = pointy[0];
+	cout << i << " " << points << " " << px << " " << py << endl;
+	for (i=1;i<points;i++) {
+		//cout << i << " " << points << " " << px << " " << py << endl;
+		draw_line(px,py,pointx[i],pointy[i]);
+		px = pointx[i];
+		py = pointy[i];
+	}
+}
+//draw_line(p1x,p1y,p2x,p2y);
 [/action]
 [/object]
 [/objects]

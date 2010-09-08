@@ -33,6 +33,8 @@ typedef map<int,objlist *> instancemap;
 
 typedef map<int,int> collidemap;
 
+typedef vector<map<int, Variable *> *> arraymap;
+
 class Engine {
 public:
         static void init();
@@ -101,6 +103,8 @@ public:
 	static void updateObjects();
 
 	static vector<Font *> fonts;
+
+	static arraymap *vecList;
 };
 
 #endif

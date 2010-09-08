@@ -5,7 +5,7 @@ void draw_character(char letter, float x, float y) {
 	y++;
 	glColor3f(0,0,0);
 	Letter *let = Engine::currentFont->letters[letter];
-	unsigned int i,j;
+	int i,j;
 	glBegin(GL_POINTS);
 	for (i=0;i<let->height;i++) {
 		for (j=0;j<let->width;j++) {
