@@ -9,34 +9,36 @@ obj_control
 0
 [action]
 create
-/*p1x = 100;
-p1y = 100;
-p2x = 600;
-p2y = 600;
-p1xSpeed = -10;
-p1ySpeed = 10;
-p2xSpeed = 10;
-p2ySpeed = -10;*/
+points = 5;
 
 pointx[0] = 100;
 pointy[0] = 100;
-pointx[1] = 600;
+pointx[1] = 100;
 pointy[1] = 600;
+pointx[2] = 600;
+pointy[2] = 600;
+pointx[3] = 600;
+pointy[3] = 100;
+pointx[points-1] = pointx[0];
+pointy[points-1] = pointy[0];
 
 pointxsp[0] = -10;
 pointysp[0] = 10;
 pointxsp[1] = 10;
 pointysp[1] = -10;
+pointxsp[2] = 10;
+pointysp[2] = 10;
+pointxsp[3] = -10;
+pointysp[3] = -10;
+pointxsp[points-1] = pointxsp[0];
+pointysp[points-1] = pointysp[0];
 
-//cout << pointx[0] << endl;
-
-points = 1;
 [/action]
 [action]
 step
 for (i=0;i<points;i++) {
 	pointx[i] += pointxsp[i];
-	//pointy[i] += pointysp[i];
+	pointy[i] += pointysp[i];
 
 	if (pointx[i] < 0) {
 		pointx[i] = 0;
@@ -53,59 +55,19 @@ for (i=0;i<points;i++) {
 		pointy[i] = 756;
 		pointysp[i] = -10;
 	}
-	cout << pointx[i] << endl;
 }
-/*p1x += p1xSpeed;
-p1y += p1ySpeed;
-p2x += p2xSpeed;
-p2y += p2ySpeed;
-
-if (p1x < 0) {
-	p1x = 0;
-	p1xSpeed = 10;
-} else if (p1x > 1024) {
-	p1x = 1024;
-	p1xSpeed = -10;
-}
-
-if (p1y < 0) {
-	p1y = 0;
-	p1ySpeed = 10;
-} else if (p1y > 756) {
-	p1y = 756;
-	p1ySpeed = -10;
-}
-
-if (p2x < 0) {
-	p2x = 0;
-	p2xSpeed = 10;
-} else if (p2x > 1024) {
-	p2x = 1024;
-	p2xSpeed = -10;
-}
-
-if (p2y < 0) {
-	p2y = 0;
-	p2ySpeed = 10;
-} else if (p2y > 756) {
-	p2y = 756;
-	p2ySpeed = -10;
-}*/
 [/action]
 [action]
 draw
 if (points > 0) {
 	px = pointx[0];
 	py = pointy[0];
-	cout << i << " " << points << " " << px << " " << py << endl;
 	for (i=1;i<points;i++) {
-		//cout << i << " " << points << " " << px << " " << py << endl;
 		draw_line(px,py,pointx[i],pointy[i]);
 		px = pointx[i];
 		py = pointy[i];
 	}
 }
-//draw_line(p1x,p1y,p2x,p2y);
 [/action]
 [/object]
 [/objects]

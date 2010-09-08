@@ -6,29 +6,34 @@ Variable::Variable() {
 	idata = 0;
 	/* default to int */
 	type = 1;
+	isArray = false;
 }
 
 Variable::Variable(int d) {
 	sdata = "";
 	idata = d;
 	type = 1;
+	isArray = false;
 }
 
 Variable::Variable(string d) {
 	sdata = d;
 	idata = 0;
 	type = 2;
+	isArray = false;
 }
 
 Variable &Variable::operator=(int data) {
 	type = 1;
 	idata = data;
+	isArray = false;
 	return *this;
 }
 
 Variable &Variable::operator=(string data) {
 	type = 2;
 	sdata = data;
+	isArray = false;
 	return *this;
 }
 
@@ -36,6 +41,7 @@ Variable &Variable::operator=(const Variable &other) {
 	type = other.type;
 	idata = other.idata;
 	sdata = other.sdata;
+	isArray = other.isArray;
 	return *this;
 }
 
@@ -43,6 +49,7 @@ Variable &Variable::operator++() {
 	if (type == 1) {
 		idata ++;
 	}
+	isArray = false;
 	return *this;
 }
 
@@ -50,6 +57,7 @@ Variable &Variable::operator++(int unused) {
 	if (type == 1) {
 		idata ++;
 	}
+	isArray = false;
 	return *this;
 }
 
@@ -60,6 +68,7 @@ Variable Variable::operator+(const Variable &var2) {
 	}
 	ret.idata = idata+var2.idata;
 	ret.sdata = sdata+var2.sdata;
+	isArray = false;
 	return ret;
 }
 
@@ -69,6 +78,7 @@ Variable Variable::operator+(const int data) {
 		ret.type = 1;
 		ret.idata = idata+data;
 	}
+	isArray = false;
 	return ret;
 }
 
@@ -78,6 +88,7 @@ Variable Variable::operator+(const string data) {
 		ret.type = 2;
 		ret.sdata = sdata+data;
 	}
+	isArray = false;
 	return ret;
 }
 
@@ -89,29 +100,33 @@ void Variable::operator+=(const Variable &var2) {
 			sdata = sdata+var2.sdata;
 		}
 	}
+	isArray = false;
 }
 
 void Variable::operator+=(const int data) {
 	if (type == 1) {
 		idata = idata+data;
 	}
+	isArray = false;
 }
 
 void Variable::operator+=(const string data) {
 	if (type == 2) {
 		sdata = sdata+data;
 	}
+	isArray = false;
 }
 
 Variable &Variable::operator[](int index) {
 	if (type == 1) {
 		map<int, Variable *> *vec;
-		if ((unsigned int)idata < Engine::vecList->size() && idata >= 0) {
+		if ((unsigned int)idata < Engine::vecList->size() && idata >= 0 && isArray) {
 			vec = Engine::vecList->at(idata);
 		} else {
 			vec = new map<int, Variable *>();
 			Engine::vecList->push_back(vec);
 			idata = Engine::vecList->size()-1;
+			isArray = true;
 			cout << "new vector " << idata << endl;
 		}
 		if (vec->find(index) != vec->end()) {
@@ -144,6 +159,9 @@ bool operator<(const Variable &var1, const Variable &var2) {
 }
 
 ostream& operator<<(ostream &output, const Variable &var) {
+	if (var.isArray) {
+		output << "Array=>";
+	}
 	if (var.type == 1) {
 		output << var.idata;
 	} else if (var.type == 2) {

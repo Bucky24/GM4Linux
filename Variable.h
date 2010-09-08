@@ -48,6 +48,7 @@ private:
 	int type; // 1=int, 2=string
 	string sdata;
 	int idata;
+	bool isArray;
 };
 
 #endif
