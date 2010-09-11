@@ -34,13 +34,13 @@ for (i=0;i<linecount;i++) {
 }
 [/action]
 [action]
-globalmousepressed_left
+globalmousepressed_right
 mdown = 1;
 px = mouse_x;
 py = mouse_y;
 [/action]
 [action]
-globalmousereleased_left
+globalmousereleased_right
 mdown = 0;
 linesx[linecount] = px;
 linesy[linecount] = py;
@@ -54,7 +54,7 @@ linecount ++;
 [room]
 main
 0.6,0.6,0.6
-800,600
+800,460
 [instances]
 obj_pen_button,0,0
 obj_control,0,0

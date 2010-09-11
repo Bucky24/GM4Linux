@@ -132,7 +132,7 @@ void Engine::fillFonts() {
 }
 
 void Engine::registerCollisions() {
-	/* -- COLLISIONS -- */
+	/* -- REGISTER COLLISIONS -- */
 }
 
 void Engine::handleEvents() {

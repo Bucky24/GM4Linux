@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
 	}
 
 	string line;
-	int state = 0; // 0=none, 1=sprites, 2=objects, 3=object, 4=object action, 5=rooms, 6=room, 7=room instances, 8=fonts
+	int state = 0; // 0=none, 1=sprites, 2=objects, 3=object, 4=object action, 5=rooms, 6=room, 7=room instances, 8=fonts, 9=collision
 	int secondState = 0;
 
 	string objectName;
@@ -174,6 +174,14 @@ int main(int argc, char **argv) {
 			outfile.write(&s,1);
 		} else if (state == 8 && line == "[/fonts]") {
 			state = 0;
+			char s = (char)state;
+			outfile.write(&s,1);
+		} else if (state == 3 && line == "[collision]") {
+			state = 9;
+			char s = (char)state;
+			outfile.write(&s,1);
+		} else if (state == 9 && line == "[/collision]") {
+			state = 3;
 			char s = (char)state;
 			outfile.write(&s,1);
 		} else {
