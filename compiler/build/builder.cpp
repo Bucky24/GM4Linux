@@ -11,18 +11,20 @@ using namespace std;
 
 class Object {
 public:
-	Object(string, map<string,string> *,int,int);
+	Object(string, map<string,string> *,int,int,string);
 	string name;
 	map<string,string> *actionMap;
 	int sprite;
 	int objectId;
+	string parent;
 };
 
-Object::Object(string n, map<string,string> *a, int s, int id) {
+Object::Object(string n, map<string,string> *a, int s, int id, string p) {
 	name = n;
 	actionMap = a;
 	sprite = s;
 	objectId = id;
+	parent = p;
 }
 
 class Room {
@@ -109,6 +111,7 @@ int main(int argc, char **argv) {
 	int state = 0;
 	string objectName = "";
 	string actionName = "";
+	string objectParent = "";
 	string roomName = "";
 	map<string,string> *actionMap = new map<string,string>;
 	int objectSprite = -1;
@@ -205,10 +208,11 @@ int main(int argc, char **argv) {
 				readName = false;
 			} else if (state == 2 && objectName != "") {
 				//cout << "new object" << endl;
-				Object *obj = new Object(objectName,actionMap,objectSprite,objectId);
+				Object *obj = new Object(objectName,actionMap,objectSprite,objectId,objectParent);
 				objects.push_back(obj);				
 
 				objectName = "";
+				objectParent = "";
 				actionMap = new map<string,string>();
 				objectSprite = -1;
 				objectId = 2;
@@ -246,6 +250,12 @@ int main(int argc, char **argv) {
 				infile.read(&input,1);
 				infile.read(&input2,1);
 				objectId = input*256+input2;
+
+				infile.read(&input,1);
+				while (input != '\n') {
+					objectParent += input;
+					infile.read(&input,1);
+				}
 			} else if (state == 4) {
 				if (!readName) {
 					if (input == '\n') {
@@ -318,7 +328,8 @@ int main(int argc, char **argv) {
 		actionMap = objects[i]->actionMap;
 		objectSprite = objects[i]->sprite;
 		objectId = objects[i]->objectId;
-		cout << "object " << objectName << endl;
+		objectParent = objects[i]->parent;
+		cout << "object " << objectName << "<=" << objectParent << endl;
 		bool buildH = false;
 		bool buildCpp = false;
 		string className = "obj_" + objectName;
@@ -328,7 +339,7 @@ int main(int argc, char **argv) {
 			outfile << "#ifndef " << objectName << "HFILE\n";
 			outfile << "#define " << objectName << "HFILE\n";
 			outfile << "#include \"Object.h\"\n";
-			outfile << "class " << className << " : public Object {\npublic:\n" << className << "(int, float, float);\n";
+			outfile << "class " << className << " : public " << objectParent << " {\npublic:\n" << className << "(int, float, float);\n";
 			map<string,string>::iterator itor;
 			for (itor=actionMap->begin();itor!=actionMap->end();itor++) {
 				outfile << "void " << itor->first << "();\n";

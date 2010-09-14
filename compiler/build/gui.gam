@@ -7,7 +7,8 @@ font
 [object]
 obj_button
 -1
-1
+0
+Object
 [action]
 create
 width = 40;
@@ -39,6 +40,9 @@ status = "up";
 [/object]
 [object]
 obj_textfield
+-1
+1
+Object
 [action]
 create
 width = 100;
@@ -48,6 +52,17 @@ height = 100;
 draw
 [/action]
 [/object]
+[object]
+control
+-1
+2
+Object
+[action]
+create
+tempid = instance_create(0,0,obj_button);
+tempid.text = "objects";
+[/action]
+[/object]
 [/objects]
 [rooms]
 [room]
@@ -55,7 +70,7 @@ main
 0.6,0.6,0.6
 800,600
 [instances]
-obj_button,0,0
+control,0,0
 [/instances]
 [/room]
 [rooms]

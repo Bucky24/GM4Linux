@@ -80,13 +80,14 @@ void initRendering() {
 }
 
 void handleResize(int w, int h) {
+	cout << "main.cpp handleResize begin" << endl;
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(0,w,h,0,-100,1000);
-	cout << "main.cpp handling resize " << endl;
 	Engine::currentRoom->width = w;
 	Engine::currentRoom->height = h;
+	cout << "main.cpp handleResize completed " << endl;
 }
 
 void drawScene() {

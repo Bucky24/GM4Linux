@@ -31,9 +31,11 @@ void Tokenize(const string& str,
 
 void writeString(ofstream &out, const char *str, int count) {
 	int i;
+	//cout << str << endl;
 	for (i=0;i<count;i++) {
 		char c = str[i];
 		out.write(&c,1);
+		//cout << (int)c << endl;
 		//out.seekp(1,ios_base::cur);
 	}
 	//char c = 10;
@@ -77,6 +79,7 @@ int main(int argc, char **argv) {
 	string objectName;
 	int objectSprite;
 	string spriteName;
+	string objectParent;
 	string r,g,b;
 	int objectId;
 	while (!infile.eof()) {
@@ -195,7 +198,7 @@ int main(int argc, char **argv) {
 			} else if (state == 3) {
 				if (secondState == 0) {
 					objectName = line;
-					cout << "object " << objectName << endl;
+					cout << "object " << objectName;
 					secondState = 1;
 					writeString(outfile,objectName.c_str(),objectName.size());
 					char s = '\n';
@@ -217,6 +220,14 @@ int main(int argc, char **argv) {
 					s = (char)objectId;
 					outfile.write(&s,1);
 					//outfile.seekp(1,ios_base::cur);
+					secondState = 3;
+				} else if (secondState == 3) {
+					objectParent = line;
+					cout << "<=" << objectParent << endl;
+					secondState = 1;
+					writeString(outfile,objectParent.c_str(),objectParent.size());
+					char s = '\n';
+					outfile.write(&s,1);
 				}
 			} else if (state == 4) {
 				line += "\n";
