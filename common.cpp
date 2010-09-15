@@ -6,6 +6,10 @@ void draw_character(char letter, float x, float y) {
 	glColor3f(0,0,0);
 	Letter *let = Engine::currentFont->letters[letter];
 	int i,j;
+	if (let == NULL) {
+		return;
+	}
+
 	glBegin(GL_POINTS);
 	for (i=0;i<let->height;i++) {
 		for (j=0;j<let->width;j++) {

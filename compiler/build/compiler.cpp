@@ -198,7 +198,7 @@ int main(int argc, char **argv) {
 			} else if (state == 3) {
 				if (secondState == 0) {
 					objectName = line;
-					cout << "object " << objectName;
+					cout << "object " << objectName << endl;
 					secondState = 1;
 					writeString(outfile,objectName.c_str(),objectName.size());
 					char s = '\n';
@@ -220,15 +220,15 @@ int main(int argc, char **argv) {
 					s = (char)objectId;
 					outfile.write(&s,1);
 					//outfile.seekp(1,ios_base::cur);
-					secondState = 3;
-				} else if (secondState == 3) {
+					//secondState = 3;
+				}/* else if (secondState == 3) {
 					objectParent = line;
 					cout << "<=" << objectParent << endl;
 					secondState = 1;
 					writeString(outfile,objectParent.c_str(),objectParent.size());
 					char s = '\n';
 					outfile.write(&s,1);
-				}
+				}*/
 			} else if (state == 4) {
 				line += "\n";
 				writeString(outfile,line.c_str(),line.size());

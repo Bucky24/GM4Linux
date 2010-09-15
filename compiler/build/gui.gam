@@ -5,15 +5,14 @@ font
 [/fonts]
 [objects]
 [object]
-obj_button
+obj_objbutton
 -1
 0
-Object
 [action]
 create
 width = 40;
 height = 15;
-text = "button";
+text = "objects";
 status = "up";
 [/action]
 [action]
@@ -42,7 +41,6 @@ status = "up";
 obj_textfield
 -1
 1
-Object
 [action]
 create
 width = 100;
@@ -56,11 +54,8 @@ draw
 control
 -1
 2
-Object
 [action]
 create
-tempid = instance_create(0,0,obj_button);
-tempid.text = "objects";
 [/action]
 [/object]
 [/objects]
@@ -71,6 +66,7 @@ main
 800,600
 [instances]
 control,0,0
+obj_objbutton,0,0
 [/instances]
 [/room]
 [rooms]
