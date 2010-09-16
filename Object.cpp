@@ -201,12 +201,18 @@ Variable &Variables::operator[](string key) {
 	Tokenize(key,toks,".");
 
 	if (toks.size() > 1) {
-		cout << "object.cpp variables[] found reference request " << endl;
+		/*cout << "object.cpp variables[] found reference request " << endl;*/
+		if (toks[0] == "global") {
+			if (Engine::globalVars->find(toks[1]) == Engine::globalVars->end()) {
+				Engine::globalVars->insert(pair<string,Variable *>(toks[1],new Variable(0)));
+			}
+			return *(Engine::globalVars->find(toks[1])->second);
+		}
 		if (vars.find(toks[0]) == vars.end()) {
 			return *(new Variable(0));
 		}
 		int instanceId = vars[toks[0]];
-		cout << "object.cpp variables[] " << key << " translates to " << instanceId << endl;
+		/*cout << "object.cpp variables[] " << key << " translates to " << instanceId << endl;*/
 		unsigned int i;
 		for (i=0;i<Engine::instanceref.size();i++) {
 			if (Engine::instanceref[i]->id == instanceId) {

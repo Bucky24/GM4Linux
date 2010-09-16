@@ -35,11 +35,14 @@ Font *Engine::currentFont;
 arraymap *Engine::vecList;
 vector<fstream *> *Engine::filePtrRead;
 vector<fstream *> *Engine::filePtrWrite;
+map<string,Variable *> *Engine::globalVars;
 
 void Engine::init() {
 
 	cout << "engine.cpp init begin initialization" << endl;
 	Engine::currentRoom = NULL;
+
+	Engine::globalVars = new map<string,Variable *>();
 
 	cout << "engine.cpp init creating reference vectors" << endl;
         Engine::instanceref = *(new vector<Object *>());
@@ -59,8 +62,8 @@ void Engine::init() {
 
 	cout << "engine.cpp init creating objects/rooms/images" << endl;
 
-        fillObjects();
         fillImages();
+        fillObjects();
         fillRooms();
 	cout << "engine.cpp completed creation of rooms " << endl;
 	fillFonts();

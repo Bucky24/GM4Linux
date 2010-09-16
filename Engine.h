@@ -109,6 +109,8 @@ public:
 
 	static vector<fstream *> *filePtrRead;
 	static vector<fstream *> *filePtrWrite;
+
+	static map<string,Variable *> *globalVars;
 };
 
 #endif

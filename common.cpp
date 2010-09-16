@@ -127,6 +127,21 @@ void draw_rectangle(float x1, float y1, float x2, float y2) {
 	glEnd();
 }
 
+void draw_rectangle_color(float x1, float y1, float x2, float y2, float r, float g, float b) {
+	x1++;
+	x2++;
+	y1++;
+	y2++;
+	glColor3f(r,g,b);
+	glBegin(GL_POLYGON);
+	glVertex3f(x1,y1,0);
+	glVertex3f(x2,y1,0);
+	glVertex3f(x2,y2,0);
+	glVertex3f(x1,y2,0);
+	glEnd();
+	glColor3f(Engine::r,Engine::g,Engine::b);
+}
+
 void Tokenize(const string& str,
                       vector<string>& tokens,
                       const string& delimiters = " ")

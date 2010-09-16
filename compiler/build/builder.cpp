@@ -568,6 +568,9 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("draw_rectangle");
 	ret.push_back("c_white");
 	ret.push_back("else");
+	ret.push_back("room_width");
+	ret.push_back("room_height");
+	ret.push_back("draw_rectangle_color");
 }
 
 bool isReserved(string word, vector<string> &vec) {
