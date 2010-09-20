@@ -56,12 +56,11 @@ obj_objects
 [action]
 draw
 if (global.showObjects == 1) {
-	//draw_rectangle_color(x,y,x+60,room_height,c_white);
-	//draw_line(x,y,x+60,y);
-	draw_line(x+60,room_height-10,x,room_height-10);
-	//draw_line(x+60,y,x+60,room_height);
-	//draw_line(x,room_height,x,y);
-	//cout << (room_height-10) << " " << x << endl;
+	draw_rectangle_color(x,y,x+60,room_height,c_white);
+	draw_line(x,y,x+60,y);
+	draw_line(x+60,room_height,x,room_height);
+	draw_line(x,room_height,x,y);
+	draw_line(x+60,y,x+60,room_height);
 }
 [/action]
 [/object]

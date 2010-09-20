@@ -74,6 +74,7 @@ void initRendering() {
 	glEnable(GL_LIGHT0);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_COLOR_MATERIAL);
+	glDisable(GL_CULL_FACE);
 
 	cout << "main.cpp initRendering initializing engine" << endl;
         Engine::init();
@@ -121,7 +122,7 @@ void update(int value) {
 
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	cout << "main.cpp main program entered" << endl;	
