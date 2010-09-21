@@ -36,6 +36,7 @@ arraymap *Engine::vecList;
 vector<fstream *> *Engine::filePtrRead;
 vector<fstream *> *Engine::filePtrWrite;
 map<string,Variable *> *Engine::globalVars;
+vector<vector<Variable *> *> *Engine::vectors;
 
 void Engine::init() {
 
@@ -52,6 +53,7 @@ void Engine::init() {
 	Engine::fonts = *(new vector<Font *>());
 
 	Engine::vecList = new vector<map<int, Variable *> *>();
+	Engine::vectors = new vector<vector<Variable *> *>();
 
 	Engine::filePtrRead = new vector<fstream *>();
 	Engine::filePtrWrite = new vector<fstream *>();

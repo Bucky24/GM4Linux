@@ -111,6 +111,8 @@ public:
 	static vector<fstream *> *filePtrWrite;
 
 	static map<string,Variable *> *globalVars;
+
+	static vector<vector<Variable *> *> *vectors;
 };
 
 #endif

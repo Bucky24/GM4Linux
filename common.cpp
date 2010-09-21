@@ -198,3 +198,9 @@ void file_text_close(int handle) {
 void file_text_write_string(int handle, string data) {
 	
 }
+
+int ds_list_create() {	
+	vector<Variable *> *vec = new vector<Variable *>();
+	Engine::vectors->push_back(vec);
+	return Engine::vectors->size()-1;
+}

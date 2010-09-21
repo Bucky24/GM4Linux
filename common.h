@@ -34,5 +34,6 @@ extern void draw_rectangle_color(float x1, float y1, float x2, float y2, float r
 extern void Tokenize(const string& str, vector<string>& tokens, const string& delimiters);
 extern int file_text_open_write(string filename);
 extern void file_text_close(int handle);
+extern int ds_list_create();
 
 #endif
