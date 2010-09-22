@@ -1,10 +1,13 @@
 #include "common.h"
 
 void draw_character(char letter, float x, float y) {
-	x++;
-	y++;
+	if (x == 0)x++;
+	if (y == 0)y++;
 	glColor3f(0,0,0);
-	Letter *let = Engine::currentFont->letters[letter];
+	if (Engine::currentFont->letters.find(letter) == Engine::currentFont->letters.end()) {
+		return;
+	}
+	Letter *let = Engine::currentFont->letters.find(letter)->second;
 	int i,j;
 	if (let == NULL) {
 		return;
@@ -113,6 +116,10 @@ void draw_text(string text, float x, float y) {
 	}
 }
 
+void draw_text(Variable *text, float x, float y) {
+	draw_text(text->getS(),x,y);
+}
+
 void draw_rectangle(float x1, float y1, float x2, float y2) {
 	if (x1 == 0)x1++;
 	if (x2 == 0)x2++;
@@ -203,4 +210,47 @@ int ds_list_create() {
 	vector<Variable *> *vec = new vector<Variable *>();
 	Engine::vectors->push_back(vec);
 	return Engine::vectors->size()-1;
+}
+
+void ds_list_add(int id, Variable *value) {
+	if ((signed int)Engine::vectors->size() <= id) {
+		return;
+	}
+	if (Engine::vectors->at(id) == NULL) {
+		return;
+	}
+	Engine::vectors->at(id)->push_back(value);
+}
+
+void ds_list_add(int id, const char *value) {
+	if ((signed int)Engine::vectors->size() <= id) {
+		return;
+	}
+	if (Engine::vectors->at(id) == NULL) {
+		return;
+	}
+	Variable *var = new Variable(value);
+	Engine::vectors->at(id)->push_back(var);
+}
+
+Variable *ds_list_find_value(int id, int pos) {
+	cout << id << " " << pos << endl;
+	if ((signed int)Engine::vectors->size() <= id) {
+		return new Variable(-4);
+	}
+	if (Engine::vectors->at(id) == NULL) {
+		return new Variable(-4);
+	}
+	if ((signed int)Engine::vectors->at(id)->size() <= pos) {
+		return new Variable(-4);
+	}
+	cout << id << " " << pos << endl;
+	return Engine::vectors->at(id)->at(pos);
+}
+
+int ds_list_size(int id) {
+	if ((signed int)Engine::vectors->size() <= id) {
+		return -4;
+	}
+	return Engine::vectors->at(id)->size();
 }

@@ -55,9 +55,9 @@ obj_objnewobject
 0
 [action]
 create
-width = 60;
+width = 80;
 height = 15;
-text = "new object";
+text = "newobject";
 status = "up";
 [/action]
 [action]
@@ -94,11 +94,17 @@ obj_objects
 [action]
 draw
 if (global.showObjects == 1) {
-	draw_rectangle_color(x,y,x+60,room_height,c_white);
-	draw_line(x,y,x+60,y);
-	draw_line(x+60,room_height,x,room_height);
+	draw_rectangle_color(x,y,x+80,room_height,c_white);
+	draw_line(x,y,x+80,y);
+	draw_line(x+80,room_height,x,room_height);
 	draw_line(x,room_height,x,y);
-	draw_line(x+60,y,x+60,room_height);
+	draw_line(x+80,y,x+80,room_height);
+
+	ty = y;
+	for (i=0;i<ds_list_size(global.objectNames);i++) {
+		draw_text(ds_list_find_value(global.objectNames,i),x,ty);
+		ty += 12;
+	}
 }
 [/action]
 [/object]
@@ -125,6 +131,9 @@ create
 global.showObjects = 0;
 global.objectNames = ds_list_create();
 global.objectCode = ds_list_create();
+ds_list_add(global.objectNames,"test");
+ds_list_add(global.objectNames,"test2");
+ds_list_add(global.objectNames,"test3");
 [/action]
 [/object]
 [/objects]

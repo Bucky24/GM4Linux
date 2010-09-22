@@ -214,3 +214,11 @@ bool operator!=(const Variable &var1, int data) {
 bool operator!=(const Variable &var1, const Variable &var2) {
 	return !(var1 == var2);
 }
+
+string Variable::getS() {
+	if (type == 2) {
+		return sdata;
+	} else {
+		return "";
+	}
+}

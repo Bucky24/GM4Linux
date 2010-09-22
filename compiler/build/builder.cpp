@@ -572,6 +572,9 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("room_height");
 	ret.push_back("draw_rectangle_color");
 	ret.push_back("ds_list_create");
+	ret.push_back("ds_list_add");
+	ret.push_back("ds_list_find_value");
+	ret.push_back("ds_list_size");
 }
 
 bool isReserved(string word, vector<string> &vec) {

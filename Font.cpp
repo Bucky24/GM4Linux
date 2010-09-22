@@ -14,6 +14,7 @@ Font::Font(const char *filename) {
 	Letter *letter;
 	char w,h,ch;
 	int i,j;
+	letters = *(new map<char, Letter *>());
 	while (infile.read(&c,1)) {
 		w = c;
 		infile.read(&h,1);
