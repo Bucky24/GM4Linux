@@ -234,7 +234,6 @@ void ds_list_add(int id, const char *value) {
 }
 
 Variable *ds_list_find_value(int id, int pos) {
-	cout << id << " " << pos << endl;
 	if ((signed int)Engine::vectors->size() <= id) {
 		return new Variable(-4);
 	}
@@ -244,7 +243,6 @@ Variable *ds_list_find_value(int id, int pos) {
 	if ((signed int)Engine::vectors->at(id)->size() <= pos) {
 		return new Variable(-4);
 	}
-	cout << id << " " << pos << endl;
 	return Engine::vectors->at(id)->at(pos);
 }
 

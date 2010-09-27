@@ -82,7 +82,7 @@ if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height) {
 [action]
 globalmousereleased_left
 if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height && status == "down") {
-	
+	ds_list_add(global.objectNames,"derp");
 }
 status = "up";
 [/action]
@@ -91,6 +91,10 @@ status = "up";
 obj_objects
 -1
 3
+[action]
+create
+currentObject = 0;
+[/action]
 [action]
 draw
 if (global.showObjects == 1) {
@@ -102,9 +106,16 @@ if (global.showObjects == 1) {
 
 	ty = y;
 	for (i=0;i<ds_list_size(global.objectNames);i++) {
-		draw_text(ds_list_find_value(global.objectNames,i),x,ty);
+		value = ds_list_find_value(global.objectNames,i);
+		draw_text(value,x,ty);
 		ty += 12;
 	}
+}
+[/action]
+[action]
+globalmousereleased_left
+if (mouse_x >= x && mouse_x <= x+80 && mouse_y >= y && mouse_y <= y+room_height && status == "down") {
+	
 }
 [/action]
 [/object]
@@ -132,8 +143,8 @@ global.showObjects = 0;
 global.objectNames = ds_list_create();
 global.objectCode = ds_list_create();
 ds_list_add(global.objectNames,"test");
-ds_list_add(global.objectNames,"test2");
-ds_list_add(global.objectNames,"test3");
+ds_list_add(global.objectNames,"testtwo");
+ds_list_add(global.objectNames,"testthree");
 [/action]
 [/object]
 [/objects]

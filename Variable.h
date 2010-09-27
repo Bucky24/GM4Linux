@@ -17,6 +17,7 @@ public:
 	Variable &operator=(int);
 	Variable &operator=(string);
 	Variable &operator=(const Variable &);
+	Variable &operator=(const Variable *);
 
 	Variable &operator++();
 	Variable &operator++(int);
@@ -34,8 +35,15 @@ public:
 	friend bool operator<(const Variable &, int);
 	friend bool operator<(const Variable &, const Variable &);
 
+	//friend bool operator>=(const Variable &, int);
+	//friend bool operator>=(const Variable &, const Variable &);
+
+	//friend bool operator<=(const Variable &, int);
+	//friend bool operator<=(const Variable &, const Variable &);
+
 	operator float() {return (float)idata;}
 	operator string() {return sdata;}
+	//operator int() {return idata;}
 
 	friend bool operator==(const Variable &, string);
 	friend bool operator==(const Variable &, int);
@@ -46,6 +54,7 @@ public:
 	friend bool operator!=(const Variable &, const Variable &);
 
 	string getS();
+	int getI();
 private:
 	int type; // 1=int, 2=string
 	string sdata;

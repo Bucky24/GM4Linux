@@ -45,6 +45,14 @@ Variable &Variable::operator=(const Variable &other) {
 	return *this;
 }
 
+Variable &Variable::operator=(const Variable *other) {
+	type = other->type;
+	idata = other->idata;
+	sdata = other->sdata;
+	isArray = other->isArray;
+	return *this;
+}
+
 Variable &Variable::operator++() {
 	if (type == 1) {
 		idata ++;
@@ -158,6 +166,42 @@ bool operator<(const Variable &var1, const Variable &var2) {
 	return false;
 }
 
+/*bool operator>=(const Variable &var1, int data) {
+	if (var1.type == 1) {
+		if (var1.idata >= data) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool operator>=(const Variable &var1, const Variable &var2) {
+	if (var1.type == 1 && var2.type == 1) {
+		if (var1.idata >= var2.idata) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool operator<=(const Variable &var1, int data) {
+	if (var1.type == 1) {
+		if (var1.idata <= data) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool operator<=(const Variable &var1, const Variable &var2) {
+	if (var1.type == 1 && var2.type == 1) {
+		if (var1.idata <= var2.idata) {
+			return true;
+		}
+	}
+	return false;
+}*/
+
 ostream& operator<<(ostream &output, const Variable &var) {
 	if (var.isArray) {
 		output << "Array=>";
@@ -220,5 +264,13 @@ string Variable::getS() {
 		return sdata;
 	} else {
 		return "";
+	}
+}
+
+int Variable::getI() {
+	if (type == 1) {
+		return idata;
+	} else {
+		return 0;
 	}
 }
