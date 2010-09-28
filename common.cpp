@@ -1,30 +1,45 @@
 #include "common.h"
 
 void draw_character(char letter, float x, float y) {
-	if (x == 0)x++;
-	if (y == 0)y++;
-	glColor3f(0,0,0);
-	if (Engine::currentFont->letters.find(letter) == Engine::currentFont->letters.end()) {
+	if (x == 0) x++;
+	if (y == 0) y++;
+	
+	int i,j;
+	bool found = false;
+
+	for (i=0;i<(signed int)Engine::currentFont->chars->size();i++) {
+		if (Engine::currentFont->chars->at(i) == letter) {
+			found = true;
+			break;
+		}
+	}
+
+	if (!found) {
 		return;
 	}
-	Letter *let = Engine::currentFont->letters.find(letter)->second;
-	int i,j;
+
+	Letter *let = Engine::currentFont->letters->find(letter)->second;
 	if (let == NULL) {
 		return;
 	}
+	glColor3f(0,0,0);
 
 	glBegin(GL_POINTS);
 	for (i=0;i<let->height;i++) {
 		for (j=0;j<let->width;j++) {
 			int index = (i*let->width+j)*3;
 			if (let->pixels[index] != -1 || let->pixels[index+1] != -1 || let->pixels[index+2] != -1) {
-				//glColor3f((float)let->pixels[index]/255,(float)let->pixels[index+1]/255,(float)let->pixels[index+2]/255);
+				double r = let->pixels[index];
+				double g = let->pixels[index+1];
+				double b = let->pixels[index+2];
+				glColor3d(r/255,g/255,b/255);
 				glVertex2f(j+x,i+y);
 			}
 		}
 	}
 	glEnd();
-	glColor3f(Engine::r,Engine::g,Engine::b);
+	glColor3d(Engine::r,Engine::g,Engine::b);
+
 }
 
 int instance_create(unsigned int id, int x, int y) {
@@ -95,9 +110,9 @@ int instance_find(int object, int number) {
 }
 
 void draw_set_color_rgb(int r, int g, int b) {
-	Engine::r = ((float)r)/255;
-	Engine::g = ((float)g)/255;
-	Engine::b = ((float)b)/255;
+	Engine::r = ((double)r)/255;
+	Engine::g = ((double)g)/255;
+	Engine::b = ((double)b)/255;
 }
 
 void draw_point(float x, float y) {
@@ -112,7 +127,7 @@ void draw_text(string text, float x, float y) {
 	for (i=0;i<text.size();i++) {
 		char let = text.at(i);
 		draw_character(let,x,y);
-		x += Engine::currentFont->letters[let]->width;
+		x += Engine::currentFont->widthOf(let);
 	}
 }
 

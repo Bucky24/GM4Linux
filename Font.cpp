@@ -14,11 +14,13 @@ Font::Font(const char *filename) {
 	Letter *letter;
 	char w,h,ch;
 	int i,j;
-	letters = *(new map<char, Letter *>());
+	letters = new map<char, Letter *>();
+	chars = new vector<char>();
 	while (infile.read(&c,1)) {
 		w = c;
 		infile.read(&h,1);
 		infile.read(&ch,1);
+		chars->push_back(ch);
 		char *p = (char *)malloc(sizeof(char)*w*h*3);
 		cout << "font.cpp font reading in " << (int)ch << " with size of " << (int)w << "," << (int)h << endl;
 		for (i=0;i<h;i++) {
@@ -27,10 +29,17 @@ Font::Font(const char *filename) {
 				infile.read(&p[index],1);
 				infile.read(&p[index+1],1);
 				infile.read(&p[index+2],1);
+				/*int r = p[index];
+				if (r < 0) r += 255;
+				int g = p[index];
+				if (g < 0) g += 255;
+				int b = p[index];
+				if (b < 0) b += 255;
+				cout << r << " " << g << " " << b << endl;*/
 			}
 		}
 		letter = new Letter(w,h,p);
-		letters.insert(pair<char,Letter *>(ch,letter));
+		letters->insert(pair<char,Letter *>(ch,letter));
 	}
 	cout << "font.cpp font finished loading of font " << endl;
 }
@@ -42,8 +51,8 @@ Letter::Letter(int w, int h, char *pix) {
 }
 
 int Font::widthOf(char c) {
-	if (letters[c] != NULL) {
-		return letters[c]->width;
+	if (letters->find(c) != letters->end()) {
+		return letters->find(c)->second->width;
 	}
 	return 0;
 }

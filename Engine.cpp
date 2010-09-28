@@ -28,17 +28,20 @@ instancemap *Engine::instances;
 collidemap *Engine::collisionmap;
 float Engine::mousex;
 float Engine::mousey;
-float Engine::r;
-float Engine::g;
-float Engine::b;
+double Engine::r;
+double Engine::g;
+double Engine::b;
 Font *Engine::currentFont;
 arraymap *Engine::vecList;
 vector<fstream *> *Engine::filePtrRead;
 vector<fstream *> *Engine::filePtrWrite;
 map<string,Variable *> *Engine::globalVars;
 vector<vector<Variable *> *> *Engine::vectors;
+Variable *Engine::keyboardString;
 
 void Engine::init() {
+
+	Engine::keyboardString = new Variable("");
 
 	cout << "engine.cpp init begin initialization" << endl;
 	Engine::currentRoom = NULL;
@@ -158,6 +161,11 @@ void Engine::handleEvents() {
 					}
                                 }
                         }
+			if (id >= 32 && id < 127) {
+				string str = Engine::keyboardString->getS();
+				str += (char)id;
+				*(Engine::keyboardString) = str;
+			}
                 }
                 itor ++;
         }
@@ -350,7 +358,7 @@ void Engine::setMouse(int x, int y) {
 	Engine::mousey = y;
 }
 
-void Engine::setColors(float r, float g, float b) {
+void Engine::setColors(double r, double g, double b) {
 	Engine::r = r;
 	Engine::g = g;
 	Engine::b = b;
@@ -568,6 +576,18 @@ void Engine::generateFunctionMaps() {
         keymaps->insert(pair<int,objfunc>('z',&Object::key_z));
         keys->insert(pair<int,bool>('z',false));
         keyslaststep->insert(pair<int,bool>('z',false));
+        keys->insert(pair<int,bool>(' ',false));
+        keyslaststep->insert(pair<int,bool>(' ',false));
+        keys->insert(pair<int,bool>('1',false));
+        keyslaststep->insert(pair<int,bool>('1',false));
+        keys->insert(pair<int,bool>('2',false));
+        keyslaststep->insert(pair<int,bool>('2',false));
+        keys->insert(pair<int,bool>('3',false));
+        keyslaststep->insert(pair<int,bool>('3',false));
+        keys->insert(pair<int,bool>('4',false));
+        keyslaststep->insert(pair<int,bool>('4',false));
+        keys->insert(pair<int,bool>('5',false));
+        keyslaststep->insert(pair<int,bool>('5',false));
 
         beginStepEvent = &Object::step_begin;
         stepEvent = &Object::step;

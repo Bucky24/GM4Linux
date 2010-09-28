@@ -245,6 +245,8 @@ int main(int argc, char **argv) {
 
 		vector<Letter *> letters;
 
+		int avgw=0,avgh=0;
+
 		int prev = 0;
 		for (l=0;l<splits.size();l+=2) {
 			int w = splits[l]-prev;
@@ -263,7 +265,28 @@ int main(int argc, char **argv) {
 			Letter *let = new Letter(w,height,data);
 			letters.push_back(let);
 			prev = splits[l+1];
+			avgw += w;
+			avgh += height;
 		}
+
+		avgw /= splits.size();
+		avgh /= splits.size();
+
+		// add in the space
+		char *data = (char *)malloc(sizeof(char)*avgw*avgh*3);
+		for (j=0;j<avgh*avgw*3;j++) {
+			data[j] = -1;
+		}
+		for (j=0;j<avgh;j++) {
+			for (k=0;k<avgw;k++) {
+				int index = (j*avgw+k)*3;
+				data[index] = 255;
+				data[index+1] = 255;
+				data[index+2] = 255;
+			}
+		}
+		Letter *let = new Letter(avgw,avgh,data);
+		letters.push_back(let);
 
 		// now format for font thingy
 		// first byte is width
@@ -326,6 +349,17 @@ int main(int argc, char **argv) {
 		letterVec.push_back('X');
 		letterVec.push_back('Y');
 		letterVec.push_back('Z');
+		letterVec.push_back('1');
+		letterVec.push_back('2');
+		letterVec.push_back('3');
+		letterVec.push_back('4');
+		letterVec.push_back('5');
+		letterVec.push_back('6');
+		letterVec.push_back('7');
+		letterVec.push_back('8');
+		letterVec.push_back('9');
+		letterVec.push_back('0');
+		letterVec.push_back(' ');
 
 		// get output name
 		string outname = argv[i];
@@ -344,6 +378,7 @@ int main(int argc, char **argv) {
 			outfile.write(&c,1);
 			c = letterVec[l];
 			outfile.write(&c,1);
+			cout << "wrote '" << (char)c << "'" <<  endl;
 			for (j=0;j<let->height;j++) {
 				for (k=0;k<let->width;k++) {
 					int index = (j*let->width+k)*3;

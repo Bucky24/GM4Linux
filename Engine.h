@@ -89,13 +89,13 @@ public:
 	static keymap *keydownmaps;
         static keymap *keyupmaps;
 
-	static float r;
-	static float g;
-	static float b;
+	static double r;
+	static double g;
+	static double b;
 
 	static Font *currentFont;
 
-	static void setColors(float,float,float);
+	static void setColors(double,double,double);
 
         static instancemap *instances;
 
@@ -113,6 +113,8 @@ public:
 	static map<string,Variable *> *globalVars;
 
 	static vector<vector<Variable *> *> *vectors;
+
+	static Variable *keyboardString;
 };
 
 #endif

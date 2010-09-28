@@ -18,6 +18,8 @@
 #define room_width Engine::currentRoom->width
 #define room_height Engine::currentRoom->height
 
+#define keyboard_string Engine::keyboardString
+
 using namespace std;
 
 extern int instance_create(unsigned int id, int x, int y);

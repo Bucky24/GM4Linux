@@ -200,6 +200,11 @@ Variable &Variables::operator[](string key) {
 	vector<string> toks;
 	Tokenize(key,toks,".");
 
+	/* keyword variables */
+	if (key == "keyboard_string") {
+		return *Engine::keyboardString;
+	}
+
 	if (toks.size() > 1) {
 		/*cout << "object.cpp variables[] found reference request " << endl;*/
 		if (toks[0] == "global") {

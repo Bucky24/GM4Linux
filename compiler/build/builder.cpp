@@ -576,7 +576,7 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("ds_list_find_value");
 	ret.push_back("ds_list_size");
 	ret.push_back("round");
-	ret.push_back("keyboard_string");
+	//ret.push_back("keyboard_string");
 }
 
 bool isReserved(string word, vector<string> &vec) {

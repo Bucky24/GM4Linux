@@ -2,6 +2,7 @@
 #define FONTH
 
 #include <map>
+#include <vector>
 
 using namespace std;
 
@@ -16,9 +17,10 @@ public:
 class Font {
 public:
 	Font(const char *);
-	map<char,Letter *> letters;
+	map<char,Letter *> *letters;
 	void create(const char *);
 	int widthOf(char);
+	vector<char> *chars;
 };
 
 #endif
