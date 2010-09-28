@@ -41,5 +41,6 @@ extern void ds_list_add(int id, const char*value);
 extern void ds_list_add(int id, Variable *value);
 extern Variable *ds_list_find_value(int id, int pos);
 extern int ds_list_size(int id);
+extern int round(Variable *);
 
 #endif

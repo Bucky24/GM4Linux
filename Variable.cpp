@@ -76,7 +76,7 @@ Variable Variable::operator+(const Variable &var2) {
 	}
 	ret.idata = idata+var2.idata;
 	ret.sdata = sdata+var2.sdata;
-	isArray = false;
+	ret.isArray = false;
 	return ret;
 }
 
@@ -86,7 +86,7 @@ Variable Variable::operator+(const int data) {
 		ret.type = 1;
 		ret.idata = idata+data;
 	}
-	isArray = false;
+	ret.isArray = false;
 	return ret;
 }
 
@@ -96,7 +96,27 @@ Variable Variable::operator+(const string data) {
 		ret.type = 2;
 		ret.sdata = sdata+data;
 	}
-	isArray = false;
+	ret.isArray = false;
+	return ret;
+}
+
+Variable Variable::operator/(const Variable &data) {
+	Variable ret = *(new Variable());
+	if (type == 1 and data.type == 1) {
+		ret.type = 1;
+		ret.idata = idata/data.idata;
+	}
+	ret.isArray = false;
+	return ret;
+}
+
+Variable Variable::operator/(const int data) {
+	Variable ret = *(new Variable());
+	if (type == 1) {
+		ret.type = 1;
+		ret.idata = idata/data;
+	}
+	ret.isArray = false;
 	return ret;
 }
 
@@ -124,6 +144,20 @@ void Variable::operator+=(const string data) {
 	}
 	isArray = false;
 }
+
+/*void operator/=(const Variable &data) {
+	if (type == 1 && data.type == 1) {
+		idata /= data.idata;
+	}
+	isArray = false;
+}
+
+void operator/=(const int data) {
+	if (type == 1) {
+		idata /= data;
+	}
+	isArray = false;
+}*/
 
 Variable &Variable::operator[](int index) {
 	if (type == 1) {

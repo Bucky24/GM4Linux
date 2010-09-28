@@ -252,3 +252,8 @@ int ds_list_size(int id) {
 	}
 	return Engine::vectors->at(id)->size();
 }
+
+
+int round(Variable *data) {
+	return (int)data;
+}

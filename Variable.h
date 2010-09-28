@@ -26,9 +26,15 @@ public:
 	Variable operator+(const int);
 	Variable operator+(const string);
 
+	Variable operator/(const Variable &);
+	Variable operator/(const int);
+
 	void operator+=(const Variable &);
 	void operator+=(const int);
 	void operator+=(const string);
+
+	//void operator/=(const Variable &);
+	//void operator/=(const int);
 
 	Variable &operator[](int);
 
