@@ -44,5 +44,7 @@ extern void ds_list_add(Variable &id, int value);
 extern Variable &ds_list_find_value(int id, int pos);
 extern int ds_list_size(int id);
 extern int round(Variable *);
+extern Variable &string_char_at(Variable &str, unsigned int pos);
+extern Variable &string_length(Variable &str);
 
 #endif

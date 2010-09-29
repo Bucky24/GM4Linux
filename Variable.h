@@ -29,9 +29,9 @@ public:
 	Variable operator/(const Variable &);
 	Variable operator/(const int);
 
-	void operator+=(const Variable &);
-	void operator+=(const int);
-	void operator+=(const string);
+	Variable &operator+=(const Variable &);
+	Variable &operator+=(const int);
+	Variable &operator+=(const string);
 
 	//void operator/=(const Variable &);
 	//void operator/=(const int);
@@ -61,6 +61,7 @@ public:
 
 	string getS();
 	int getI();
+	int getType() {return type;}
 private:
 	int type; // 1=int, 2=string
 	string sdata;

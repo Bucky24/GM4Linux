@@ -576,7 +576,8 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("ds_list_find_value");
 	ret.push_back("ds_list_size");
 	ret.push_back("round");
-	//ret.push_back("keyboard_string");
+	ret.push_back("string_length");
+	ret.push_back("string_char_at");
 }
 
 bool isReserved(string word, vector<string> &vec) {
@@ -603,6 +604,11 @@ string processCode(string code, vector<string> reserved) {
 		bool inQuotes = false;
 		for (j=0;j<tmp.size();j++) {
 			//cout << tmp[j] << endl;
+			if (tmp[j] == 92) { // '\'
+				//cout << "found \\ at " << j << " on " << tmp << endl;
+				tmp.insert(j,"\\");
+				j++;
+			}
 			if (!inVariable) {
 				if (isalpha(tmp[j]) && !inQuotes) {
 					//cout << "new var " << variable << endl;

@@ -127,7 +127,7 @@ void draw_text(string text, float x, float y) {
 	for (i=0;i<text.size();i++) {
 		char let = text.at(i);
 		draw_character(let,x,y);
-		x += Engine::currentFont->widthOf(let)+4;
+		x += Engine::currentFont->widthOf(let)+2;
 	}
 }
 
@@ -286,4 +286,20 @@ int ds_list_size(int id) {
 
 int round(Variable *data) {
 	return (int)data->getI();
+}
+
+Variable &string_char_at(Variable &str, unsigned int pos) {
+	if (str.getType() != 2 || pos > str.getS().length()) {
+		return *(new Variable(""));
+	}
+	string s = "";
+	s.push_back(str.getS().at(pos));
+	return *(new Variable(s));
+}
+
+Variable &string_length(Variable &str) {
+	if (str.getType() != 2) {
+		return *(new Variable(0));
+	}
+	return *(new Variable(str.getS().size()));
 }

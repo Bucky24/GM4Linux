@@ -120,7 +120,7 @@ Variable Variable::operator/(const int data) {
 	return ret;
 }
 
-void Variable::operator+=(const Variable &var2) {
+Variable &Variable::operator+=(const Variable &var2) {
 	if (type == var2.type) {
 		if (type == 1) {
 			idata = idata+var2.idata;
@@ -129,20 +129,23 @@ void Variable::operator+=(const Variable &var2) {
 		}
 	}
 	isArray = false;
+	return *this;
 }
 
-void Variable::operator+=(const int data) {
+Variable &Variable::operator+=(const int data) {
 	if (type == 1) {
 		idata = idata+data;
 	}
 	isArray = false;
+	return *this;
 }
 
-void Variable::operator+=(const string data) {
+Variable &Variable::operator+=(const string data) {
 	if (type == 2) {
 		sdata = sdata+data;
 	}
 	isArray = false;
+	return *this;
 }
 
 /*void operator/=(const Variable &data) {
