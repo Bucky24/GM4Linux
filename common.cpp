@@ -227,17 +227,20 @@ int ds_list_create() {
 	return Engine::vectors->size()-1;
 }
 
-void ds_list_add(int id, Variable *value) {
+void ds_list_add(Variable &id2, Variable &value) {
+	int id = id2.getI();
 	if ((signed int)Engine::vectors->size() <= id) {
 		return;
 	}
 	if (Engine::vectors->at(id) == NULL) {
 		return;
 	}
-	Engine::vectors->at(id)->push_back(value);
+	Variable *var = new Variable(value.getS());
+	Engine::vectors->at(id)->push_back(var);
 }
 
-void ds_list_add(int id, const char *value) {
+void ds_list_add(Variable &id2, const char *value) {
+	int id = id2.getI();
 	if ((signed int)Engine::vectors->size() <= id) {
 		return;
 	}
@@ -248,17 +251,29 @@ void ds_list_add(int id, const char *value) {
 	Engine::vectors->at(id)->push_back(var);
 }
 
-Variable *ds_list_find_value(int id, int pos) {
+void ds_list_add(Variable &id2, int value) {
+	int id = id2.getI();
 	if ((signed int)Engine::vectors->size() <= id) {
-		return new Variable(-4);
+		return;
 	}
 	if (Engine::vectors->at(id) == NULL) {
-		return new Variable(-4);
+		return;
+	}
+	Variable *var = new Variable(value);
+	Engine::vectors->at(id)->push_back(var);
+}
+
+Variable &ds_list_find_value(int id, int pos) {
+	if ((signed int)Engine::vectors->size() <= id) {
+		return *(new Variable(-4));
+	}
+	if (Engine::vectors->at(id) == NULL) {
+		return *(new Variable(-4));
 	}
 	if ((signed int)Engine::vectors->at(id)->size() <= pos) {
-		return new Variable(-4);
+		return *(new Variable(-4));
 	}
-	return Engine::vectors->at(id)->at(pos);
+	return *(Engine::vectors->at(id)->at(pos));
 }
 
 int ds_list_size(int id) {

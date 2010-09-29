@@ -38,10 +38,10 @@ extern void Tokenize(const string& str, vector<string>& tokens, const string& de
 extern int file_text_open_write(string filename);
 extern void file_text_close(int handle);
 extern int ds_list_create();
-extern void ds_list_add(int id, Variable *value);
-extern void ds_list_add(int id, const char*value);
-extern void ds_list_add(int id, Variable *value);
-extern Variable *ds_list_find_value(int id, int pos);
+extern void ds_list_add(Variable &id, Variable &value);
+extern void ds_list_add(Variable &id, const char*value);
+extern void ds_list_add(Variable &id, int value);
+extern Variable &ds_list_find_value(int id, int pos);
 extern int ds_list_size(int id);
 extern int round(Variable *);
 
