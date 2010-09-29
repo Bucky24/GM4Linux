@@ -84,7 +84,7 @@ globalmousereleased_left
 if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height && status == "down") {
 	ds_list_add(global.objectNames,keyboard_string);
 	keyboard_string = "";
-	ds_list_add(global.objectCode,"code");
+	ds_list_add(global.objectCode,"");
 }
 status = "up";
 [/action]
@@ -115,6 +115,7 @@ if (global.showObjects == 1) {
 
 	if (currentObject >= 0) {
 		draw_rectangle_color(x+180,y,room_width,room_height,c_white);
+		draw_text(ds_list_find_value(global.objectCode,currentObject),x+180,y);
 	}
 }
 [/action]
@@ -127,6 +128,15 @@ if (mouse_x >= x && mouse_x <= x+180 && mouse_y >= y && mouse_y <= y+room_height
 	if (tempy >= 0 && tempy < ds_list_size(global.objectNames)) {
 		currentObject = tempy;
 	}
+} else {
+	currentObject = -1;
+}
+[/action]
+[action]
+step
+if (currentObject >= 0) {
+	ds_list_find_value(global.objectCode,currentObject) += keyboard_string;
+	keyboard_string = "";
 }
 [/action]
 [/object]
@@ -148,7 +158,6 @@ if (global.showObjects == 1) {
 	draw_line(x,y+height,x,y);
 	draw_line(room_width,y,room_width,y+height);
 
-	//cout << keyboard_string << endl;
 	draw_text(keyboard_string,x,y);
 }
 [/action]

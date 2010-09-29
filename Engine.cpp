@@ -165,6 +165,10 @@ void Engine::handleEvents() {
 				string str = Engine::keyboardString->getS();
 				str += (char)id;
 				*(Engine::keyboardString) = str;
+			} else if (id == 8) {
+				string str = Engine::keyboardString->getS();
+				str = str.substr(0,str.size()-1);
+				*(Engine::keyboardString) = str;
 			}
                 }
                 itor ++;
@@ -498,6 +502,8 @@ void Engine::generateFunctionMaps() {
         keydownmaps->insert(pair<int,objfunc>(GLUT_KEY_INSERT+200,&Object::keydown_insert));
         keys->insert(pair<int,bool>(GLUT_KEY_INSERT+200,false));
         keyslaststep->insert(pair<int,bool>(GLUT_KEY_INSERT+200,false));
+        keys->insert(pair<int,bool>(8,false));
+        keyslaststep->insert(pair<int,bool>(8,false));
         keymaps->insert(pair<int,objfunc>('a',&Object::key_a));
         keys->insert(pair<int,bool>('a',false));
         keyslaststep->insert(pair<int,bool>('a',false));
