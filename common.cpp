@@ -285,5 +285,5 @@ int ds_list_size(int id) {
 
 
 int round(Variable *data) {
-	return (int)data;
+	return (int)data->getI();
 }
