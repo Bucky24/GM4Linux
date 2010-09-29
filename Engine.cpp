@@ -504,6 +504,9 @@ void Engine::generateFunctionMaps() {
         keyslaststep->insert(pair<int,bool>(GLUT_KEY_INSERT+200,false));
         keys->insert(pair<int,bool>(8,false));
         keyslaststep->insert(pair<int,bool>(8,false));
+        keymaps->insert(pair<int,objfunc>(13,&Object::key_enter));
+        keys->insert(pair<int,bool>(13,false));
+        keyslaststep->insert(pair<int,bool>(13,false));
 
         keymaps->insert(pair<int,objfunc>('a',&Object::key_a));
         keys->insert(pair<int,bool>('a',false));
@@ -582,8 +585,8 @@ void Engine::generateFunctionMaps() {
         keyslaststep->insert(pair<int,bool>('y',false));
         keymaps->insert(pair<int,objfunc>('z',&Object::key_z));
         keys->insert(pair<int,bool>('z',false));
-
         keyslaststep->insert(pair<int,bool>('z',false));
+
         keys->insert(pair<int,bool>(' ',false));
         keyslaststep->insert(pair<int,bool>(' ',false));
         keys->insert(pair<int,bool>('1',false));

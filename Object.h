@@ -43,6 +43,8 @@ public:
         virtual void key_home();
         virtual void key_end();
         virtual void key_insert();
+	virtual void key_enter();
+
 	virtual void key_a();
 	virtual void key_b();
 	virtual void key_c();
