@@ -127,7 +127,7 @@ void draw_text(string text, float x, float y) {
 	for (i=0;i<text.size();i++) {
 		char let = text.at(i);
 		draw_character(let,x,y);
-		x += Engine::currentFont->widthOf(let);
+		x += Engine::currentFont->widthOf(let)+4;
 	}
 }
 

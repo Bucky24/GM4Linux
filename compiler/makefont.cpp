@@ -359,6 +359,18 @@ int main(int argc, char **argv) {
 		letterVec.push_back('8');
 		letterVec.push_back('9');
 		letterVec.push_back('0');
+		letterVec.push_back('[');
+		letterVec.push_back(']');
+		letterVec.push_back('/');
+		letterVec.push_back('-');
+		letterVec.push_back('+');
+		letterVec.push_back('=');
+		letterVec.push_back('(');
+		letterVec.push_back(')');
+		letterVec.push_back(',');
+		letterVec.push_back('.');
+		letterVec.push_back(';');
+		letterVec.push_back('*');
 		letterVec.push_back(' ');
 
 		// get output name

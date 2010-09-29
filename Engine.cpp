@@ -504,6 +504,7 @@ void Engine::generateFunctionMaps() {
         keyslaststep->insert(pair<int,bool>(GLUT_KEY_INSERT+200,false));
         keys->insert(pair<int,bool>(8,false));
         keyslaststep->insert(pair<int,bool>(8,false));
+
         keymaps->insert(pair<int,objfunc>('a',&Object::key_a));
         keys->insert(pair<int,bool>('a',false));
         keyslaststep->insert(pair<int,bool>('a',false));
@@ -581,6 +582,7 @@ void Engine::generateFunctionMaps() {
         keyslaststep->insert(pair<int,bool>('y',false));
         keymaps->insert(pair<int,objfunc>('z',&Object::key_z));
         keys->insert(pair<int,bool>('z',false));
+
         keyslaststep->insert(pair<int,bool>('z',false));
         keys->insert(pair<int,bool>(' ',false));
         keyslaststep->insert(pair<int,bool>(' ',false));
@@ -594,6 +596,41 @@ void Engine::generateFunctionMaps() {
         keyslaststep->insert(pair<int,bool>('4',false));
         keys->insert(pair<int,bool>('5',false));
         keyslaststep->insert(pair<int,bool>('5',false));
+        keys->insert(pair<int,bool>('6',false));
+        keyslaststep->insert(pair<int,bool>('6',false));
+        keys->insert(pair<int,bool>('7',false));
+        keyslaststep->insert(pair<int,bool>('7',false));
+        keys->insert(pair<int,bool>('8',false));
+        keyslaststep->insert(pair<int,bool>('8',false));
+        keys->insert(pair<int,bool>('9',false));
+        keyslaststep->insert(pair<int,bool>('9',false));
+        keys->insert(pair<int,bool>('0',false));
+        keyslaststep->insert(pair<int,bool>('0',false));
+
+        keys->insert(pair<int,bool>('[',false));
+        keyslaststep->insert(pair<int,bool>('[',false));
+        keys->insert(pair<int,bool>(']',false));
+        keyslaststep->insert(pair<int,bool>(']',false));
+        keys->insert(pair<int,bool>('/',false));
+        keyslaststep->insert(pair<int,bool>('/',false));
+        keys->insert(pair<int,bool>('-',false));
+        keyslaststep->insert(pair<int,bool>('-',false));
+        keys->insert(pair<int,bool>('+',false));
+        keyslaststep->insert(pair<int,bool>('+',false));
+        keys->insert(pair<int,bool>('=',false));
+        keyslaststep->insert(pair<int,bool>('=',false));
+        keys->insert(pair<int,bool>('(',false));
+        keyslaststep->insert(pair<int,bool>('(',false));
+        keys->insert(pair<int,bool>(')',false));
+        keyslaststep->insert(pair<int,bool>(')',false));
+        keys->insert(pair<int,bool>(',',false));
+        keyslaststep->insert(pair<int,bool>(',',false));
+        keys->insert(pair<int,bool>('.',false));
+        keyslaststep->insert(pair<int,bool>('.',false));
+        keys->insert(pair<int,bool>(';',false));
+        keyslaststep->insert(pair<int,bool>(';',false));
+        keys->insert(pair<int,bool>('*',false));
+        keyslaststep->insert(pair<int,bool>('*',false));
 
         beginStepEvent = &Object::step_begin;
         stepEvent = &Object::step;
