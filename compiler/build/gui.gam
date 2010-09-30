@@ -55,7 +55,7 @@ obj_objnewobject
 0
 [action]
 create
-width = 80;
+width = 100;
 height = 15;
 text = "newobject";
 status = "up";
@@ -144,7 +144,6 @@ globalmousereleased_left
 if (mouse_x >= x && mouse_x <= x+180 && mouse_y >= y && mouse_y <= y+room_height) {
 	tempy = mouse_y-y;
 	tempy = tempy/12;
-	//cout << tempy << endl;
 	if (tempy >= 0 && tempy < ds_list_size(global.objectNames)) {
 		currentObject = tempy;
 		keyboard_string = "";
@@ -168,7 +167,6 @@ key_enter
 if (currentObject >= 0) {
 	ds_list_find_value(global.objectCode,currentObject) += "#";
 }
-cout << ds_list_find_value(global.objectCode,currentObject) << endl;
 [/action]
 [/object]
 [object
