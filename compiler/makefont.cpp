@@ -53,7 +53,7 @@ int main(int argc, char **argv) {
 	ifstream infile;
 	char input;
 	int state = 0;
-	char r, g, b;
+	unsigned char r, g, b;
 	unsigned int i,j,k,l;
 	int width,height;
 
@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
 		//cout << i1 << " " << i2 << endl;
 		height = byteToInt(i1,i2);
 
-		//cout << width << " " << height << endl;
+		cout << width << " " << height << endl;
 
 		char image[width][height][3];
 
@@ -102,28 +102,29 @@ int main(int argc, char **argv) {
 		state = 0;
 		while (infile.read(&input,1)) {
 			if (state == 0) {
-				r = input;
+				b = input;
 				state = 1;
 			} else if (state == 1) {
 				g = input;
 				state = 2;
 			} else if (state == 2) {
-				b = input;
+				r = input;
 				state = 0;
 				if (r != -1 || g != -1 || b != -1) {
-					//cout << count << " == " << (width-1)*3 << " " << height-lines-1 << endl;
+					//cout << infile.tellg() << " " << count/3 << "," << height-lines-1 << " " << (int)r << "," << (int)g << "," << (int)b << endl;
 					image[count/3][height-lines-1][0] = r;
-					image[count/3][height-lines-1][0] = g;
-					image[count/3][height-lines-1][0] = b;
+					image[count/3][height-lines-1][1] = g;
+					image[count/3][height-lines-1][2] = b;
 				}
 			}
-			if (count == (width)*3) {
+			if (count == (width)*3-1) {
 				lines ++;
 				//cout << count << " " << (count/3) << " " << lines << endl;
-				count = 0;
+				count = -1;
 				//cout << lines << " " << pad << " " << infile.tellg() << endl;
 				for (j=0;j<pad;j++) {
 					infile.read(&input,1);
+					//cout <<"pad " << (int)input << endl;
 				}
 			}
 			count ++;
@@ -131,6 +132,19 @@ int main(int argc, char **argv) {
 		}
 		infile.close();
 		//cout << lines << endl;
+
+		// print
+		for (j=0;j<height;j++) {
+			for (k=0;k<width;k++) {
+				if (image[k][j][0] != -1 || image[k][j][1] != -1 || image[k][j][2] != -1) {
+					cout << "*";
+				} else {
+					cout << " ";
+				}
+			}
+			cout << endl;
+		}
+		// end print
 
 		// remove top blank lines
 		int remove = 0;
@@ -190,7 +204,7 @@ int main(int argc, char **argv) {
 			}
 		}
 
-		cout << remove << endl;
+		//cout << remove << endl;
 		for (j=remove;j<width;j++) {
 			for (k=0;k<height;k++) {
 				image[j-remove][k][0] = image[j][k][0];
@@ -260,6 +274,8 @@ int main(int argc, char **argv) {
 					data[index] = image[k+prev][j][0];
 					data[index+1] = image[k+prev][j][1];
 					data[index+2] = image[k+prev][j][2];
+
+					//cout << "l: " << l << " " << k << "," << j << " " << (int)(unsigned char)image[k+prev][j][0] << "," << (int)(unsigned char)image[k+prev][j][1] << "," << (int)(unsigned char)image[k+prev][j][2] << endl;
 				}
 			}
 			Letter *let = new Letter(w,height,data);
@@ -267,10 +283,14 @@ int main(int argc, char **argv) {
 			prev = splits[l+1];
 			avgw += w;
 			avgh += height;
+			cout << endl << endl;
 		}
 
 		avgw /= splits.size();
 		avgh /= splits.size();
+
+		avgh = height;
+		avgw = 6;
 
 		// add in the space
 		char *data = (char *)malloc(sizeof(char)*avgw*avgh*3);
@@ -382,6 +402,7 @@ int main(int argc, char **argv) {
 
 		outfile.open(outname.c_str(), ios::out | ios::binary);
 		for (l=0;l<letters.size();l++) {
+			//cout << l << endl;
 			Letter *let = letters[l];
 			char *image2 = let->pixels;
 			char c = let->width;
@@ -390,7 +411,7 @@ int main(int argc, char **argv) {
 			outfile.write(&c,1);
 			c = letterVec[l];
 			outfile.write(&c,1);
-			cout << "wrote '" << (char)c << "'" <<  endl;
+			//cout << "wrote '" << c << "'" <<  endl;
 			for (j=0;j<let->height;j++) {
 				for (k=0;k<let->width;k++) {
 					int index = (j*let->width+k)*3;
@@ -400,6 +421,9 @@ int main(int argc, char **argv) {
 					outfile.write(&c,1);
 					c = image2[index+2];
 					outfile.write(&c,1);
+					//if (letterVec[l] == 'A') {
+					//	cout << k << "," << j << " " << (int)(unsigned char)image2[index] << "," << (int)(unsigned char)image2[index+1] << "," << (int)(unsigned char)image2[index+2] << endl;
+					//}
 				}
 			}
 		}

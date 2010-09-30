@@ -29,9 +29,9 @@ void draw_character(char letter, float x, float y) {
 		for (j=0;j<let->width;j++) {
 			int index = (i*let->width+j)*3;
 			if (let->pixels[index] != -1 || let->pixels[index+1] != -1 || let->pixels[index+2] != -1) {
-				double r = let->pixels[index];
-				double g = let->pixels[index+1];
-				double b = let->pixels[index+2];
+				double r = (unsigned char)let->pixels[index];
+				double g = (unsigned char)let->pixels[index+1];
+				double b = (unsigned char)let->pixels[index+2];
 				glColor3d(r/255,g/255,b/255);
 				glVertex2f(j+x,i+y);
 			}

@@ -12,7 +12,8 @@ obj_objbutton
 create
 width = 60;
 height = 15;
-text = "objects";
+//text = "objects";
+text = "a";
 status = "up";
 tick = 0;
 [/action]

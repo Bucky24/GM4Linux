@@ -30,11 +30,11 @@ Font::Font(const char *filename) {
 				infile.read(&p[index+1],1);
 				infile.read(&p[index+2],1);
 				/*int r = p[index];
-				if (r < 0) r += 255;
-				int g = p[index];
-				if (g < 0) g += 255;
-				int b = p[index];
-				if (b < 0) b += 255;
+				if (r < 0) r += 256;
+				int g = p[index+1];
+				if (g < 0) g += 256;
+				int b = p[index+2];
+				if (b < 0) b += 256;
 				cout << r << " " << g << " " << b << endl;*/
 			}
 		}
