@@ -411,7 +411,7 @@ int main(int argc, char **argv) {
 			outfile.write(&c,1);
 			c = letterVec[l];
 			outfile.write(&c,1);
-			//cout << "wrote '" << c << "'" <<  endl;
+			cout << "wrote '" << c << "'" <<  endl;
 			for (j=0;j<let->height;j++) {
 				for (k=0;k<let->width;k++) {
 					int index = (j*let->width+k)*3;
