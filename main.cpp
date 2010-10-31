@@ -27,7 +27,7 @@ const float WINDOW_HEIGHT = 600;
 
 void handleKeypress(unsigned char key, int x, int y) {
         (*Engine::keys->find(key)).second = true;
-	cout << key << endl;
+	//cout << key << endl;
         //Engine::keys[key] = true;
 	switch (key) {
 		case 27: //Escape key
