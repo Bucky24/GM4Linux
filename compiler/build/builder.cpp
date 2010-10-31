@@ -602,9 +602,9 @@ string processCode(string code, vector<string> reserved) {
 		bool inVariable = false;
 		int varPos = 0;
 		bool inQuotes = false;
-		cout << "\tbegin line" << endl;
+		//cout << "\tbegin line" << endl;
 		for (j=0;j<tmp.size();j++) {
-			cout << j << " " << tmp[j] << " " << inVariable << " " << inQuotes << endl;
+			//cout << j << " " << tmp[j] << " " << inVariable << " " << inQuotes << endl;
 			if (tmp[j] == 92) { // '\'
 				//cout << "found \\ at " << j << " on " << tmp << endl;
 				tmp.insert(j,"\\");
@@ -612,7 +612,7 @@ string processCode(string code, vector<string> reserved) {
 			}
 			if (!inVariable) {
 				if (isalpha(tmp[j]) && !inQuotes) {
-					cout << "new var " << variable << endl;
+					//cout << "new var " << variable << endl;
 					inVariable = true;
 					varPos = j;
 					//j--;
@@ -624,9 +624,9 @@ string processCode(string code, vector<string> reserved) {
 					variable += tmp[j];
 				} else {
 					if (variable != "") {
-						cout << "running " << variable << endl;
+						//cout << "running " << variable << endl;
 						if (!isReserved(variable,reserved)) {
-							cout << variable << " found" << endl;
+							//cout << variable << " found" << endl;
 							//vector<string> toks2;
 							//Tokenize(variable,toks2,".");
 							//if (toks2.size() > 1) {
@@ -647,7 +647,7 @@ string processCode(string code, vector<string> reserved) {
 				}
 			}
 			if (tmp[j] == '"') {
-				cout << "quote! " << j << " " << tmp[j] << "\n";
+				//cout << "quote! " << j << " " << tmp[j] << "\n";
 				inQuotes = !inQuotes;
 			}
 		}

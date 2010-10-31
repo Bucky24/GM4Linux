@@ -192,7 +192,7 @@ if (global.showObjects == 1) {
 [/action]
 [/object]
 [object]
-control
+obj_control
 -1
 2
 [action]
@@ -209,7 +209,7 @@ main
 0.6,0.6,0.6
 800,600
 [instances]
-control,0,0
+obj_control,0,0
 obj_objbutton,0,0
 obj_objects,60,16
 obj_objnewobject,60,0

@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include "Rooms.h"
 #include "sprites.h"
+#include "specialDefs.h"
 
 //vector<ObjectType *> Engine::objectref;
 vector<Image *> Engine::imageref;
@@ -68,7 +69,6 @@ void Engine::init() {
 	cout << "engine.cpp init creating objects/rooms/images" << endl;
 
         fillImages();
-        fillObjects();
         fillRooms();
 	cout << "engine.cpp completed creation of rooms " << endl;
 	fillFonts();
@@ -105,17 +105,13 @@ void Engine::init() {
 	cout << "engine.cpp init initialization complete " << endl;
 }
 
-void Engine::fillObjects() {
-	/* -- CREATE OBJECT TYPES -- */
-}
-
 void Engine::fillImages() {
 	initSprites();
-	/* -- CREATE IMAGES -- */
+	createImages();
 }
 
 void Engine::fillRooms() {
-	/* -- CREATE ROOMS -- */
+	createRooms();
 
 	cout << "engine.cpp fillRooms there are " << Engine::roomref.size() << " rooms" << endl;
 	if (Engine::roomref.size() > 0) {	
@@ -131,7 +127,7 @@ void Engine::fillRooms() {
 }
 
 void Engine::fillFonts() {
-	/* -- CREATE FONTS -- */
+	createFonts();
 
 	cout << "engine.cpp fillFonts there are " << Engine::fonts.size() << " fonts" << endl;
 	if (Engine::fonts.size() > 0) {
@@ -140,7 +136,7 @@ void Engine::fillFonts() {
 }
 
 void Engine::registerCollisions() {
-	/* -- REGISTER COLLISIONS -- */
+	createCollisions();
 }
 
 void Engine::handleEvents() {

@@ -1,6 +1,7 @@
 #include "Object.h"
 #include <string>
 #include "common.h"
+#include "Engine.h"
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>

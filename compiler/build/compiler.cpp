@@ -256,6 +256,7 @@ int main(int argc, char **argv) {
 				char s = '\n';
 				outfile.write(&s,1);
 			} else if (state == 8) {
+				cout << "font " << line << endl;
 				writeString(outfile,line.c_str(),line.size());
 				char s = '\n';
 				outfile.write(&s,1);

@@ -17,6 +17,7 @@ extern string Makefile;
 extern string Objects_h;
 extern string Variable_cpp;
 extern string Room_cpp;
+extern string specialDefs_h;
 extern string Object_h;
 extern string Image_cpp;
 extern string sprites_cpp;
@@ -24,5 +25,6 @@ extern string Rooms_h;
 extern string main_cpp;
 extern string Object_cpp;
 extern string Engine_h;
+extern string specialDefs_cpp;
 void initFiles();
 #endif

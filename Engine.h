@@ -39,7 +39,6 @@ typedef vector<map<int, Variable *> *> arraymap;
 class Engine {
 public:
         static void init();
-        static void fillObjects();
         static void fillImages();
         static void fillRooms();
 	static void fillFonts();

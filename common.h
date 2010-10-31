@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 
-/* -- OBJECT DEFINITIONS -- */
+#include "specialDefs.h"
 
 #define c_white 1,1,1
 
