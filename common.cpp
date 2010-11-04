@@ -218,7 +218,14 @@ void file_text_close(int handle) {
 }
 
 void file_text_write_string(int handle, string data) {
-	
+	if (handle < 0) return;
+	if (Engine::filePtrWrite->size() > (unsigned int)handle) {
+		fstream *file = Engine::filePtrWrite->at(handle);
+		if (file != NULL) {
+			//file->write(data.c_str(),data.length());
+			(*file) << "testing";
+		}
+	}
 }
 
 int ds_list_create() {	

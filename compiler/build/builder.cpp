@@ -578,6 +578,9 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("round");
 	ret.push_back("string_length");
 	ret.push_back("string_char_at");
+	ret.push_back("file_text_write_string");
+	ret.push_back("file_text_open_write");
+	ret.push_back("file_text_close");
 }
 
 bool isReserved(string word, vector<string> &vec) {
