@@ -1,5 +1,4 @@
 #include "common.h"
-#include <cstdio>
 
 void draw_character(char letter, float x, float y) {
 	if (x == 0) x++;
@@ -190,7 +189,11 @@ void Tokenize(const string& str,
 
 int file_text_open_write(string filename) {
 	fstream file;
+<<<<<<< HEAD
 	file.open(filename.c_str());
+=======
+	file.open(filename.c_str(),ios::out);
+>>>>>>> parent of 5b9e33e... commit
 	if (!file.is_open()) {
 		cout << "common.cpp file_text_open_write cannot open " << filename << endl;
 		return -4;
