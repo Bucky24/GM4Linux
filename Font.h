@@ -3,21 +3,14 @@
 
 #include <map>
 #include <vector>
+#include "Image.h"
 
 using namespace std;
-
-class Letter {
-public:
-	Letter(int,int,char *);
-	int width;
-	int height;
-	char *pixels;
-};
 
 class Font {
 public:
 	Font(const char *);
-	map<char,Letter *> *letters;
+	map<char,Image *> *letters;
 	void create(const char *);
 	int widthOf(char);
 	vector<char> *chars;

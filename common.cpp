@@ -19,11 +19,13 @@ void draw_character(char letter, float x, float y) {
 		return;
 	}
 
-	Letter *let = Engine::currentFont->letters->find(letter)->second;
+	Image *let = Engine::currentFont->letters->find(letter)->second;
 	if (let == NULL) {
 		return;
 	}
-	glColor3f(0,0,0);
+
+	let->draw(x,y);
+	/*glColor3f(0,0,0);
 
 	glBegin(GL_POINTS);
 	for (i=0;i<let->height;i++) {
@@ -39,7 +41,7 @@ void draw_character(char letter, float x, float y) {
 		}
 	}
 	glEnd();
-	glColor3d(Engine::r,Engine::g,Engine::b);
+	glColor3d(Engine::r,Engine::g,Engine::b);*/
 
 }
 
@@ -187,8 +189,8 @@ void Tokenize(const string& str,
 
 
 int file_text_open_write(string filename) {
-	FILE *file;
-	fopen(filename.c_str(),ios::out);
+	fstream file;
+	file.open(filename.c_str());
 	if (!file.is_open()) {
 		cout << "common.cpp file_text_open_write cannot open " << filename << endl;
 		return -4;

@@ -11,10 +11,10 @@ Font::Font(const char *filename) {
 	ifstream infile;
 	infile.open(filename, ios::in | ios::binary);
 	char c;
-	Letter *letter;
+	Image *letter;
 	char w,h,ch;
 	int i,j;
-	letters = new map<char, Letter *>();
+	letters = new map<char, Image *>();
 	chars = new vector<char>();
 	while (infile.read(&c,1)) {
 		w = c;
@@ -38,16 +38,10 @@ Font::Font(const char *filename) {
 				cout << r << " " << g << " " << b << endl;*/
 			}
 		}
-		letter = new Letter(w,h,p);
-		letters->insert(pair<char,Letter *>(ch,letter));
+		letter = new Image(p,w,h);
+		letters->insert(pair<char,Image *>(ch,letter));
 	}
 	cout << "font.cpp font finished loading of font " << endl;
-}
-
-Letter::Letter(int w, int h, char *pix) {
-	width = w;
-	height = h;
-	pixels = pix;
 }
 
 int Font::widthOf(char c) {
