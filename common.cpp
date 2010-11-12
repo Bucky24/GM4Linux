@@ -1,4 +1,5 @@
 #include "common.h"
+#include <cstdio>
 
 void draw_character(char letter, float x, float y) {
 	if (x == 0) x++;
@@ -186,8 +187,8 @@ void Tokenize(const string& str,
 
 
 int file_text_open_write(string filename) {
-	fstream file;
-	file.open(filename.c_str(),ios::out);
+	FILE *file;
+	fopen(filename.c_str(),ios::out);
 	if (!file.is_open()) {
 		cout << "common.cpp file_text_open_write cannot open " << filename << endl;
 		return -4;
