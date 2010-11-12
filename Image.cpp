@@ -73,7 +73,7 @@ Image::~Image() {
 
 void Image::draw(float x, float y) {
 	//if (!(width != dwidth || height != dheight)) {
-	//if ((int)dwidth % 2 != 0 || (int)dheight % 2 != 0) {
+	//if ((int)width % 2 != 0 || (int)height % 2 != 0) {
 		glTranslatef(x, y, 0.0f);
 		glEnable(GL_TEXTURE_2D);
 		glBindTexture(GL_TEXTURE_2D, _textureId);
@@ -94,8 +94,8 @@ void Image::draw(float x, float y) {
 		glDisable(GL_TEXTURE_2D);
 		glTranslatef(-x,-y,0.0f);
 	//} else {
-	//	glRasterPos2f(x+1,y+16);
-	//	glDrawPixels(width,height,GL_RGB,GL_UNSIGNED_BYTE,pixels);
+		//glRasterPos2f(x+1,y+16);
+		//glDrawPixels(width,height,GL_RGB,GL_UNSIGNED_BYTE,pixels);
 	//}
 }
 

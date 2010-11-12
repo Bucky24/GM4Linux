@@ -46,7 +46,7 @@ void Tokenize(const string& str,
 
 int main(int argc, char **argv) {
 	if (argc < 2) {
-		cout << "Usage: makefont <input images>" << endl;
+		//cout << "Usage: makefont <input images>" << endl;
 	}
 
 	ofstream outfile;
@@ -80,12 +80,15 @@ int main(int argc, char **argv) {
 		//cout << i1 << " " << i2 << endl;
 		height = byteToInt(i1,i2);
 
-		cout << width << " " << height << endl;
+		//cout << width << " " << height << endl;
 
+		//cout << "allocating image memory of " << width << "x" << height << "x3" <<  endl;
 		char image[width][height][3];
+		//cout << "generating image map " << endl;
 
 		for (j=0;j<width;j++) {
 			for (k=0;k<height;k++) {
+				//cout << j <<  " " << k << endl;
 				image[j][k][0] = 255;
 				image[j][k][1] = 255;
 				image[j][k][2] = 255;
@@ -95,6 +98,8 @@ int main(int argc, char **argv) {
 		int four = width;
 		while (four % 4 != 0) four --;
 		int pad = width-four;
+
+		//cout << "four: " << four << endl;
 
 		infile.seekg(54);
 		int count = 0;
@@ -137,12 +142,12 @@ int main(int argc, char **argv) {
 		for (j=0;j<height;j++) {
 			for (k=0;k<width;k++) {
 				if (image[k][j][0] != -1 || image[k][j][1] != -1 || image[k][j][2] != -1) {
-					cout << "*";
+					//cout << "*";
 				} else {
-					cout << " ";
+					//cout << " ";
 				}
 			}
-			cout << endl;
+			//cout << endl;
 		}
 		// end print
 
@@ -283,7 +288,7 @@ int main(int argc, char **argv) {
 			prev = splits[l+1];
 			avgw += w;
 			avgh += height;
-			cout << endl << endl;
+			//cout << endl << endl;
 		}
 
 		avgw /= splits.size();
@@ -401,17 +406,20 @@ int main(int argc, char **argv) {
 		outname += ".font";
 
 		outfile.open(outname.c_str(), ios::out | ios::binary);
-		for (l=0;l<letters.size();l++) {
+		for (l=0;l<1/*letters.size()*/;l++) {
 			//cout << l << endl;
 			Letter *let = letters[l];
 			char *image2 = let->pixels;
-			char c = let->width;
+			char c;
+			//c = let->width;
+			c = 32;
 			outfile.write(&c,1);
-			c = let->height;
+			//c = let->height;
+			c = 32;
 			outfile.write(&c,1);
 			c = letterVec[l];
 			outfile.write(&c,1);
-			cout << "wrote '" << c << "'" <<  endl;
+			//cout << "wrote '" << c << "'" <<  endl;
 			for (j=0;j<let->height;j++) {
 				for (k=0;k<let->width;k++) {
 					int index = (j*let->width+k)*3;
@@ -422,7 +430,7 @@ int main(int argc, char **argv) {
 					c = image2[index+2];
 					outfile.write(&c,1);
 					//if (letterVec[l] == 'A') {
-					//	cout << k << "," << j << " " << (int)(unsigned char)image2[index] << "," << (int)(unsigned char)image2[index+1] << "," << (int)(unsigned char)image2[index+2] << endl;
+					//	//cout << k << "," << j << " " << (int)(unsigned char)image2[index] << "," << (int)(unsigned char)image2[index+1] << "," << (int)(unsigned char)image2[index+2] << endl;
 					//}
 				}
 			}
