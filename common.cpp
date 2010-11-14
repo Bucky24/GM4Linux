@@ -188,13 +188,9 @@ void Tokenize(const string& str,
 
 
 int file_text_open_write(string filename) {
-	fstream file;
-<<<<<<< HEAD
-	file.open(filename.c_str());
-=======
-	file.open(filename.c_str(),ios::out);
->>>>>>> parent of 5b9e33e... commit
-	if (!file.is_open()) {
+	fstream *file = new fstream();
+	file->open(filename.c_str(),ios::out);
+	if (!file->is_open()) {
 		cout << "common.cpp file_text_open_write cannot open " << filename << endl;
 		return -4;
 	}
@@ -202,12 +198,12 @@ int file_text_open_write(string filename) {
 	unsigned int i;
 	for (i=0;i<Engine::filePtrWrite->size();i++) {
 		if (Engine::filePtrWrite->at(i) == NULL) {
-			Engine::filePtrWrite->at(i) = &file;
+			Engine::filePtrWrite->at(i) = file;
 			return i;
 		}
 	}
 
-	Engine::filePtrWrite->push_back(&file);
+	Engine::filePtrWrite->push_back(file);
 	return Engine::filePtrWrite->size()-1;
 }
 
@@ -228,8 +224,9 @@ void file_text_write_string(int handle, string data) {
 	if (Engine::filePtrWrite->size() > (unsigned int)handle) {
 		fstream *file = Engine::filePtrWrite->at(handle);
 		if (file != NULL) {
-			//file->write(data.c_str(),data.length());
-			(*file) << "testing";
+			if (file->is_open()) {
+				file->write(data.c_str(),data.length());
+			}
 		}
 	}
 }
