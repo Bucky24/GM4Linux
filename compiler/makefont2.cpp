@@ -1,6 +1,7 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -20,24 +21,43 @@ Image::Image(char *p, int w, int h) {
 
 Image *loadImage(char *);
 
+int byteToInt(int n1, int n2) {
+        return n1+n2*256;
+}
+
 int main(int argc, char **argv) {
-	if (argv < 4) {
+	if (argc < 4) {
 		cout << "Usage: makefont2 <bitmap> width height" << endl;
 		return 1;
 	}
 
+	int i,j,k;
+
 	int letterWidth = atoi(argv[2]);
 	int letterHeight = atoi(argv[3]);
 
-	char letters[75][letterHeight][letterWidth];
-
 	Image *image = loadImage(argv[1]);
+
+	int letterCount = letterWidth/image->width;
+
+	char letters[letterCount][letterHeight][letterWidth][3];
+
+	for (i=0;i<75;i++) {
+		for (j=0;j<letterWidth;j++) {
+			for (k=0;k<letterHeight;k++) {
+				letters[i][k][j][0] = image->pixels[i*letterWidth*3+letterHeight*3+0];
+				letters[i][k][j][1] = image->pixels[i*letterWidth*3+letterHeight*3+1];
+				letters[i][k][j][2] = image->pixels[i*letterWidth*3+letterHeight*3+2];
+			}
+		}
+	}
 
 	return 0;
 }
 
 Image *loadImage(char *filename) {
-	infile.open(argv[i],ios::in | ios::binary);
+	ifstream infile;
+	infile.open(filename,ios::in | ios::binary);
 	infile.seekg(18);
 	char in1, in2;
 	int i1, i2;
@@ -47,7 +67,8 @@ Image *loadImage(char *filename) {
 	if (i1 < 0) i1 = 256+i1;
 	i2 = in2;	
 	//cout << i1 << " " << i2 << endl;
-	width = byteToInt(i1,i2);
+	int width = byteToInt(i1,i2);
+	int j,k;
 
 	infile.seekg(22);
 	infile.read(&in1,1);
@@ -56,20 +77,20 @@ Image *loadImage(char *filename) {
 	if (i1 < 0) i1 = 256+i1;
 	i2 = in2;	
 	//cout << i1 << " " << i2 << endl;
-	height = byteToInt(i1,i2);
+	int height = byteToInt(i1,i2);
 
 	//cout << width << " " << height << endl;
 
 	//cout << "allocating image memory of " << width << "x" << height << "x3" <<  endl;
-	char image[width][height][3];
+	char *image = (char *)malloc(sizeof(char)*width*height*3);
 	//cout << "generating image map " << endl;
 
 	for (j=0;j<width;j++) {
 		for (k=0;k<height;k++) {
-			//cout << j <<  " " << k << endl;
-			image[j][k][0] = 255;
-			image[j][k][1] = 255;
-			image[j][k][2] = 255;
+			//cout << j <<  " " << k << " " << j*height*3+k*3+0 <<  endl;
+			image[j*height*3+k*3+0] = 255;
+			image[j*height*3+k*3+1] = 255;
+			image[j*height*3+k*3+2] = 255;
 		}
 	}
 
@@ -82,7 +103,11 @@ Image *loadImage(char *filename) {
 	infile.seekg(54);
 	int count = 0;
 	int lines = 0;
-	state = 0;
+	int state = 0;
+	char input;
+
+	char r,g,b;
+
 	while (infile.read(&input,1)) {
 		if (state == 0) {
 			b = input;
@@ -95,9 +120,9 @@ Image *loadImage(char *filename) {
 			state = 0;
 			if (r != -1 || g != -1 || b != -1) {
 				//cout << infile.tellg() << " " << count/3 << "," << height-lines-1 << " " << (int)r << "," << (int)g << "," << (int)b << endl;
-				image[count/3][height-lines-1][0] = r;
-				image[count/3][height-lines-1][1] = g;
-				image[count/3][height-lines-1][2] = b;
+				image[(count/3)*height*3+(height-lines-1)*3+0] = r;
+				image[(count/3)*height*3+(height-lines-1)*3+1] = g;
+				image[(count/3)*height*3+(height-lines-1)*3+2] = b;
 			}
 		}
 		if (count == (width)*3-1) {
