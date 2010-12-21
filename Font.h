@@ -13,6 +13,7 @@ public:
 	map<char,Image *> *letters;
 	void create(const char *);
 	int widthOf(char);
+	int heightOf(char);
 	vector<char> *chars;
 };
 

@@ -23,8 +23,8 @@ void draw_character(char letter, float x, float y) {
 		return;
 	}
 
-	let->draw(x,y);
-	/*glColor3f(0,0,0);
+	//let->draw(x,y);
+	glColor3f(0,0,0);
 
 	glBegin(GL_POINTS);
 	for (i=0;i<let->height;i++) {
@@ -35,12 +35,12 @@ void draw_character(char letter, float x, float y) {
 				double g = (unsigned char)let->pixels[index+1];
 				double b = (unsigned char)let->pixels[index+2];
 				glColor3d(r/255,g/255,b/255);
-				glVertex2f(j+x,i+y);
+				glVertex2f(j+x,y+(let->height-i));
 			}
 		}
 	}
 	glEnd();
-	glColor3d(Engine::r,Engine::g,Engine::b);*/
+	glColor3d(Engine::r,Engine::g,Engine::b);
 
 }
 

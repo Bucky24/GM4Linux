@@ -50,3 +50,10 @@ int Font::widthOf(char c) {
 	}
 	return 0;
 }
+
+int Font::heightOf(char c) {
+	if (letters->find(c) != letters->end()) {
+		return letters->find(c)->second->height;
+	}
+	return 0;
+}
