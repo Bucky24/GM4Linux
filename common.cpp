@@ -1,5 +1,9 @@
 #include "common.h"
 
+#include <sstream>
+
+using namespace std;
+
 void draw_character(char letter, float x, float y) {
 	if (x == 0) x++;
 	if (y == 0) y++;
@@ -326,5 +330,29 @@ Variable &string_copy(Variable &str, int index, int len) {
 		return *ret;
 	} else {
 		return *(new Variable (""));
+	}
+}
+
+void file_text_writeln(int handle) {
+	if (handle < 0) return;
+	if (Engine::filePtrWrite->size() > (unsigned int)handle) {
+		fstream *file = Engine::filePtrWrite->at(handle);
+		if (file != NULL) {
+			if (file->is_open()) {
+				file->write("\n",1);
+			}
+		}
+	}
+}
+
+Variable &stringInt(Variable &var) {
+	if (var.getType() == 2) {
+		return var;
+	} else if (var.getType() == 1) {
+		stringstream out;
+		out << var.getI();
+		return *(new Variable(out.str()));
+	} else {
+		return *(new Variable(""));
 	}
 }

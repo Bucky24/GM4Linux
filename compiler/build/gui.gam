@@ -92,13 +92,54 @@ if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height &&
 	//cout << global.showObjects << endl;
 	cout << "saving game " << endl;
 	filePointer = file_text_open_write("saveGame.gam");
+	file_text_write_string(filePointer,"[sprites]");
+	file_text_writeln(filePointer);
+	file_text_write_string(filePointer,"[/sprites]");
+	file_text_writeln(filePointer);
+	file_text_write_string(filePointer,"[fonts]");
+	file_text_writeln(filePointer);
+	file_text_write_string(filePointer,"[/fonts]");
+	file_text_writeln(filePointer);
 	file_text_write_string(filePointer,"[objects]");
+	file_text_writeln(filePointer);
 	for (i=0;i<ds_list_size(global.objectNames);i++) {
 		file_text_write_string(filePointer,"[object]");
+		file_text_writeln(filePointer);
 		file_text_write_string(filePointer,ds_list_find_value(global.objectNames,i));
+		file_text_writeln(filePointer);
+		file_text_write_string(filePointer,"-1");
+		file_text_writeln(filePointer);
+		file_text_write_string(filePointer,string(i));
+		file_text_writeln(filePointer);
+
+		str = ds_list_find_value(global.objectCode,i);
+		drstr = "";
+		for (j=0;j<string_length(str);j++) {
+			ch = string_char_at(str,j);
+			if (ch == "#" && escaped == 0) {
+				file_text_write_string(filePointer,drstr);
+				file_text_writeln(filePointer);
+				drstr = "";
+			} else {
+				if (ch == "\" && escaped == 0) {
+					escaped = 1;
+				} else {
+					drstr += ch;
+					escaped = 0;
+				}
+			}
+		}
+		file_text_write_string(filePointer,drstr);
+		file_text_writeln(filePointer);
+
 		file_text_write_string(filePointer,"[/object]");
+		file_text_writeln(filePointer);
 	}
 	file_text_write_string(filePointer,"[/objects]");
+	file_text_writeln(filePointer);
+	file_text_write_string(filePointer,"[rooms]");
+	file_text_writeln(filePointer);
+	file_text_write_string(filePointer,"[/rooms]");
 	file_text_close(filePointer);
 }
 status = "up";
@@ -165,7 +206,7 @@ if (global.showObjects == 1) {
 	for (i=0;i<ds_list_size(global.objectNames);i++) {
 		value = ds_list_find_value(global.objectNames,i);
 		draw_text(value,x,ty);
-		ty += 12;
+		ty += 20;
 	}
 
 	if (currentObject >= 0) {
@@ -180,7 +221,7 @@ if (global.showObjects == 1) {
 			if (ch == "#" && escaped == 0) {
 				draw_text(drstr,tx,ty);
 				drstr = "";
-				ty += 12;
+				ty += 20;
 			} else {
 				if (ch == "\" && escaped == 0) {
 					escaped = 1;
@@ -198,7 +239,7 @@ if (global.showObjects == 1) {
 globalmousereleased_left
 if (mouse_x >= x && mouse_x <= x+180 && mouse_y >= y && mouse_y <= y+room_height) {
 	tempy = mouse_y-y;
-	tempy = tempy/12;
+	tempy = tempy/20;
 	if (tempy >= 0 && tempy < ds_list_size(global.objectNames)) {
 		currentObject = tempy;
 		keyboard_string = "";

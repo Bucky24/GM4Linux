@@ -582,6 +582,8 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("file_text_open_write");
 	ret.push_back("file_text_close");
 	ret.push_back("string_copy");
+	ret.push_back("file_text_writeln");
+	ret.push_back("stringInt");
 }
 
 bool isReserved(string word, vector<string> &vec) {
@@ -629,6 +631,11 @@ string processCode(string code, vector<string> reserved) {
 				} else {
 					if (variable != "") {
 						//cout << "running " << variable << endl;
+						if (variable == "string") {
+							tmp.replace(varPos,variable.size(),"stringInt");
+							variable = "stringInt";
+							j += 3;
+						}
 						if (!isReserved(variable,reserved)) {
 							//cout << variable << " found" << endl;
 							//vector<string> toks2;

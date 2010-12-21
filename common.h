@@ -48,5 +48,7 @@ extern int round(Variable *);
 extern Variable &string_char_at(Variable &str, unsigned int pos);
 extern Variable &string_length(Variable &str);
 extern Variable &string_copy(Variable &, int, int);
+extern void file_text_writeln(int handle);
+extern Variable &stringInt(Variable &);
 
 #endif
