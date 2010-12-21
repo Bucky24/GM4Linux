@@ -11,7 +11,7 @@ obj_objbutton
 [action]
 create
 width = 90;
-height = 15;
+height = 20;
 text = "objects";
 status = "up";
 tick = 0;
@@ -56,7 +56,7 @@ obj_save_game
 [action]
 create
 width = 90;
-height = 15;
+height = 20;
 text = "save game";
 status = "up";
 tick = 0;
@@ -269,7 +269,7 @@ obj_objbutton,0,0
 obj_objects,90,16
 obj_objnewobject,90,0
 obj_object_name,270,0
-obj_save_game,0,15
+obj_save_game,0,20
 [/instances]
 [/room]
 [rooms]

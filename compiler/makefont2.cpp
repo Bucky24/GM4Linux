@@ -152,7 +152,7 @@ int main(int argc, char **argv) {
 				letters[i][k][j][0] = image->pixels[(i*letterWidth+j)*letterHeight*3+k*3+0];
 				letters[i][k][j][1] = image->pixels[(i*letterWidth+j)*letterHeight*3+k*3+1];
 				letters[i][k][j][2] = image->pixels[(i*letterWidth+j)*letterHeight*3+k*3+2];
-				//cout << (int)letters[i][k][j][0] << " " << (int)letters[i][k][j][1] << " " << (int)letters[i][k][j][2] << " " << (i*letterWidth+j)*letterHeight*3+k*3 << " " << j << " " << k << endl;
+				cout << (int)letters[i][k][j][0] << " " << (int)letters[i][k][j][1] << " " << (int)letters[i][k][j][2] << " " << (i*letterWidth+j)*letterHeight*3+k*3 << " " << j << " " << k << endl;
 			}
 		}
 	}
@@ -199,14 +199,20 @@ int main(int argc, char **argv) {
 Image *loadImage(char *filename) {
 	ifstream infile;
 	infile.open(filename,ios::in | ios::binary);
-	infile.seekg(18);
 	char in1, in2;
+	infile.seekg(28);
+	infile.read(&in1,1);
+	if (in1 != 24) {
+		cout << "Image is not a 24-bit bitmap. Cannot load" << endl;
+		exit(0);
+	}
+	infile.seekg(18);
 	int i1, i2;
 	infile.read(&in1,1);
 	infile.read(&in2,1);
 	i1 = in1;
 	if (i1 < 0) i1 = 256+i1;
-	i2 = in2;	
+	i2 = in2;
 	//cout << i1 << " " << i2 << endl;
 	int width = byteToInt(i1,i2);
 	int j,k;
@@ -260,7 +266,7 @@ Image *loadImage(char *filename) {
 			r = input;
 			state = 0;
 			if (r != -1 || g != -1 || b != -1) {
-				//cout << infile.tellg() << " " << count/3 << "," << height-lines-1 << " " << (int)r << "," << (int)g << "," << (int)b << " " << (count/3)*height*3+(height-lines-1)*3 << endl;
+				cout << infile.tellg() << " " << count/3 << "," << lines << " " << (int)r << "," << (int)g << "," << (int)b << " " << (count/3)*height*3+(lines)*3 << endl;
 				image[(count/3)*height*3+(lines)*3+0] = r;
 				image[(count/3)*height*3+(lines)*3+1] = g;
 				image[(count/3)*height*3+(lines)*3+2] = b;

@@ -4,7 +4,7 @@ void draw_character(char letter, float x, float y) {
 	if (x == 0) x++;
 	if (y == 0) y++;
 	
-	int i,j;
+	/*int i,j;
 	bool found = false;
 
 	for (i=0;i<(signed int)Engine::currentFont->chars->size();i++) {
@@ -23,10 +23,14 @@ void draw_character(char letter, float x, float y) {
 		return;
 	}
 
-	//let->draw(x,y);
+	//let->draw(x,y);*/
 	glColor3f(0,0,0);
 
-	glBegin(GL_POINTS);
+	glRasterPos3f(x,y,0);
+
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, letter); // Updates the position
+
+	/*glBegin(GL_POINTS);
 	for (i=0;i<let->height;i++) {
 		for (j=0;j<let->width;j++) {
 			int index = (i*let->width+j)*3;
@@ -39,7 +43,7 @@ void draw_character(char letter, float x, float y) {
 			}
 		}
 	}
-	glEnd();
+	glEnd();*/
 	glColor3d(Engine::r,Engine::g,Engine::b);
 
 }
@@ -125,11 +129,13 @@ void draw_point(float x, float y) {
 }
 
 void draw_text(string text, float x, float y) {
+	y += 16;
 	unsigned int i;
 	for (i=0;i<text.size();i++) {
 		char let = text.at(i);
 		draw_character(let,x,y);
-		x += Engine::currentFont->widthOf(let)+2;
+		//x += Engine::currentFont->widthOf(let)+2;
+		x += glutBitmapWidth(GLUT_BITMAP_HELVETICA_18, let);
 	}
 }
 
