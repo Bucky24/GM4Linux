@@ -44,6 +44,7 @@ public:
         virtual void key_end();
         virtual void key_insert();
 	virtual void key_enter();
+	virtual void key_backspace();
 
 	virtual void key_a();
 	virtual void key_b();
@@ -94,6 +95,7 @@ public:
         virtual void keyup_home();
         virtual void keyup_end();
         virtual void keyup_insert();
+
 	virtual void keyup_a();
 	virtual void keyup_b();
 	virtual void keyup_c();

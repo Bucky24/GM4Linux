@@ -502,7 +502,10 @@ void Engine::generateFunctionMaps() {
         keyslaststep->insert(pair<int,bool>(8,false));
         keymaps->insert(pair<int,objfunc>(13,&Object::key_enter));
         keys->insert(pair<int,bool>(13,false));
-        keyslaststep->insert(pair<int,bool>(13,false));
+        keyslaststep->insert(pair<int,bool>(13,false)); 
+        keymaps->insert(pair<int,objfunc>(8,&Object::key_backspace));
+        keys->insert(pair<int,bool>(8,false));
+        keyslaststep->insert(pair<int,bool>(8,false));
 
         keymaps->insert(pair<int,objfunc>('a',&Object::key_a));
         keys->insert(pair<int,bool>('a',false));
@@ -709,6 +712,22 @@ void Engine::generateFunctionMaps() {
         keyslaststep->insert(pair<int,bool>(';',false));
         keys->insert(pair<int,bool>('*',false));
         keyslaststep->insert(pair<int,bool>('*',false));
+        keys->insert(pair<int,bool>('_',false));
+        keyslaststep->insert(pair<int,bool>('_',false));
+        keys->insert(pair<int,bool>('<',false));
+        keyslaststep->insert(pair<int,bool>('<',false));
+        keys->insert(pair<int,bool>('>',false));
+        keyslaststep->insert(pair<int,bool>('>',false));
+        keys->insert(pair<int,bool>('?',false));
+        keyslaststep->insert(pair<int,bool>('?',false));
+        keys->insert(pair<int,bool>('\\',false));
+        keyslaststep->insert(pair<int,bool>('\\',false));
+        keys->insert(pair<int,bool>('|',false));
+        keyslaststep->insert(pair<int,bool>('|',false));
+        keys->insert(pair<int,bool>('{',false));
+        keyslaststep->insert(pair<int,bool>('{',false));
+        keys->insert(pair<int,bool>('}',false));
+        keyslaststep->insert(pair<int,bool>('}',false));
 
         beginStepEvent = &Object::step_begin;
         stepEvent = &Object::step;

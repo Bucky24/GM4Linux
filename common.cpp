@@ -319,3 +319,12 @@ Variable &string_length(Variable &str) {
 	}
 	return *(new Variable(str.getS().size()));
 }
+
+Variable &string_copy(Variable &str, int index, int len) {
+	if (index+len < (signed int)str.getS().length()) {
+		Variable *ret = new Variable(str.getS().substr(index,len));
+		return *ret;
+	} else {
+		return *(new Variable (""));
+	}
+}

@@ -14,6 +14,9 @@ string stripStuff(string input) {
 			output[i] = '\\';
 			output.insert(i+1,"\"");
 			i++;
+		} else if (output[i] == '\\') {
+			output.insert(i+1,"\\");
+			i++;
 		}
 	}
 	return output;

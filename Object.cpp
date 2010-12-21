@@ -52,7 +52,8 @@ void Object::key_page_up() {}
 void Object::key_home() {}
 void Object::key_end() {}
 void Object::key_insert() {}
-void Object::key_enter () {}
+void Object::key_enter() {}
+void Object::key_backspace() {}
 
 void Object::key_a() {}
 void Object::key_b() {}
