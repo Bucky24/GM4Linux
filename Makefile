@@ -18,7 +18,7 @@ clean:
 	rm -f *.o *.gch
 
 cleancode:
-	rm -f $(CORE_FILES) $(EXTRA_FILES) *.o *.gch
+	rm -f $(CORE_FILES) $(EXTRA_FILES) Makefile *.o *.gch
 
 cleanall:
 	rm -f $(CORE_FILES) $(EXTRA_FILES) $(PROG) Makefile *.o *.gch
