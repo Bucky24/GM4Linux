@@ -1,0 +1,25 @@
+[sprites]
+[/sprites]
+[fonts]
+[/fonts]
+[objects]
+[object]
+obj_new
+-1
+1
+[action]
+create
+i = 5;
+[/action]
+[/object]
+[/objects]
+[rooms]
+[room]
+rm_main
+0.6,0.6,0.6
+400,400
+[instances]
+obj_new,100,100
+[/instances]
+[/room]
+[/rooms]
