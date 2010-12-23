@@ -50,9 +50,54 @@ status = "up";
 [/action]
 [/object]
 [object]
+obj_load_game
+-1
+5
+[action]
+create
+width = 90;
+height = 20;
+text = "load game";
+status = "up";
+tick = 0;
+[/action]
+[action]
+draw
+draw_line(x,y,x+width,y);
+draw_line(x,y,x,y+height);
+draw_line(x,y+height,x+width,y+height);
+draw_line(x+width,y,x+width,y+height);
+draw_text(text,x,y);
+if (status == "down") {
+	draw_rectangle(x,y,x+width,y+height);
+}
+[/action]
+[action]
+globalmousepressed_left
+if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height) {
+	status = "down";
+}
+[/action]
+[action]
+globalmousereleased_left
+if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height && status == "down") {
+	cout << "loading game " << endl;
+	filePointer = file_text_open_read("saveGame.gam");
+
+	while (!file_text_eof(filePointer)){
+		cout << file_text_read_string(filePointer) << endl;
+		file_text_readln(filePointer);
+	}
+
+	file_text_close(filePointer);
+}
+status = "up";
+[/action]
+[/object]
+[object]
 obj_save_game
 -1
-0
+4
 [action]
 create
 width = 90;
@@ -352,7 +397,7 @@ global.objectTypes = ds_list_create();
 [/objects]
 [rooms]
 [room]
-main
+rm_main
 0.6,0.6,0.6
 800,380
 [instances]
@@ -362,6 +407,7 @@ obj_objects,90,21
 obj_objnewobject,90,0
 obj_object_name,270,0
 obj_save_game,0,20
+obj_load_game,0,40
 [/instances]
 [/room]
 [rooms]

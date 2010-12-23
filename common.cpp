@@ -356,3 +356,78 @@ Variable &stringInt(Variable &var) {
 		return *(new Variable(""));
 	}
 }
+
+int file_text_open_read(string filename) {
+	fstream *file = new fstream();
+	file->open(filename.c_str(),ios::in);
+	if (!file->is_open()) {
+		cout << "common.cpp file_text_open_read cannot open " << filename << endl;
+		return -4;
+	}
+	
+	unsigned int i;
+	for (i=0;i<Engine::filePtrWrite->size();i++) {
+		if (Engine::filePtrWrite->at(i) == NULL) {
+			Engine::filePtrWrite->at(i) = file;
+			return i;
+		}
+	}
+
+	Engine::filePtrWrite->push_back(file);
+	return Engine::filePtrWrite->size()-1;
+}
+
+string file_text_read_string(int handle) {
+	string ret = "";
+	char c = 0;
+	if (handle < 0) return "";
+	if (Engine::filePtrWrite->size() > (unsigned int)handle) {
+		fstream *file = Engine::filePtrWrite->at(handle);
+		if (file != NULL) {
+			if (file->is_open()) {
+				while (!file->eof()) {
+					c = file->get();
+					if (c == '\n') {
+						file->putback(c);
+						break;
+					}
+					if (!file->eof()) {
+						ret += c;
+					}
+				}
+			}
+		}
+	}
+	return ret;
+}
+
+void file_text_readln(int handle) {
+	if (handle < 0) return;
+	if (Engine::filePtrWrite->size() > (unsigned int)handle) {
+		fstream *file = Engine::filePtrWrite->at(handle);
+		if (file != NULL) {
+			if (file->is_open()) {
+				char c = 0;
+				while (!file->eof()) {
+					c = file->get();
+					if (c == '\n') {
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+bool file_text_eof(int handle) {
+	if (handle < 0) return true;
+	if (Engine::filePtrWrite->size() > (unsigned int)handle) {
+		fstream *file = Engine::filePtrWrite->at(handle);
+		if (file != NULL) {
+			if (file->is_open()) {
+				return file->eof();
+			}
+		}
+	}
+	return true;
+}

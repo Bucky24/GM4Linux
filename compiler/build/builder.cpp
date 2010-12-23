@@ -584,6 +584,11 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("string_copy");
 	ret.push_back("file_text_writeln");
 	ret.push_back("stringInt");
+	ret.push_back("file_text_open_read");
+	ret.push_back("file_text_read_string");
+	ret.push_back("file_text_readln");
+	ret.push_back("file_text_eof");
+	ret.push_back("while");
 }
 
 bool isReserved(string word, vector<string> &vec) {
