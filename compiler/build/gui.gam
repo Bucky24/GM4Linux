@@ -199,6 +199,8 @@ if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height &&
 			file_text_writeln(filePointer);
 			file_text_write_string(filePointer,ds_list_find_value(global.objectNames,i));
 			file_text_writeln(filePointer);
+			file_text_write_string(filePointer,string(i));
+			file_text_writeln(filePointer);
 
 			str = ds_list_find_value(global.objectCode,i);
 			drstr = "";
@@ -398,6 +400,7 @@ global.objectTypes = ds_list_create();
 [rooms]
 [room]
 rm_main
+6
 0.6,0.6,0.6
 800,380
 [instances]

@@ -33,6 +33,7 @@ public:
 	string name;
 	string colors;
 	string size;
+	int roomId;
 	vector<string> *instances;
 };
 
@@ -41,6 +42,7 @@ Room::Room(string n, string c, string s, vector<string> *i) {
 	colors = c;
 	size = s;
 	instances = i;
+	//roomId = id;
 }
 
 class Sprite {

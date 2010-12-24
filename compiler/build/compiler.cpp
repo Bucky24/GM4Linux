@@ -233,23 +233,28 @@ int main(int argc, char **argv) {
 				line += "\n";
 				writeString(outfile,line.c_str(),line.size());
 			} else if (state == 6) {
-				if (secondState == 0) {
+				if (secondState == 0) { // name
 					objectName = line;
 					cout << "room " << objectName << endl;
 					writeString(outfile,line.c_str(),line.size());
 					char s = '\n';
 					outfile.write(&s,1);
 					secondState = 1;
-				} else if (secondState == 1) {
-					writeString(outfile,line.c_str(),line.size());
+				} else if (secondState == 1) { // id
+					/*writeString(outfile,line.c_str(),line.size());
 					char s = '\n';
-					outfile.write(&s,1);
+					outfile.write(&s,1);*/
 					secondState = 2;
-				} else if (secondState == 2) {
+				} else if (secondState == 2) { // color
 					writeString(outfile,line.c_str(),line.size());
 					char s = '\n';
 					outfile.write(&s,1);
 					secondState = 3;
+				} else if (secondState == 3) { // size
+					writeString(outfile,line.c_str(),line.size());
+					char s = '\n';
+					outfile.write(&s,1);
+					secondState = 4;
 				}
 			} else if (state == 7) {
 				writeString(outfile,line.c_str(),line.size());
