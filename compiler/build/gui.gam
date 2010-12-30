@@ -84,8 +84,32 @@ if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height &&
 	cout << "loading game " << endl;
 	filePointer = file_text_open_read("saveGame.gam");
 
+	// 0=none, 1=sprites, 2=objects, 3=object, 4=object action, 5=rooms, 6=room, 7=room instances, 8=font
+	mode = 0;
 	while (!file_text_eof(filePointer)){
-		cout << file_text_read_string(filePointer) << endl;
+		line = file_text_read_string(filePointer);
+		if (line == "[sprites]" && mode == 0) {
+			mode = 1;
+		} else if (line == "[/sprites]" && mode == 1) {
+			mode = 0;
+		} else if (line == "[objects]" && mode == 0) {
+			mode = 2;
+		} else if (line == "[/objects]" && mode == 2) {
+			mode = 0;
+		} else if (line == "[/object]" && mode == 0) {
+			mode = 3;
+		} else if (line == "[/object]" && mode == 3) {
+			mode = 0;
+		} else if (line == "[rooms]" && mode == 0) {
+			mode = 5;
+		} else if (line == "[/rooms]" && mode == 5) {
+			mode = 0;
+		} else if (line == "[room]" && mode == 0) {
+			mode = 6;
+		} else if (line == "[/room]" && mode == 6) {
+			mode = 0;
+		}
+		cout << line << " " << mode << endl;
 		file_text_readln(filePointer);
 	}
 
