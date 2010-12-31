@@ -138,7 +138,7 @@ if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height &&
 				cout << "name set" << endl;
 				name = line;
 				skip ++;
-			} else if ((type == "obj" && skip <= 3) || (type == "rm_" && skip <= 1)) {
+			} else if ((type == "obj" && skip <= 2) || (type == "rm_" && skip <= 1)) {
 				cout << "skip" << endl;
 				skip ++;
 			} else if (type == "spr") {
@@ -353,10 +353,11 @@ obj_objects
 [action]
 create
 currentObject = -1;
+focus = 0;
 [/action]
 [action]
 draw
-if (global.showObjects == 1) {
+//if (global.showObjects == 1) {
 	draw_rectangle_color(x,y,x+180,room_height,c_white);
 	draw_line(x,y,x+180,y);
 	draw_line(x+180,room_height,x,room_height);
@@ -366,12 +367,19 @@ if (global.showObjects == 1) {
 	ty = y;
 	for (i=0;i<ds_list_size(global.objectNames);i++) {
 		value = ds_list_find_value(global.objectNames,i);
+		if (currentObject == i) {
+			draw_rectangle_color(x,ty,x+179,ty+20,0,1,0);
+		}
 		draw_text(value,x,ty);
 		ty += 20;
 	}
 
 	if (currentObject >= 0) {
-		draw_rectangle_color(x+180,y,room_width,room_height,c_white);
+		if (focus == 1) {
+			draw_rectangle_color(x+180,y,room_width,room_height,0.8,0.8,0.8);
+		} else {
+			draw_rectangle_color(x+180,y,room_width,room_height,c_white);
+		}
 		str = ds_list_find_value(global.objectCode,currentObject);
 		drstr = "";
 		escaped = 0;
@@ -394,7 +402,7 @@ if (global.showObjects == 1) {
 		}
 		draw_text(drstr,tx,ty);
 	}
-}
+//}
 [/action]
 [action]
 globalmousereleased_left
@@ -405,13 +413,17 @@ if (mouse_x >= x && mouse_x <= x+180 && mouse_y >= y && mouse_y <= y+room_height
 		currentObject = tempy;
 		keyboard_string = "";
 	}
+	focus = 0;
+} else if ((mouse_x >= x+180 && mouse_x <= x+room_width && mouse_y >= y && mouse_y <= y+room_height) && currentObject != -1) {
+	focus = 1;
 } else {
+	focus = 0;
 	currentObject = -1;
 }
 [/action]
 [action]
 step
-if (currentObject >= 0) {
+if (currentObject >= 0 && focus == 1) {
 	if (keyboard_string == "\" || keyboard_string == "#") {
 		ds_list_find_value(global.objectCode,currentObject) += "\";
 	}
@@ -421,13 +433,13 @@ if (currentObject >= 0) {
 [/action]
 [action]
 key_enter
-if (currentObject >= 0) {
+if (currentObject >= 0 && focus == 1) {
 	ds_list_find_value(global.objectCode,currentObject) += "#";
 }
 [/action]
 [action]
 key_backspace
-if (currentObject >= 0) {
+if (currentObject >= 0 && focus == 1) {
 	if (string_length(ds_list_find_value(global.objectCode,currentObject)) > 0) {
 		ds_list_find_value(global.objectCode,currentObject) = string_copy(ds_list_find_value(global.objectCode,currentObject),0,string_length(ds_list_find_value(global.objectCode,currentObject))-1);
 	}
