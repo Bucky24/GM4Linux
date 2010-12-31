@@ -86,28 +86,76 @@ if (mouse_x >= x && mouse_x <= x+width && mouse_y >= y && mouse_y <= y+height &&
 
 	// 0=none, 1=sprites, 2=objects, 3=object, 4=object action, 5=rooms, 6=room, 7=room instances, 8=font
 	mode = 0;
+	type = "";
+	code = "";
+	name = "";
+	skip = 0;
 	while (!file_text_eof(filePointer)){
 		line = file_text_read_string(filePointer);
 		if (line == "[sprites]" && mode == 0) {
 			mode = 1;
+			type = "spr";
+			code = "";
 		} else if (line == "[/sprites]" && mode == 1) {
 			mode = 0;
+			type = "";
 		} else if (line == "[objects]" && mode == 0) {
 			mode = 2;
+			type = "obj";
+			code = "";
+			name = "";
 		} else if (line == "[/objects]" && mode == 2) {
 			mode = 0;
-		} else if (line == "[/object]" && mode == 0) {
+			type = "";
+		} else if (line == "[object]" && mode == 2) {
 			mode = 3;
 		} else if (line == "[/object]" && mode == 3) {
-			mode = 0;
+			mode = 2;
+			ds_list_add(global.objectNames,name);
+			ds_list_add(global.objectCode,code);
+			ds_list_add(global.objectTypes,type);
 		} else if (line == "[rooms]" && mode == 0) {
 			mode = 5;
+			type = "rm_";
+			code = "";
+			name = "";
 		} else if (line == "[/rooms]" && mode == 5) {
 			mode = 0;
-		} else if (line == "[room]" && mode == 0) {
+			type = "";
+		} else if (line == "[room]" && mode == 5) {
 			mode = 6;
 		} else if (line == "[/room]" && mode == 6) {
-			mode = 0;
+			mode = 5;
+			ds_list_add(global.objectNames,name);
+			ds_list_add(global.objectCode,code);
+			ds_list_add(global.objectTypes,type);
+		} else if (line == "[fonts]") {
+
+		} else if (line == "[/fonts]" && mode == 8) {
+			
+		} else {
+			if (name == "" && (type == "obj" || type == "rm_")) {
+				cout << "name set" << endl;
+				name = line;
+				skip ++;
+			} else if ((type == "obj" && skip <= 3) || (type == "rm_" && skip <= 1)) {
+				cout << "skip" << endl;
+				skip ++;
+			} else if (type == "spr") {
+				ds_list_add(global.objectNames,line);
+				ds_list_add(global.objectCode,code);
+				ds_list_add(global.objectTypes,type);
+			} else {
+				for (i=0;i<string_length(line);i++) {
+					chr = string_char_at(line,i);
+					if (chr == "#") {
+						code += "\#";
+					} else {
+						code += chr;
+					}
+				}
+				code += "#";
+			}
 		}
 		cout << line << " " << mode << endl;
 		file_text_readln(filePointer);
