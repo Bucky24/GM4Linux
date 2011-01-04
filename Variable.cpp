@@ -201,7 +201,7 @@ Variable &Variable::operator[](int index) {
 	return *(new Variable(-4));
 }
 
-bool operator<(const Variable &var1, int data) {
+/*bool operator<(const Variable &var1, int data) {
 	if (var1.type == 1) {
 		if (var1.idata < data) {
 			return true;
@@ -217,7 +217,7 @@ bool operator<(const Variable &var1, const Variable &var2) {
 		}
 	}
 	return false;
-}
+}*/
 
 /*bool operator>=(const Variable &var1, int data) {
 	if (var1.type == 1) {

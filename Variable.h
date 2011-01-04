@@ -40,8 +40,8 @@ public:
 
 	Variable &operator[](int);
 
-	friend bool operator<(const Variable &, int);
-	friend bool operator<(const Variable &, const Variable &);
+	//friend bool operator<(const Variable &, int);
+	//friend bool operator<(const Variable &, const Variable &);
 
 	//friend bool operator>=(const Variable &, int);
 	//friend bool operator>=(const Variable &, const Variable &);
