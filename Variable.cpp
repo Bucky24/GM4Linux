@@ -69,6 +69,22 @@ Variable &Variable::operator++(int unused) {
 	return *this;
 }
 
+Variable &Variable::operator--() {
+	if (type == 1) {
+		idata --;
+	}
+	isArray = false;
+	return *this;
+}
+
+Variable &Variable::operator--(int unused) {
+	if (type == 1) {
+		idata --;
+	}
+	isArray = false;
+	return *this;
+}
+
 Variable Variable::operator+(const Variable &var2) {
 	Variable ret = *(new Variable());
 	if (type == var2.type) {

@@ -144,10 +144,41 @@ void Engine::handleEvents() {
         unsigned int i;
         //int j;
         keyhitmap::iterator itor = keys->begin();
+	keyhitmap::iterator lastitor = keyslaststep->begin();
         while (itor != keys->end()) {
                 bool val = (*itor).second;
                 int id = (*itor).first;
-                if (val == true) {
+		bool val2 = (*lastitor).second;
+		if (val == true && val2 == false) {
+			if (id >= 32 && id < 127) {
+				string str = Engine::keyboardString->getS();
+				str += (char)id;
+				*(Engine::keyboardString) = str;
+			} else if (id == 8) {
+				string str = Engine::keyboardString->getS();
+				str = str.substr(0,str.size()-1);
+				*(Engine::keyboardString) = str;
+			}
+	                objfunc function = (*(keydownmaps->find(id))).second;
+	                if (function != NULL) {
+	                        for (i=0;i<instances.size();i++) {
+	                                Object *inst = instances[i];
+					if (inst != NULL) {
+	                                	(inst->*function)();
+					}
+	                        }
+	                }
+                } else if (val == false && val2 == true) {
+	                objfunc function = (*(keyupmaps->find(id))).second;
+	                if (function != NULL) {
+	                        for (i=0;i<instances.size();i++) {
+	                                Object *inst = instances[i];
+					if (inst != NULL) {
+	                                	(inst->*function)();
+					}
+	                        }
+			}
+		} else if (val == true && val2 == true) {
                         objfunc function = (*(keymaps->find(id))).second;
                         if (function != NULL) {
                                 for (i=0;i<instances.size();i++) {
@@ -166,8 +197,9 @@ void Engine::handleEvents() {
 				str = str.substr(0,str.size()-1);
 				*(Engine::keyboardString) = str;
 			}
-                }
+		}
                 itor ++;
+		lastitor ++;
         }
 
 	// left button
@@ -263,7 +295,7 @@ void Engine::handleEvents() {
         keyhitmap::iterator itor2 = keyslaststep->begin();
         while (itor != keys->end()) {
                 (*itor2).second = (*itor).second;
-                (*itor).second = false;
+                //(*itor).second = false;
                 itor ++;
                 itor2 ++;
         }

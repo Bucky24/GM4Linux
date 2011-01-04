@@ -33,7 +33,7 @@ void draw_character(char letter, float x, float y) {
 	glRasterPos3f(x,y,0);
 
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, letter); // Updates the position
-
+	//glutBitmapCharacter(GLUT_BITMAP_8_BY_13, letter);
 	/*glBegin(GL_POINTS);
 	for (i=0;i<let->height;i++) {
 		for (j=0;j<let->width;j++) {
@@ -430,4 +430,8 @@ bool file_text_eof(int handle) {
 		}
 	}
 	return true;
+}
+
+int string_width(string in) {
+	return glutBitmapLength(GLUT_BITMAP_HELVETICA_18,(const unsigned char *)in.c_str());
 }

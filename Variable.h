@@ -21,6 +21,8 @@ public:
 
 	Variable &operator++();
 	Variable &operator++(int);
+	Variable &operator--();
+	Variable &operator--(int);
 
 	Variable operator+(const Variable &);
 	Variable operator+(const int);

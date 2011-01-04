@@ -591,6 +591,7 @@ void buildReserved(vector<string> &ret) {
 	ret.push_back("file_text_readln");
 	ret.push_back("file_text_eof");
 	ret.push_back("while");
+	ret.push_back("string_width");
 }
 
 bool isReserved(string word, vector<string> &vec) {

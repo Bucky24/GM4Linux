@@ -27,8 +27,10 @@ const float WINDOW_HEIGHT = 600;
 
 void handleKeypress(unsigned char key, int x, int y) {
         (*Engine::keys->find(key)).second = true;
-	//cout << key << endl;
-        //Engine::keys[key] = true;
+}
+
+void handleKeyrelease(unsigned char key, int x, int y) {
+        (*Engine::keys->find(key)).second = false;
 	switch (key) {
 		case 27: //Escape key
 			exit(0);
@@ -66,6 +68,10 @@ void handleMouseMotion(int x, int y) {
 
 void handleSpecialKeypress(int key, int x, int y) {
         (*Engine::keys->find(key+200)).second = true;
+}
+
+void handleSpecialKeyrelease(int key, int x, int y) {
+        (*Engine::keys->find(key+200)).second = false;
 }
 
 void initRendering() {
@@ -138,7 +144,9 @@ int main(int argc, char** argv) {
 	
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(handleKeypress);
+	glutKeyboardUpFunc(handleKeyrelease);
 	glutSpecialFunc(handleSpecialKeypress);
+	glutSpecialUpFunc(handleSpecialKeyrelease);
 	glutMouseFunc(handleMouse);
 	glutMotionFunc(handleMouseMotion);
 	glutPassiveMotionFunc(handleMouseMotion);

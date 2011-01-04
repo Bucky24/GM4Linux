@@ -54,5 +54,6 @@ extern int file_text_open_read(string filename);
 extern string file_text_read_string(int handle);
 extern void file_text_readln(int handle);
 extern bool file_text_eof(int handle);
+extern int string_width(string);
 
 #endif
