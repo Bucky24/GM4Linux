@@ -356,6 +356,7 @@ currentObject = -1;
 focus = 0;
 curline = 0;
 maxline = 0;
+position = 0;
 [/action]
 [action]
 draw
@@ -388,17 +389,19 @@ draw
 		tx = x+180;
 		ty = y;
 		lineCount = 0;
+		var = 20*lineCount;
+		draw_rectangle_color(x+180,ty+var,room_width,ty+var+20,0.3,0.5,0.6);
 		for (i=0;i<string_length(str);i++) {
 			ch = string_char_at(str,i);
+			if (i == position && focus == 1) {
+				draw_rectangle_color(tx,ty,tx+string_width(ch),ty+20,1,0,0);
+			}
 			if (ch == "#" && escaped == 0) {
-				if (curline == lineCount) {
-					draw_rectangle_color(x+180,ty,room_width,ty+20,0.3,0.5,0.6);
-					//cout << x+180 << " " << ty << " " << room_width << " " << ty+20 << endl;
-				}
-				draw_text(drstr,tx,ty);
-				drstr = "";
+				//draw_text(drstr,tx,ty);
+				//drstr = "";
 				ty += 20;
 				lineCount ++;
+				tx = x+180;
 			} else {
 				if (ch == "\" && escaped == 0) {
 					escaped = 1;
@@ -407,12 +410,19 @@ draw
 					escaped = 0;
 				}
 			}
+			if (escaped == 0 && ch != "#") {
+				draw_text(ch,tx,ty);
+				tx += string_width(ch);
+			}
+		}
+		if (i == position && focus == 1) {
+			draw_rectangle_color(tx,ty,tx+10,ty+20,1,0,0);
 		}
 		maxline = lineCount;
 		//if (curline == lineCount) {
 		//	draw_rectangle_color(x+180,ty,room_width,ty+20,0.3,0.5,0.6);
 		//}
-		draw_text(drstr,tx,ty);
+		//draw_text(ch,tx,ty);
 	}
 //}
 [/action]
@@ -439,7 +449,9 @@ if (currentObject >= 0 && focus == 1) {
 	if (keyboard_string == "\" || keyboard_string == "#") {
 		ds_list_find_value(global.objectCode,currentObject) += "\";
 	}
-	ds_list_find_value(global.objectCode,currentObject) += keyboard_string;
+	str = ds_list_find_value(global.objectCode,currentObject);
+	str += keyboard_string;
+	ds_list_find_value(global.objectCode,currentObject) = str;
 	keyboard_string = "";
 }
 [/action]
@@ -474,12 +486,20 @@ if (currentObject >= 0 && focus == 1) {
 }
 [/action]
 [action]
-keydown_left
-cout << "left key down" << endl;
+key_right
+if (currentObject >= 0 && focus == 1) {
+	if (position < string_length(ds_list_find_value(global.objectCode,currentObject))-1) {
+		position ++;
+	}
+}
 [/action]
 [action]
-keyup_left
-cout << "left key up" << endl;
+key_left
+if (currentObject >= 0 && focus == 1) {
+	if (position > 0) {
+		position --;
+	}
+}
 [/action]
 [/object]
 [object

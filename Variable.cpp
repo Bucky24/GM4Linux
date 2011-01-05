@@ -89,6 +89,8 @@ Variable Variable::operator+(const Variable &var2) {
 	Variable ret = *(new Variable());
 	if (type == var2.type) {
 		ret.type = type;
+	} else {
+		return NULL;
 	}
 	ret.idata = idata+var2.idata;
 	ret.sdata = sdata+var2.sdata;
@@ -131,6 +133,26 @@ Variable Variable::operator/(const int data) {
 	if (type == 1) {
 		ret.type = 1;
 		ret.idata = idata/data;
+	}
+	ret.isArray = false;
+	return ret;
+}
+
+Variable Variable::operator*(const Variable &data) {
+	Variable ret = *(new Variable());
+	if (type == 1 and data.type == 1) {
+		ret.type = 1;
+		ret.idata = idata*data.idata;
+	}
+	ret.isArray = false;
+	return ret;
+}
+
+Variable Variable::operator*(const int data) {
+	Variable ret = *(new Variable());
+	if (type == 1) {
+		ret.type = 1;
+		ret.idata = idata*data;
 	}
 	ret.isArray = false;
 	return ret;

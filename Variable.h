@@ -31,6 +31,9 @@ public:
 	Variable operator/(const Variable &);
 	Variable operator/(const int);
 
+	Variable operator*(const Variable &);
+	Variable operator*(const int);
+
 	Variable &operator+=(const Variable &);
 	Variable &operator+=(const int);
 	Variable &operator+=(const string);
