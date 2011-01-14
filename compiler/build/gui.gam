@@ -449,10 +449,16 @@ if (currentObject >= 0 && focus == 1) {
 	if (keyboard_string == "\" || keyboard_string == "#") {
 		ds_list_find_value(global.objectCode,currentObject) += "\";
 	}
-	str = ds_list_find_value(global.objectCode,currentObject);
-	str += keyboard_string;
-	ds_list_find_value(global.objectCode,currentObject) = str;
-	keyboard_string = "";
+	if (keyboard_string != "") {
+		str = ds_list_find_value(global.objectCode,currentObject);
+		//str += keyboard_string;
+		strBefore = string_copy(str,0,position);
+		strAfter = string_copy(str,position+1,string_width(str)-(position+1)-1);
+		cout << str << " " << strBefore << " " << strAfter << " 0-" << position << ", " << position << "-" << string_width(str)-(position+1)-1 << endl;
+		str = strBefore+keyboard_string+strAfter;
+		ds_list_find_value(global.objectCode,currentObject) = str;
+		keyboard_string = "";
+	}
 }
 [/action]
 [action]
