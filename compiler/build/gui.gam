@@ -453,9 +453,11 @@ if (currentObject >= 0 && focus == 1) {
 		str = ds_list_find_value(global.objectCode,currentObject);
 		//str += keyboard_string;
 		strBefore = string_copy(str,0,position);
-		strAfter = string_copy(str,position+1,string_width(str)-(position+1)-1);
-		cout << str << " " << strBefore << " " << strAfter << " 0-" << position << ", " << position << "-" << string_width(str)-(position+1)-1 << endl;
-		str = strBefore+keyboard_string+strAfter;
+		strAfter = string_copy(str,position+1,string_length(str)-(position+1)-1);
+		//strAfter = string_copy(str,position+1,3);
+		cout << str << " " << strBefore << " after: " << strAfter << " 0-" << position << ", " << position+1 << "-" << string_length(str)-(position+1)-1 << " " << string_length(str) << endl;
+		str = strBefore+keyboard_string+strAfter + " ";
+		cout << "end: " << str << endl;
 		ds_list_find_value(global.objectCode,currentObject) = str;
 		keyboard_string = "";
 	}
