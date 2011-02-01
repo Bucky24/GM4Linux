@@ -27,10 +27,12 @@ const float WINDOW_HEIGHT = 600;
 
 void handleKeypress(unsigned char key, int x, int y) {
         (*Engine::keys->find(key)).second = true;
+        (*Engine::keys2->find(key)).second = true;
 }
 
 void handleKeyrelease(unsigned char key, int x, int y) {
         (*Engine::keys->find(key)).second = false;
+        //(*Engine::keys2->find(key)).second = false;
 	switch (key) {
 		case 27: //Escape key
 			exit(0);
@@ -127,6 +129,11 @@ void update(int value) {
 	glutTimerFunc(1000/Engine::currentRoom->getSpeed(), update, 0);
 }
 
+void doKeys(int value) {
+	Engine::handleKeyboard();
+	glutTimerFunc(300,doKeys,0);
+}
+
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
@@ -152,6 +159,7 @@ int main(int argc, char** argv) {
 	glutPassiveMotionFunc(handleMouseMotion);
 	glutReshapeFunc(handleResize);
 	glutTimerFunc(1, update, 0);
+	glutTimerFunc(300,doKeys, 0);
 	
 	glutMainLoop();
 	return 0;

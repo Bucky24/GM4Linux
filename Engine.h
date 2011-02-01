@@ -46,6 +46,7 @@ public:
 
         static void generateFunctionMaps();
 
+	static void handleKeyboard();
         static void handleEvents();
         static void beginStep();
         static void step();
@@ -61,6 +62,8 @@ public:
         static keyhitmap *keys;
         //static bool keyslaststep[500];
         static keyhitmap *keyslaststep;
+        static keyhitmap *keys2;
+        static keyhitmap *keyslaststep2;
         static objfunc beginStepEvent;
         static objfunc stepEvent;
         static objfunc endStepEvent;

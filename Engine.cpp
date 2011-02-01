@@ -13,6 +13,8 @@ int Engine::instanceid = 0;
 Room *Engine::currentRoom;
 keyhitmap *Engine::keys;
 keyhitmap *Engine::keyslaststep;
+keyhitmap *Engine::keys2;
+keyhitmap *Engine::keyslaststep2;
 bool Engine::mouse_left_flagged;
 bool Engine::mouse_left_flagged_laststep;
 bool Engine::mouse_right_flagged;
@@ -139,6 +141,80 @@ void Engine::registerCollisions() {
 	createCollisions();
 }
 
+void Engine::handleKeyboard() {
+	cout << "engine.cpp handle keyboard" << endl;
+	unsigned int i;
+	keyhitmap::iterator itor = keys2->begin();
+	keyhitmap::iterator lastitor = keyslaststep2->begin();
+	cout << "engine.cpp handleKeyboard place2" << endl;
+        while (itor != keys2->end()) {
+                bool val = (*itor).second;
+                int id = (*itor).first;
+		bool val2 = (*lastitor).second;
+		cout << "Engine.cpp handleKeyboard " << id << endl;
+		if (val == true && val2 == false) {
+			if (id >= 32 && id < 127) {
+				string str = Engine::keyboardString->getS();
+				str += (char)id;
+				*(Engine::keyboardString) = str;
+			} else if (id == 8) {
+				string str = Engine::keyboardString->getS();
+				str = str.substr(0,str.size()-1);
+				*(Engine::keyboardString) = str;
+			}
+	                /*objfunc function = (*(keydownmaps->find(id))).second;
+	                if (function != NULL) {
+	                        for (i=0;i<instances.size();i++) {
+	                                Object *inst = instances[i];
+					if (inst != NULL) {
+	                                	//(inst->*function)();
+					}
+	                        }
+	                }*/
+                } else if (val == false && val2 == true) {
+	                /*objfunc function = (*(keyupmaps->find(id))).second;
+	                if (function != NULL) {
+	                        for (i=0;i<instances.size();i++) {
+	                                Object *inst = instances[i];
+					if (inst != NULL) {
+	                                	//(inst->*function)();
+					}
+	                        }
+			}*/
+		} else if (val == true && val2 == true) {
+                        /*objfunc function = (*(keymaps->find(id))).second;
+                        if (function != NULL) {
+                                for (i=0;i<instances.size();i++) {
+                                        Object *inst = instances[i];
+					if (inst != NULL) {
+                                        	//(inst->*function)();
+					}
+                                }
+                        }*/
+			if (id >= 32 && id < 127) {
+				string str = Engine::keyboardString->getS();
+				str += (char)id;
+				*(Engine::keyboardString) = str;
+			} else if (id == 8) {
+				string str = Engine::keyboardString->getS();
+				str = str.substr(0,str.size()-1);
+				*(Engine::keyboardString) = str;
+			}
+		}
+                itor ++;
+		lastitor ++;
+        }
+        itor = keys2->begin();
+        keyhitmap::iterator itor2 = keyslaststep2->begin();
+        while (itor != keys2->end()) {
+                (*itor2).second = (*itor).second;
+                //(*itor).second = false;
+                itor ++;
+                itor2 ++;
+        }
+	cout << "engine.cpp end of handleKeyboard" << endl;
+}
+
 void Engine::handleEvents() {
         vector<Object *> instances = Engine::currentRoom->getInstances();
         unsigned int i;
@@ -153,11 +229,11 @@ void Engine::handleEvents() {
 			if (id >= 32 && id < 127) {
 				string str = Engine::keyboardString->getS();
 				str += (char)id;
-				*(Engine::keyboardString) = str;
+				//*(Engine::keyboardString) = str;
 			} else if (id == 8) {
 				string str = Engine::keyboardString->getS();
 				str = str.substr(0,str.size()-1);
-				*(Engine::keyboardString) = str;
+				//*(Engine::keyboardString) = str;
 			}
 	                objfunc function = (*(keydownmaps->find(id))).second;
 	                if (function != NULL) {
@@ -191,11 +267,11 @@ void Engine::handleEvents() {
 			if (id >= 32 && id < 127) {
 				string str = Engine::keyboardString->getS();
 				str += (char)id;
-				*(Engine::keyboardString) = str;
+				//*(Engine::keyboardString) = str;
 			} else if (id == 8) {
 				string str = Engine::keyboardString->getS();
 				str = str.substr(0,str.size()-1);
-				*(Engine::keyboardString) = str;
+				//*(Engine::keyboardString) = str;
 			}
 		}
                 itor ++;
@@ -764,4 +840,10 @@ void Engine::generateFunctionMaps() {
         beginStepEvent = &Object::step_begin;
         stepEvent = &Object::step;
         endStepEvent = &Object::step_end;
+
+	int i;
+	for (i=0;i<255;i++) {
+        	keys->insert(pair<int,bool>(i,false));
+        	keyslaststep->insert(pair<int,bool>(i,false));
+	}
 }
