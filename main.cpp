@@ -21,22 +21,33 @@ using namespace std;
 const float BOX_SIZE = 70.0f; //The length of each side of the cube
 const float WINDOW_WIDTH = 800;
 const float WINDOW_HEIGHT = 600;
+int timer;
+int lastKeyUp;
 //testobject *inst;
 //int objectid;
 //int instanceid;
 
 void handleKeypress(unsigned char key, int x, int y) {
+	cout << "key down " << timer <<  endl;
         (*Engine::keys->find(key)).second = true;
-        (*Engine::keys2->find(key)).second = true;
+	if (Engine::keys2->find(key) != Engine::keys2->end()) {
+        	(*Engine::keys2->find(key)).second = true;
+	}
 }
 
 void handleKeyrelease(unsigned char key, int x, int y) {
-        (*Engine::keys->find(key)).second = false;
-        //(*Engine::keys2->find(key)).second = false;
+	if (timer > lastKeyUp+5) {
+		cout << "key up " << timer << endl;
+        	(*Engine::keys->find(key)).second = false;
+		/*if (Engine::keys2->find(key) != Engine::keys2->end()) {
+       		 	(*Engine::keys2->find(key)).second = false;
+		}*/
+	}
 	switch (key) {
 		case 27: //Escape key
 			exit(0);
 	}
+	lastKeyUp = timer;
 }
 
 
@@ -78,6 +89,8 @@ void handleSpecialKeyrelease(int key, int x, int y) {
 
 void initRendering() {
 
+	timer = 0;
+	lastKeyUp = 0;
 	/*glEnable(GL_DEPTH_TEST);*/
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -127,11 +140,12 @@ void update(int value) {
         // draw
 	glutPostRedisplay();
 	glutTimerFunc(1000/Engine::currentRoom->getSpeed(), update, 0);
+	timer ++;
 }
 
 void doKeys(int value) {
 	Engine::handleKeyboard();
-	glutTimerFunc(300,doKeys,0);
+	glutTimerFunc(50,doKeys,0);
 }
 
 int main(int argc, char** argv) {
@@ -152,6 +166,7 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(handleKeypress);
 	glutKeyboardUpFunc(handleKeyrelease);
+	glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);
 	glutSpecialFunc(handleSpecialKeypress);
 	glutSpecialUpFunc(handleSpecialKeyrelease);
 	glutMouseFunc(handleMouse);
@@ -159,7 +174,7 @@ int main(int argc, char** argv) {
 	glutPassiveMotionFunc(handleMouseMotion);
 	glutReshapeFunc(handleResize);
 	glutTimerFunc(1, update, 0);
-	glutTimerFunc(300,doKeys, 0);
+	glutTimerFunc(1,doKeys, 0);
 	
 	glutMainLoop();
 	return 0;
